@@ -359,9 +359,12 @@ class HerbieFetcher():
         
         for point in points:
             for fxx in fxxs:
+                filtered_df = output_data[(output_data['point_id'] == point) & (output_data['fxx'] == fxx)]
+                filtered_df = filtered_df.drop_duplicates()
+                
                 if split_seasons:
-                    min_year = output_data['time'].min().year
-                    max_year = output_data['time'].max().year
+                    min_year = filtered_df['time'].min().year
+                    max_year = filtered_df['time'].max().year
                     years = [y for y in range(min_year, max_year, 1)]
                     
                     split_output_folder = f"weather_{min_year}-{max_year}_p{int(point)}_fxx{int(fxx)}"
@@ -374,12 +377,10 @@ class HerbieFetcher():
                         start_date = datetime(year, 10,1)
                         end_date = datetime(start_date.year + 1, 6,1)
                         
-                        curr_df = output_data[(output_data['time'] >= start_date) & (output_data['time'] < end_date)]
+                        curr_df = filtered_df[(filtered_df['time'] >= start_date) & (filtered_df['time'] < end_date)]
 
                         curr_df.to_csv(f"{split_output_path}/weather_{year}_p{int(point)}_fxx{int(fxx)}.csv",index=False)
                 else:
-                    filtered_df = output_data[(output_data['point_id'] == point) & (output_data['fxx'] == fxx)]
-                    filtered_df = filtered_df.drop_duplicates()
                     filtered_df.to_csv(f"{output_path}/weather_p{int(point)}_fxx{int(fxx)}.csv",index=False)
                 
         
