@@ -339,11 +339,13 @@ class HerbieFetcher():
         output_data.drop_duplicates(inplace=True)
         output_data.to_csv(self.output_file_path, index=False)
 
-    def split_data(self):
+    def split_data(self, split_seasons: bool = False):
         output_data = pd.read_csv(self.output_file_path)
         output_data['time'] = pd.to_datetime(output_data['time'])
         
         self.validate_df(output_data)
+        
+        self.remove_outliers(output_data)
         
         points = [n for n in output_data['point_id'].unique()]
         fxxs = [n for n in output_data['fxx'].unique()]
@@ -357,9 +359,29 @@ class HerbieFetcher():
         
         for point in points:
             for fxx in fxxs:
-                filtered_df = output_data[(output_data['point_id'] == point) & (output_data['fxx'] == fxx)]
-                filtered_df = filtered_df.drop_duplicates()
-                filtered_df.to_csv(f"{output_path}/weather_p{point}_fxx{fxx}.csv",index=False)
+                if split_seasons:
+                    min_year = output_data['time'].min().year
+                    max_year = output_data['time'].max().year
+                    years = [y for y in range(min_year, max_year, 1)]
+                    
+                    split_output_folder = f"weather_{min_year}-{max_year}_p{int(point)}_fxx{int(fxx)}"
+                    
+                    split_output_path = os.path.join(output_path,split_output_folder)
+                    
+                    os.makedirs(split_output_path, exist_ok=True)
+
+                    for year in years:
+                        start_date = datetime(year, 10,1)
+                        end_date = datetime(start_date.year + 1, 6,1)
+                        
+                        curr_df = output_data[(output_data['time'] >= start_date) & (output_data['time'] < end_date)]
+
+                        curr_df.to_csv(f"{split_output_path}/weather_{year}_p{int(point)}_fxx{int(fxx)}.csv",index=False)
+                else:
+                    filtered_df = output_data[(output_data['point_id'] == point) & (output_data['fxx'] == fxx)]
+                    filtered_df = filtered_df.drop_duplicates()
+                    filtered_df.to_csv(f"{output_path}/weather_p{int(point)}_fxx{int(fxx)}.csv",index=False)
+                
         
     def __remove_herbie_dir(self):
         herbie_data_dir = os.path.expanduser("~/data")
@@ -373,12 +395,39 @@ class HerbieFetcher():
             os.remove(output_path)
             if self.verbose:
                 print(f"{output_path} deleted.")
+                
+    def remove_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
+        for c in df.columns:
+            if c in ['time','point_id','fxx','valid_time','sdswrf','sde']:
+                continue
+
+            desc = df[c].describe()
+
+            min_val = desc['mean'] - (desc['std'] * 4)
+            max_val = desc['mean'] + (desc['std'] * 4)
+            
+            bad_vals = df[(df[c] > max_val) | (df[c] < min_val)]
+
+            if bad_vals.shape[0] != 0:
+                for index, row in bad_vals.iterrows():
+                    if index == 0:
+                        # First row, only next row exists
+                        df.loc[index, c] = df.loc[index + 1, c]
+                    elif index == df.shape[0] - 1:
+                        # Last row, only previous row exists
+                        df.loc[index, c] = df.loc[index - 1, c]
+                    else:
+                        # Middle rows, average of previous and next
+                        df.loc[index, c] = (df.loc[index - 1, c] + df.loc[index + 1, c]) / 2 # type: ignore
+                if self.verbose:
+                    print(f"Removed {bad_vals.shape[0]} major outliers in col {c}")
+        return df
         
 if __name__ == "__main__":
         
     start_time = datetime.now()
     
-    output_path = "../../../data/FAC"
+    output_path = "data/FAC"
     error_file = "herbie_error_log.txt"
     date_path = "date_log.txt"
         
@@ -391,7 +440,7 @@ if __name__ == "__main__":
         start_date = datetime(2020, 10, 1, 0, 0)  # start date
     n_days = 365  # Number of days
 
-    fac_coords = gpd.read_file("../../../data/FAC/zones/grid_coords.geojson")
+    fac_coords = gpd.read_file("data/FAC/zones/grid_coords.geojson")
     fac_coords = fac_coords[fac_coords['zone_name'] == 'Whitefish']
     test_coords = fac_coords.iloc[0:2,:].copy()
 
@@ -407,7 +456,7 @@ if __name__ == "__main__":
     fxx = [0,1]
     
     hf = HerbieFetcher(output_path, "weather.csv", error_file,date_path, show_times=True)
-    # hf.split_data()
+    hf.split_data(split_seasons=True)
     # hf.refetch_data(regs, fxx, test_coords)
     # hf.fetch_data(start_date,n_days, regs, fxx, test_coords)
     
