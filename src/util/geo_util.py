@@ -147,7 +147,7 @@ def find_elevation(id, lat, lon):
 
     raise ValueError(f"No tif file found for point #{id} at {lat}, {lon}")
         
-def csv_to_smet(df, output_file_path, output_file_name):
+def csv_to_smet(df, data_source, output_file_path, output_file_name):
     validate_df(df)
     
     df['time'] = pd.to_datetime(df['time'])
@@ -195,6 +195,7 @@ def csv_to_smet(df, output_file_path, output_file_name):
         file.write(f"longitude = {station_coords['lon'].values[0]}\n")
         file.write(f"altitude = {station_altitude}\n")
         file.write(f"tz = 0\n")
+        file.write(f"source = {data_source}\n")
         file.write(f"creation = {datetime.now().isoformat()}\n")
         file.write(f"fields = {' '.join(df.columns)}\n")
         
@@ -210,4 +211,4 @@ if __name__ == "__main__":
     # print(os.path.exists("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv"))
     df = pd.read_csv("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv")
     # find_elevation()
-    csv_to_smet(df, "data", "test.smet")
+    csv_to_smet(df, "weather_2021_p159_fxx1.csv", "data", "test.smet")
