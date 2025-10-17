@@ -6,6 +6,8 @@ import pandas as pd
 import rasterio
 import s3fs
 import xarray as xr
+import os
+import json
 from geographiclib.geodesic import Geodesic
 from rasterio.transform import xy
 from rasterio.warp import transform_bounds, transform
@@ -16,7 +18,7 @@ from datetime import datetime
 
 fs = s3fs.S3FileSystem(anon=True)
 
-from src.config import COORDS_FP
+from src.config import COORDS_FP, LOC_TIFS_FP, TIFS_FP
 
 from src.util.df_util import validate_df
 
@@ -74,7 +76,7 @@ def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") ->
             "geometry": poly
         }], crs="EPSG:4326")
     
-def get_elevation(gdf, rast_file_path):
+def calculate_elevation(gdf, rast_file_path):
     min_lat = gdf['lat'].min()
     max_lat = gdf['lat'].max()
     min_lon = gdf['lon'].min()
@@ -116,16 +118,36 @@ def get_elevation(gdf, rast_file_path):
         "lat": lats,
         "elevation_m": elev
     })
-
-    print(df.head())
-    print(f"Total points: {len(df)}")
-    print(df['elevation_m'].mean())
+    
+    if df.empty:
+        return -1
+    
     return df['elevation_m'].mean()
 
-def tbd():
-    pass
+def find_elevation(id, lat, lon):
+    with open(LOC_TIFS_FP, "r") as file:
+        json_data = json.load(file)
+    if str(id) in json_data.keys():
+        return json_data.get(str(id))['elevation']
     
-def csv_to_smet(df, output_file_path):
+    bbox = get_bbox(lat,lon, "gdf")
+    
+    # If elevation isn't found in the file above, need to check all tif files to see if it can be found
+    # This is pretty slow, which is why the elevations are saved in a json file. 
+    for tif_file in os.listdir(TIFS_FP):
+        elevation = calculate_elevation(bbox, os.path.join(TIFS_FP, tif_file))
+        if elevation != -1:
+            json_data[str(id)] = {
+                "elevation": elevation,
+                "tif_file": tif_file
+            }
+            with open(LOC_TIFS_FP, "w") as file:
+                json.dump(obj=json_data, fp=file,default=float, indent=2)
+            return elevation
+
+    raise ValueError(f"No tif file found for point #{id} at {lat}, {lon}")
+        
+def csv_to_smet(df, output_file_path, output_file_name):
     validate_df(df)
     
     df['time'] = pd.to_datetime(df['time'])
@@ -156,13 +178,16 @@ def csv_to_smet(df, output_file_path):
         "tp":"PSUM"
     }
 
-    df = df[var_map.keys()]
+    df = df[var_map.keys()].copy()
     df.rename(mapper=var_map, inplace=True, axis=1)
     
     station_coords = coords[coords['id'] == station_id]
-    station_altitude = 0 #get_elevation()
+    
+    station_altitude = find_elevation(station_id,station_coords['lat'].values[0],station_coords['lon'].values[0])
 
-    with open(output_file_path, "w") as file:
+    os.makedirs(output_file_path, exist_ok=True)
+
+    with open(os.path.join(output_file_path, output_file_name), "w") as file:
         file.write("SMET 1.1 ASCII\n")
         file.write("[HEADER]\n")
         file.write(f"station_id = {station_id}\n")
@@ -182,4 +207,7 @@ def csv_to_smet(df, output_file_path):
             
             
 if __name__ == "__main__":
-    print(f'Hello world')
+    # print(os.path.exists("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv"))
+    df = pd.read_csv("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv")
+    # find_elevation()
+    csv_to_smet(df, "data", "test.smet")
