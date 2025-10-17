@@ -1,1 +1,1 @@
-from config import REQ_COLS, EXP_COLS
+from src.config import *

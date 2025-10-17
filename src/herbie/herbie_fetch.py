@@ -10,8 +10,8 @@ import herbie
 import pandas as pd
 from herbie.fast import FastHerbie
 
-from util.df_util import remove_outliers, validate_df
-from src import REQ_COLS, EXP_COLS
+from src.util.df_util import remove_outliers, validate_df
+from src.config import REQ_COLS, EXP_COLS
 
 class HerbieFetcher():
     def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False):

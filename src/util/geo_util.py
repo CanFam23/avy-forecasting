@@ -16,6 +16,10 @@ from datetime import datetime
 
 fs = s3fs.S3FileSystem(anon=True)
 
+from src.config import COORDS_FP
+
+from src.util.df_util import validate_df
+
 
 def get_midpoint(lat1, lon1, lat2, lon2):
     # Compute path from 1 to 2
@@ -26,7 +30,7 @@ def get_midpoint(lat1, lon1, lat2, lon2):
     # print(h1['lat2'],h1['lon2'])
     return h1
 
-def get_bbox(lat: float,lon: float, ret_val: Literal["gdf", "poly"] = "gdf") -> gpd.GeoDataFrame:
+def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") -> gpd.GeoDataFrame:
     chunk_index = xr.open_zarr(s3fs.S3Map("s3://hrrrzarr/grid/HRRR_chunk_index.zarr", s3=fs))
 
     # open HRRR grid metadata (Zarr)
@@ -117,13 +121,18 @@ def get_elevation(gdf, rast_file_path):
     print(f"Total points: {len(df)}")
     print(df['elevation_m'].mean())
     return df['elevation_m'].mean()
+
+def tbd():
+    pass
     
 def csv_to_smet(df, output_file_path):
+    validate_df(df)
+    
     df['time'] = pd.to_datetime(df['time'])
     
     station_id = int(df['point_id'].unique()[0])
     
-    coords = gpd.read_file("../../data/FAC/zones/grid_coords.geojson")
+    coords = gpd.read_file(COORDS_FP)
     
     df['r2'] = df['r2'] / 100 # Convert to decimal
     df['prate'] = df['prate'] * 60 * 60 # kg/m2/s = mm/s, so * 60 == mm/min * 60 = mm/hr
@@ -151,7 +160,7 @@ def csv_to_smet(df, output_file_path):
     df.rename(mapper=var_map, inplace=True, axis=1)
     
     station_coords = coords[coords['id'] == station_id]
-    station_altitude = 100 # Replace with get_elevation
+    station_altitude = 0 #get_elevation()
 
     with open(output_file_path, "w") as file:
         file.write("SMET 1.1 ASCII\n")
@@ -170,3 +179,7 @@ def csv_to_smet(df, output_file_path):
             row.iloc[0] = row.iloc[0].isoformat()
             row = [str(d) for d in row]
             file.write(' '.join(row) + "\n")
+            
+            
+if __name__ == "__main__":
+    print(f'Hello world')
