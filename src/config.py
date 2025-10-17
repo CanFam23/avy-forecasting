@@ -1,0 +1,2 @@
+EXP_COLS = ['time','valid_time','fxx','t','sp','prate','sde','tp','cpofp','gust', 'sdswrf','suswrf','sdlwrf','sulwrf', 'point_id','max_10si','t2m','r2']
+REQ_COLS = ['time','valid_time','fxx','point_id']

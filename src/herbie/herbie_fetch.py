@@ -10,8 +10,8 @@ import herbie
 import pandas as pd
 from herbie.fast import FastHerbie
 
-exp_cols = ['time','valid_time','fxx','t','sp','prate','sde','tp','cpofp','gust', 'sdswrf','suswrf','sdlwrf','sulwrf', 'point_id','max_10si','t2m','r2']
-req_cols = ['time','valid_time','fxx','point_id']
+from util.df_util import remove_outliers, validate_df
+from src import REQ_COLS, EXP_COLS
 
 class HerbieFetcher():
     def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False):
@@ -91,19 +91,19 @@ class HerbieFetcher():
         
         merged["fxx"] = (merged["step"].dt.components["hours"] == 1).astype(int)
         
-        keep_cols = [c for c in merged.columns if c in exp_cols]
+        keep_cols = [c for c in merged.columns if c in EXP_COLS]
         filtered_df = merged[keep_cols]
         
         df_cols = filtered_df.columns.to_list()
         missing_cols = []
-        for c in exp_cols:
+        for c in EXP_COLS:
             if c not in df_cols or filtered_df[c].isna().any():
                 missing_cols.append(c)
         if len(missing_cols) > 0:
             warnings.warn(f"Missing {','.join(missing_cols)}")
             return False
 
-        filtered_df = filtered_df[exp_cols] # Reorder exp_cols
+        filtered_df = filtered_df[EXP_COLS] # Reorder exp_cols
         
         if os.path.exists(self.output_file_path) and os.path.getsize(self.output_file_path) > 0:
             filtered_df.to_csv(self.output_file_path,index=False,header=False,mode='a')
@@ -288,14 +288,6 @@ class HerbieFetcher():
         
         return missing_hours
         
-    def validate_df(self, df: pd.DataFrame):
-        if df.empty:
-            raise AttributeError("Given DataFrame is empty!")
-        
-        for req_col in req_cols:
-            if req_col not in df.columns:
-                raise KeyError(f"{req_cols} not a column in given DataFrame!")
-        
     def interpolate_missing_time(self, t: datetime):
         if self.verbose:
             print(f'Interpolating {t}')
@@ -304,7 +296,7 @@ class HerbieFetcher():
         output_data = pd.read_csv(self.output_file_path)
         output_data['time'] = pd.to_datetime(output_data['time'])
         
-        self.validate_df(output_data)
+        validate_df(output_data)
         
         points = [int(n) for n in output_data['point_id'].unique()]
         fxxs = [int(n) for n in output_data['fxx'].unique()]
@@ -327,7 +319,7 @@ class HerbieFetcher():
                 })
 
                 for i in range(vals.shape[1]):
-                    if vals.columns[i] in req_cols:
+                    if vals.columns[i] in REQ_COLS:
                         continue
                     new_entry[vals.columns[i]] = (vals.iloc[0,i] + vals.iloc[1,i]) / 2 # type: ignore
                 new_entry = new_entry[vals.columns.to_list()]
@@ -343,9 +335,9 @@ class HerbieFetcher():
         output_data = pd.read_csv(self.output_file_path)
         output_data['time'] = pd.to_datetime(output_data['time'])
         
-        self.validate_df(output_data)
+        validate_df(output_data)
         
-        self.remove_outliers(output_data)
+        remove_outliers(output_data)
         
         points = [n for n in output_data['point_id'].unique()]
         fxxs = [n for n in output_data['fxx'].unique()]
@@ -396,33 +388,6 @@ class HerbieFetcher():
             os.remove(output_path)
             if self.verbose:
                 print(f"{output_path} deleted.")
-                
-    def remove_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
-        for c in df.columns:
-            if c in ['time','point_id','fxx','valid_time','sdswrf','sde']:
-                continue
-
-            desc = df[c].describe()
-
-            min_val = desc['mean'] - (desc['std'] * 4)
-            max_val = desc['mean'] + (desc['std'] * 4)
-            
-            bad_vals = df[(df[c] > max_val) | (df[c] < min_val)]
-
-            if bad_vals.shape[0] != 0:
-                for index, row in bad_vals.iterrows():
-                    if index == 0:
-                        # First row, only next row exists
-                        df.loc[index, c] = df.loc[index + 1, c]
-                    elif index == df.shape[0] - 1:
-                        # Last row, only previous row exists
-                        df.loc[index, c] = df.loc[index - 1, c]
-                    else:
-                        # Middle rows, average of previous and next
-                        df.loc[index, c] = (df.loc[index - 1, c] + df.loc[index + 1, c]) / 2 # type: ignore
-                if self.verbose:
-                    print(f"Removed {bad_vals.shape[0]} major outliers in col {c}")
-        return df
         
 if __name__ == "__main__":
         

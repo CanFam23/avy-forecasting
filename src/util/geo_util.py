@@ -12,6 +12,7 @@ from rasterio.warp import transform_bounds, transform
 from rasterio.windows import from_bounds
 from shapely import Polygon
 from shapely.geometry import Point
+from datetime import datetime
 
 fs = s3fs.S3FileSystem(anon=True)
 
@@ -117,7 +118,55 @@ def get_elevation(gdf, rast_file_path):
     print(df['elevation_m'].mean())
     return df['elevation_m'].mean()
     
+def csv_to_smet(df, output_file_path):
+    df['time'] = pd.to_datetime(df['time'])
     
+    station_id = int(df['point_id'].unique()[0])
+    
+    coords = gpd.read_file("../../data/FAC/zones/grid_coords.geojson")
+    
+    df['r2'] = df['r2'] / 100 # Convert to decimal
+    df['prate'] = df['prate'] * 60 * 60 # kg/m2/s = mm/s, so * 60 == mm/min * 60 = mm/hr
+    df['tp'] = df['tp'] # kg/m^2 == mm
 
-# # target coordinate
-# target_lat, target_lon = 48.45922, -114.214305
+    df[['prate','tp']].describe()
+    
+    var_map = {
+        "time":"timestamp",
+        "sp":"P",
+        "t":"TSG",
+        "t2m":"TA",
+        "r2":"RH",
+        "gust":"VW_MAX",
+        "max_10si":"VW",
+        "sdswrf":"ISWR",
+        "suswrf":"RSWR",
+        "sdlwrf":"ILWR",
+        "sulwrf":"OLWR",
+        "prate":"PINT",
+        "tp":"PSUM"
+    }
+
+    df = df[var_map.keys()]
+    df.rename(mapper=var_map, inplace=True, axis=1)
+    
+    station_coords = coords[coords['id'] == station_id]
+    station_altitude = 100 # Replace with get_elevation
+
+    with open(output_file_path, "w") as file:
+        file.write("SMET 1.1 ASCII\n")
+        file.write("[HEADER]\n")
+        file.write(f"station_id = {station_id}\n")
+        file.write(f"latitude = {station_coords['lat'].values[0]}\n")
+        file.write(f"longitude = {station_coords['lon'].values[0]}\n")
+        file.write(f"altitude = {station_altitude}\n")
+        file.write(f"tz = 0\n")
+        file.write(f"creation = {datetime.now().isoformat()}\n")
+        file.write(f"fields = {' '.join(df.columns)}\n")
+        
+        file.write(f"[DATA]\n")
+        
+        for index, row in df.iterrows():
+            row.iloc[0] = row.iloc[0].isoformat()
+            row = [str(d) for d in row]
+            file.write(' '.join(row) + "\n")
