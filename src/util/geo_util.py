@@ -1,3 +1,6 @@
+import json
+import os
+from datetime import datetime
 from typing import Literal
 
 import geopandas as gpd
@@ -6,20 +9,16 @@ import pandas as pd
 import rasterio
 import s3fs
 import xarray as xr
-import os
-import json
 from geographiclib.geodesic import Geodesic
 from rasterio.transform import xy
-from rasterio.warp import transform_bounds, transform
+from rasterio.warp import transform, transform_bounds
 from rasterio.windows import from_bounds
 from shapely import Polygon
 from shapely.geometry import Point
-from datetime import datetime
 
 fs = s3fs.S3FileSystem(anon=True)
 
 from src.config import COORDS_FP, LOC_TIFS_FP, TIFS_FP
-
 from src.util.df_util import validate_df
 
 
@@ -76,7 +75,7 @@ def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") ->
             "geometry": poly
         }], crs="EPSG:4326")
     
-def calculate_elevation(gdf, rast_file_path):
+def calculate_elevation(gdf: gpd.GeoDataFrame, rast_file_path: str) -> float:
     min_lat = gdf['lat'].min()
     max_lat = gdf['lat'].max()
     min_lon = gdf['lon'].min()
@@ -124,7 +123,7 @@ def calculate_elevation(gdf, rast_file_path):
     
     return df['elevation_m'].mean()
 
-def find_elevation(id, lat, lon):
+def find_elevation(id: int, lat: float, lon: float) -> float:
     with open(LOC_TIFS_FP, "r") as file:
         json_data = json.load(file)
     if str(id) in json_data.keys():
@@ -147,7 +146,7 @@ def find_elevation(id, lat, lon):
 
     raise ValueError(f"No tif file found for point #{id} at {lat}, {lon}")
         
-def csv_to_smet(df, data_source, output_file_path, output_file_name):
+def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str) -> None:
     validate_df(df)
     
     df['time'] = pd.to_datetime(df['time'])
@@ -180,6 +179,7 @@ def csv_to_smet(df, data_source, output_file_path, output_file_name):
 
     df = df[var_map.keys()].copy()
     df.rename(mapper=var_map, inplace=True, axis=1)
+    df.sort_values(by='timestamp',inplace=True)
     
     station_coords = coords[coords['id'] == station_id]
     
