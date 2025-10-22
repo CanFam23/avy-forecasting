@@ -1,6 +1,5 @@
 import json
 import os
-from datetime import datetime
 from typing import Literal
 
 import geopandas as gpd
@@ -19,8 +18,6 @@ from shapely.geometry import Point
 fs = s3fs.S3FileSystem(anon=True)
 
 from src.config import COORDS_FP, LOC_TIFS_FP, TIFS_FP
-from src.util.df import validate_df
-
 
 def get_midpoint(lat1, lon1, lat2, lon2):
     # Compute path from 1 to 2
@@ -145,73 +142,3 @@ def find_elevation(id: int, lat: float, lon: float) -> float:
             return elevation
 
     raise ValueError(f"No tif file found for point #{id} at {lat}, {lon}")
-        
-def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str) -> None:
-    validate_df(df)
-    
-    df['time'] = pd.to_datetime(df['time'])
-    
-    station_id = int(df['point_id'].unique()[0])
-    
-    coords = gpd.read_file(COORDS_FP)
-    
-    df['r2'] = df['r2'] / 100 # Convert to decimal
-    df['prate'] = df['prate'] * 60 * 60 # kg/m2/s = mm/s, so * 60 == mm/min * 60 = mm/hr
-    
-    var_map = {
-        "time":"timestamp",
-        "t":"TSG",
-        "t2m":"TA",
-        "r2":"RH",
-        "gust":"VW_MAX",
-        "max_10si":"VW",
-        "sdswrf":"ISWR",
-        "suswrf":"RSWR",
-        "sdlwrf":"ILWR",
-        "sulwrf":"OLWR",
-        "prate":"PINT",
-        "tp":"PSUM",
-        "sde":"HS"
-    }
-
-    df = df[var_map.keys()].copy()
-    df.rename(mapper=var_map, inplace=True, axis=1)
-    df.sort_values(by='timestamp',inplace=True)
-    df.drop_duplicates(subset=['timestamp'],keep="first",inplace=True)
-    
-    station_coords = coords[coords['id'] == station_id]
-    
-    station_altitude = find_elevation(station_id,station_coords['lat'].values[0],station_coords['lon'].values[0])
-
-    os.makedirs(output_file_path, exist_ok=True)
-    
-    # df['DW'] = 0
-
-    with open(os.path.join(output_file_path, output_file_name), "w") as file:
-        file.write("SMET 1.1 ASCII\n")
-        file.write("[HEADER]\n")
-        file.write(f"station_id = {station_id}\n")
-        file.write(f"station_name = s_{station_id}\n")
-        file.write(f"latitude = {station_coords['lat'].values[0]}\n")
-        file.write(f"longitude = {station_coords['lon'].values[0]}\n")
-        file.write(f"altitude = {station_altitude}\n")
-        file.write(f"epsg = 4326\n")
-        file.write("tz = 0\n")
-        file.write("nodata = -999\n")
-        file.write(f"source = {data_source}\n")
-        file.write(f"creation = {datetime.now().isoformat()}\n")
-        file.write(f"fields = {' '.join(df.columns)}\n")
-        
-        file.write(f"[DATA]\n")
-        
-        for index, row in df.iterrows():
-            row.iloc[0] = row.iloc[0].isoformat()
-            row = [str(d) for d in row]
-            file.write(' '.join(row) + "\n")
-            
-            
-if __name__ == "__main__":
-    # print(os.path.exists("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv"))
-    df = pd.read_csv("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv")
-    # find_elevation()
-    csv_to_smet(df, "weather_2021_p159_fxx1.csv", "data", "weather_2021_p159_fxx1.smet")
