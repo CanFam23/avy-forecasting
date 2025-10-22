@@ -118,6 +118,8 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -
     df['slope_angle'] = slope_angle # type: ignore
     df['slope_azi'] = slope_azi # type: ignore
     
+    df.drop_duplicates(inplace=True)
+    
     os.makedirs(output_file_path, exist_ok=True)
     
     df.to_csv(os.path.join(output_file_path,output_file_name), index=False)
@@ -164,6 +166,7 @@ def run_simulation(file_path: str, ini_file_path: str) -> None:
     merged_df['timestamp'] = pd.to_datetime(merged_df['timestamp'])
     merged_df.sort_values(by='timestamp',inplace=True)
     merged_df.dropna(inplace=True)
+    merged_df.drop_duplicates(inplace=True)
     
     os.makedirs("data/training_data", exist_ok=True)
 
@@ -171,5 +174,5 @@ def run_simulation(file_path: str, ini_file_path: str) -> None:
 
             
 if __name__ == "__main__":
-    fp = "../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1"
+    fp = "../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p160_fxx0"
     run_simulation(fp,"data/input/avyIO.ini")
