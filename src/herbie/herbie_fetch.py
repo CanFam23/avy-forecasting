@@ -10,7 +10,7 @@ import herbie
 import pandas as pd
 from herbie.fast import FastHerbie
 
-from src.util.df_util import remove_outliers, validate_df
+from src.util.df import remove_outliers, validate_df
 from src.config import REQ_COLS, EXP_COLS
 
 class HerbieFetcher():

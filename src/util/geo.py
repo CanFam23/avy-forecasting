@@ -19,7 +19,7 @@ from shapely.geometry import Point
 fs = s3fs.S3FileSystem(anon=True)
 
 from src.config import COORDS_FP, LOC_TIFS_FP, TIFS_FP
-from src.util.df_util import validate_df
+from src.util.df import validate_df
 
 
 def get_midpoint(lat1, lon1, lat2, lon2):
