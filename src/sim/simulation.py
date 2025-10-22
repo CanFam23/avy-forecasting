@@ -75,7 +75,7 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
             row = [str(d) for d in row]
             file.write(' '.join(row) + "\n")
             
-def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str):
+def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -> None:
     data = []
     with open(data_source, "r") as file:
         c = 0
@@ -101,7 +101,7 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str):
             raise ValueError("No station_id or field names found!")
         
         if not altitude or slope_angle or slope_azi: # type: ignore
-            pass
+            raise ValueError("One of altitude, slope angle, or slope azimuth is missing!")
             
         while line:
             line = file.readline().strip().split()
@@ -114,12 +114,15 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str):
             
     df = pd.DataFrame(data=data, columns=col_names)
     df['id'] = station_id
+    df['altitude'] = altitude
+    df['slope_angle'] = slope_angle # type: ignore
+    df['slope_azi'] = slope_azi # type: ignore
     
     os.makedirs(output_file_path, exist_ok=True)
     
     df.to_csv(os.path.join(output_file_path,output_file_name), index=False)
     
-def run_simulation(file_path, ini_file_path):
+def run_simulation(file_path: str, ini_file_path: str) -> None:
     output_files = []
     for file in os.listdir(file_path):
         print(f"Running simulation on {file}")
@@ -145,7 +148,6 @@ def run_simulation(file_path, ini_file_path):
         result = subprocess.run(["/Applications/Snowpack/bin/snowpack", "-b", df['time'].min().isoformat(), "-e", df['time'].max().isoformat(), "-c", "/Users/nickclouse/Desktop/senior-proj/avy-forecasting/data/input/avyIO.ini"], capture_output=True, text=True)
 
         # Codes -11 and 0 usually mean SNOWPACK ran successfully
-        print(result.returncode)
         if result.returncode not in [-11,0]:
             print(result.stderr)
             print(result.stdout)
@@ -169,5 +171,5 @@ def run_simulation(file_path, ini_file_path):
 
             
 if __name__ == "__main__":
-    fp = "../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p160_fxx1"
+    fp = "../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1"
     run_simulation(fp,"data/input/avyIO.ini")
