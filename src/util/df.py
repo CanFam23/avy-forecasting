@@ -9,8 +9,12 @@ def remove_outliers(df: pd.DataFrame) -> pd.DataFrame:
 
         desc = df[c].describe()
 
-        min_val = desc['mean'] - (desc['std'] * 4)
-        max_val = desc['mean'] + (desc['std'] * 4)
+        if c in ['prate','cpofp','tp']:
+            min_val = desc['mean'] - (desc['std'] * 8)
+            max_val = desc['mean'] + (desc['std'] * 8)
+        else:
+            min_val = desc['mean'] - (desc['std'] * 4)
+            max_val = desc['mean'] + (desc['std'] * 4)
         
         bad_vals = df[(df[c] > max_val) | (df[c] < min_val)]
 
