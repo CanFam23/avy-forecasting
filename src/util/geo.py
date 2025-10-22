@@ -184,11 +184,14 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
     station_altitude = find_elevation(station_id,station_coords['lat'].values[0],station_coords['lon'].values[0])
 
     os.makedirs(output_file_path, exist_ok=True)
+    
+    # df['DW'] = 0
 
     with open(os.path.join(output_file_path, output_file_name), "w") as file:
         file.write("SMET 1.1 ASCII\n")
         file.write("[HEADER]\n")
         file.write(f"station_id = {station_id}\n")
+        file.write(f"station_name = s_{station_id}\n")
         file.write(f"latitude = {station_coords['lat'].values[0]}\n")
         file.write(f"longitude = {station_coords['lon'].values[0]}\n")
         file.write(f"altitude = {station_altitude}\n")
