@@ -157,13 +157,9 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
     
     df['r2'] = df['r2'] / 100 # Convert to decimal
     df['prate'] = df['prate'] * 60 * 60 # kg/m2/s = mm/s, so * 60 == mm/min * 60 = mm/hr
-    df['tp'] = df['tp'] # kg/m^2 == mm
-
-    df[['prate','tp']].describe()
     
     var_map = {
         "time":"timestamp",
-        "sp":"P",
         "t":"TSG",
         "t2m":"TA",
         "r2":"RH",
@@ -174,12 +170,14 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
         "sdlwrf":"ILWR",
         "sulwrf":"OLWR",
         "prate":"PINT",
-        "tp":"PSUM"
+        "tp":"PSUM",
+        "sde":"HS"
     }
 
     df = df[var_map.keys()].copy()
     df.rename(mapper=var_map, inplace=True, axis=1)
     df.sort_values(by='timestamp',inplace=True)
+    df.drop_duplicates(subset=['timestamp'],keep="first",inplace=True)
     
     station_coords = coords[coords['id'] == station_id]
     
@@ -194,7 +192,9 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
         file.write(f"latitude = {station_coords['lat'].values[0]}\n")
         file.write(f"longitude = {station_coords['lon'].values[0]}\n")
         file.write(f"altitude = {station_altitude}\n")
-        file.write(f"tz = 0\n")
+        file.write(f"epsg = 4326\n")
+        file.write("tz = 0\n")
+        file.write("nodata = -999\n")
         file.write(f"source = {data_source}\n")
         file.write(f"creation = {datetime.now().isoformat()}\n")
         file.write(f"fields = {' '.join(df.columns)}\n")
@@ -211,4 +211,4 @@ if __name__ == "__main__":
     # print(os.path.exists("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv"))
     df = pd.read_csv("../data/FAC/2020-10-01_00_2025-06-01_00_159_160_0_1/weather_2020-2025_p159_fxx1/weather_2021_p159_fxx1.csv")
     # find_elevation()
-    csv_to_smet(df, "weather_2021_p159_fxx1.csv", "data", "test.smet")
+    csv_to_smet(df, "weather_2021_p159_fxx1.csv", "data", "weather_2021_p159_fxx1.smet")
