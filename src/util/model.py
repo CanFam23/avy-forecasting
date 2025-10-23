@@ -10,13 +10,30 @@ def eval_model(y_a, y_p, plot=False, norm = False):
     print(f"MAE: {mean_absolute_error(y_a, y_p)}")
 
     if plot:
-        if norm:
-            cm = confusion_matrix(y_a, y_p, normalize="true")
+        labels = np.unique(y_a)
 
-            disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=np.unique(y_a))
+        y_order = labels[::-1]
+        x_order = labels 
+        
+        if norm:
+            cm = confusion_matrix(y_a, y_p, normalize="true", labels=np.unique(y_a))
+            cm_reordered = cm[np.ix_(y_order, x_order)]
+            
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm_reordered,
+                              display_labels=x_order)
             disp.plot(cmap='Blues', values_format='.2f')
+
+            disp.ax_.set_yticks(np.arange(len(y_order)))
+            disp.ax_.set_yticklabels(y_order)
+            disp.ax_.set_title("Normalized Confusion Matrix")
         else:
             cm = confusion_matrix(y_a, y_p)
+            cm_reordered = cm[np.ix_(y_order, x_order)]
 
-            disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=np.unique(y_a))
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm_reordered,
+                              display_labels=x_order)
             disp.plot(cmap='Blues', values_format='d')
+
+            disp.ax_.set_yticks(np.arange(len(y_order)))
+            disp.ax_.set_yticklabels(y_order)
+            disp.ax_.set_title("Confusion Matrix")
