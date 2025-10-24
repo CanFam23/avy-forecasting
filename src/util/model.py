@@ -76,15 +76,13 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, danger_col: str, replac
         tuple[pd.DataFrame, pd.Series]: X and y dataframes / series.
     """
     df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df = df.loc[:, ~(df == -999).all()]
     
     if replace_missing:
-        df = df.loc[:, ~(df == -999).all()]
+       df.replace(-999, np.nan)
     
     # Find daily average of all columns
     daily_avg = df.groupby(pd.Grouper(key='timestamp', freq='D')).mean()
-    
-    if replace_missing:
-        daily_avg = daily_avg.replace(-999, replace_val)
         
     avgs = daily_avg.reset_index()
 
