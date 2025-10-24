@@ -4,12 +4,12 @@ from src import REQ_COLS, EXP_COLS
 
 def remove_outliers(df: pd.DataFrame) -> pd.DataFrame:
     for c in df.columns:
-        if c in ['time','point_id','fxx','valid_time','sdswrf','sde']:
+        if c in ['time','point_id','fxx','valid_time','sdswrf','sde','']:
             continue
 
         desc = df[c].describe()
 
-        if c in ['prate','cpofp','tp']:
+        if c in ['prate','cpofp','tp','si10','wdir10','max_10si']:
             min_val = desc['mean'] - (desc['std'] * 8)
             max_val = desc['mean'] + (desc['std'] * 8)
         else:

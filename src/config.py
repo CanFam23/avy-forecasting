@@ -1,4 +1,4 @@
-EXP_COLS = ['time','valid_time','fxx','t','sp','prate','sde','tp','cpofp','gust', 'sdswrf','suswrf','sdlwrf','sulwrf', 'point_id','max_10si','t2m','r2']
+EXP_COLS = ['time','valid_time','fxx','t','prate','sde','tp', 'sdswrf','suswrf','sdlwrf','sulwrf', 'point_id','t2m','r2','si10','wdir10','max_10si']
 REQ_COLS = ['time','valid_time','fxx','point_id']
 
 COORDS_FP = "../data/FAC/zones/grid_coords.geojson"

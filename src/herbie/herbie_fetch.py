@@ -11,10 +11,14 @@ import pandas as pd
 from herbie.fast import FastHerbie
 
 from src.util.df import remove_outliers, validate_df
-from src.config import REQ_COLS, EXP_COLS
+from src.config import REQ_COLS, EXP_COLS, COORDS_FP
 
 class HerbieFetcher():
     def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False):
+        if not os.path.exists(output_file_dir):
+            print(f"Created path '{output_file_dir}'")
+            os.makedirs(output_file_dir, exist_ok=True)
+        
         self.output_file_name = output_file_name
         self.output_file_dir = output_file_dir
         self.output_file_path = os.path.join(self.output_file_dir,self.output_file_name)
@@ -43,6 +47,10 @@ class HerbieFetcher():
         fh = FastHerbie(DATES=dates, fxx=fxx, max_processes=10) # type: ignore
         data_set = fh.xarray(search=search_regex)
         
+        if "WIND" in search_regex:
+            print(f"Using herbie with wind")
+            data_set = data_set.herbie.with_wind()
+        
         if data_set:
             point_ds = data_set.herbie.pick_points(coords)
             
@@ -66,6 +74,7 @@ class HerbieFetcher():
             bool: `True` if the data was successfully saved, `False` otherwise
         """
         s_time = datetime.now()
+        print("Saving data")
         
         if len(data_frames) == 0:
             warnings.warn("data_frames can't be empty!")
@@ -76,7 +85,8 @@ class HerbieFetcher():
         
         # This combines datasets that are from long regexs split in 2 
         for i in range(len(data_frames)):
-            if data_frames[i].shape[1] >= 23:
+            print(data_frames[i].shape)
+            if data_frames[i].shape[1] >= 20: # Dfs from regexes have more columns
                 merged = pd.concat([merged, data_frames[i].reset_index()])
             else:
                 other_dfs.append(data_frames[i])
@@ -85,6 +95,7 @@ class HerbieFetcher():
         for i in range(len(other_dfs)):
             suffixes = (f"_{i}",f"_{i}{i}") # Unique suffixes to prevent errors on combining multiple dfs
             data_set = other_dfs[i]
+
             merged = pd.merge(merged, data_set,how="outer",on=["valid_time","time","step","point_id"], suffixes=suffixes)
         
         merged.drop_duplicates(inplace=True)
@@ -175,10 +186,12 @@ class HerbieFetcher():
                         processes.append(p)
                     
                 for p in processes:
+                    print(f"starting {p}")
                     p.start()
                     
                 for p in processes:
-                    p.join()
+                    p.join(timeout=30)
+                    print(f"stopping {p}")
             except Exception as e:
                 warnings.warn(f"Error parsing {start}-{end}, not saving data. \n Error: {e}")
                 with open(self.error_file_path, mode="a") as file:
@@ -384,16 +397,16 @@ class HerbieFetcher():
             print(f"Removed herbie data dir.")
           
     def __remove_output_file(self):
-        if os.path.exists(output_path):
-            os.remove(output_path)
+        if os.path.exists(self.output_file_path):
+            os.remove(self.output_file_path)
             if self.verbose:
-                print(f"{output_path} deleted.")
+                print(f"{self.output_file_path} deleted.")
         
 if __name__ == "__main__":
         
     start_time = datetime.now()
     
-    output_path = "data/FAC"
+    output_path = "data/fetched"
     error_file = "herbie_error_log.txt"
     date_path = "date_log.txt"
         
@@ -404,26 +417,29 @@ if __name__ == "__main__":
         print(f"Loaded start time from file: {start_date}")
     else:
         start_date = datetime(2020, 10, 1, 0, 0)  # start date
-    n_days = 365  # Number of days
+    n_days = 1  # Number of days
 
-    fac_coords = gpd.read_file("data/FAC/zones/grid_coords.geojson")
-    fac_coords = fac_coords[fac_coords['zone_name'] == 'Whitefish']
-    test_coords = fac_coords.iloc[0:2,:].copy()
+    fac_coords = gpd.read_file("../data/FAC/zones/grid_coords_subset.geojson")
+    # fac_coords = fac_coords[fac_coords['zone_name'] == 'Whitefish']
+    # test_coords = fac_coords.iloc[0:10,:].copy()
+    test_coords = fac_coords.copy()
 
     test_coords = test_coords.rename(columns={'lat':'latitude','lon':'longitude'})
 
-    vars = ['TMP','GUST','PRES','PRATE','SNOD','DLWRF','DSWRF','ULWRF','USWRF','RH','WIND','APCP','CPOFP','TSOIL']
-
-    surf_reg = r":(?:GUST|TMP|PRES|SNOD|CPOFP|PRATE|APCP|.*WRF|RH|ASNOW):surface"
+    surf_reg = r":(?:TMP|SNOD|PRATE|APCP|.*WRF|RH|ASNOW):surface"
     m2_reg = r":(?:TMP|RH):2 m"
-    wind_reg = r":WIND"
+    wind_reg = r":WIND|GRD:10 m above"
     regs = [surf_reg,m2_reg,wind_reg]
 
-    fxx = [0,1]
+    fxx = [0]
     
     hf = HerbieFetcher(output_path, "weather.csv", error_file,date_path, show_times=True)
-    hf.split_data(split_seasons=True)
+    # hf.split_data(split_seasons=True)
     # hf.refetch_data(regs, fxx, test_coords)
-    # hf.fetch_data(start_date,n_days, regs, fxx, test_coords)
+    hf.fetch_data(regs = regs, 
+                  fxx = fxx, 
+                  coords=test_coords, 
+                  start_date=start_date, 
+                  n_days=n_days, remove_output_dir=True)
     
     print(f"Total time {datetime.now() - start_time}")
