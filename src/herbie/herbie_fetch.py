@@ -48,7 +48,6 @@ class HerbieFetcher():
         data_set = fh.xarray(search=search_regex)
         
         if "WIND" in search_regex:
-            print(f"Using herbie with wind")
             data_set = data_set.herbie.with_wind()
         
         if data_set:
@@ -74,7 +73,6 @@ class HerbieFetcher():
             bool: `True` if the data was successfully saved, `False` otherwise
         """
         s_time = datetime.now()
-        print("Saving data")
         
         if len(data_frames) == 0:
             warnings.warn("data_frames can't be empty!")
@@ -85,7 +83,6 @@ class HerbieFetcher():
         
         # This combines datasets that are from long regexs split in 2 
         for i in range(len(data_frames)):
-            print(data_frames[i].shape)
             if data_frames[i].shape[1] >= 20: # Dfs from regexes have more columns
                 merged = pd.concat([merged, data_frames[i].reset_index()])
             else:
@@ -169,6 +166,8 @@ class HerbieFetcher():
 
             DATES = pd.date_range(start=start, end=end, freq='1h')
             
+            data = []
+            
             # Utilize multiprocessing, doubles the speed
             try:
                 queue = Queue()
@@ -185,23 +184,35 @@ class HerbieFetcher():
                         p = Process(target=self.get_data, kwargs={"dates": DATES, "fxx":fxx, "search_regex":r, "coords":coords, "queue":queue})
                         processes.append(p)
                     
+                fetch_start_time = datetime.now()
                 for p in processes:
-                    print(f"starting {p}")
                     p.start()
                     
+                # Get data and put it into a list so it can be saved.
+                # With larger data sets, the processes often get stuck 
+                # I think it's caused by the queue's background thread blocking indefinitely
+                # My work around is as soon as all the data is received, the queue is closed and the background thread(s) is joined 
+                while len(data) < len(processes): 
+                    # safeguard in case something in the processes method causes it to never add data
+                    if datetime.now() - fetch_start_time > timedelta(seconds = 75):
+                        raise Exception("More than 60 seconds has passed since processes starting fetching data!")
+                    data.append(queue.get())
+                    
+                # Calling close before join thread ensures all data is flushed to the queue before the bg thread is joined
+                queue.close()
+                queue.join_thread()
+                    
                 for p in processes:
-                    p.join(timeout=30)
-                    print(f"stopping {p}")
+                    # Extra safeguard against indefinite blocking, but with above code the process should never timeout (hopefully)
+                    p.join(timeout=10)
+                    if p.exitcode and p.exitcode != 0:
+                        warnings.warn(f"Process {p.pid} finished with exit code {p.exitcode}")
+                    
             except Exception as e:
                 warnings.warn(f"Error parsing {start}-{end}, not saving data. \n Error: {e}")
                 with open(self.error_file_path, mode="a") as file:
-                    file.write(f'{datetime.now().strftime("%m/%d/%Y %H:%M:%S")},{e},{start},{end}\n')
+                    file.write(f'{datetime.now().strftime("%m/%d/%Y %H:%M:%S")},{start},{end},{e}\n')
                 continue
-                
-            # Get data and put it into a list so it can be saved.
-            data = []
-            while not queue.empty():
-                data.append(queue.get())
 
             # Attempt to save data
             if not self.mutate_save_data(data):
@@ -388,7 +399,6 @@ class HerbieFetcher():
                 else:
                     filtered_df.to_csv(f"{output_path}/weather_p{int(point)}_fxx{int(fxx)}.csv",index=False)
                 
-        
     def __remove_herbie_dir(self):
         herbie_data_dir = os.path.expanduser("~/data")
 
@@ -433,13 +443,13 @@ if __name__ == "__main__":
 
     fxx = [0]
     
-    hf = HerbieFetcher(output_path, "weather.csv", error_file,date_path, show_times=True)
+    hf = HerbieFetcher(output_path, "grid_subset_weather.csv", error_file,date_path, show_times=True)
     # hf.split_data(split_seasons=True)
     # hf.refetch_data(regs, fxx, test_coords)
     hf.fetch_data(regs = regs, 
                   fxx = fxx, 
                   coords=test_coords, 
                   start_date=start_date, 
-                  n_days=n_days, remove_output_dir=True)
+                  n_days=n_days, remove_output_dir=True, remove_herbie_dir=True)
     
     print(f"Total time {datetime.now() - start_time}")
