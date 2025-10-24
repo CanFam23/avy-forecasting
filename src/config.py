@@ -4,3 +4,4 @@ REQ_COLS = ['time','valid_time','fxx','point_id']
 COORDS_FP = "../data/FAC/zones/grid_coords.geojson"
 TIFS_FP = "../data/FAC/tif"
 LOC_TIFS_FP = "src/util/loc_tif.json"
+SNO_FP = "../data/input/sno"
