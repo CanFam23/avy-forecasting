@@ -115,6 +115,8 @@ def calculate_elevation(gdf: gpd.GeoDataFrame, rast_file_path: str) -> float:
         "elevation_m": elev
     })
     
+    df = df[df["elevation_m"] >= 0] # Missing values are -999,999 in tif files, so need to filter those out
+    
     if df.empty:
         return -1
     
