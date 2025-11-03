@@ -1,9 +1,11 @@
 import os
+import sys
 import shutil
 import warnings
 from datetime import datetime, timedelta
 from multiprocessing import Process, Queue
 from typing import Optional, Union
+from tkinter import messagebox
 
 import geopandas as gpd
 import herbie
@@ -128,6 +130,9 @@ class HerbieFetcher():
         if remove_herbie_dir:
             self.__remove_herbie_dir()
         if remove_output_dir:
+            resp = messagebox.askyesno("Delete output file", f"Are you sure you want to delete {self.output_file_path}?")
+            if not resp:
+                sys.exit()
             self.__remove_output_file()
         
         runtime = datetime.now()
@@ -196,7 +201,7 @@ class HerbieFetcher():
                     # safeguard in case something in the processes method causes it to never add data
                     if datetime.now() - fetch_start_time > timedelta(seconds = 75):
                         raise Exception("More than 60 seconds has passed since processes starting fetching data!")
-                    data.append(queue.get())
+                    data.append(queue.get(True, timeout=120))
                     
                 # Calling close before join thread ensures all data is flushed to the queue before the bg thread is joined
                 queue.close()
@@ -204,7 +209,7 @@ class HerbieFetcher():
                     
                 for p in processes:
                     # Extra safeguard against indefinite blocking, but with above code the process should never timeout (hopefully)
-                    p.join(timeout=10)
+                    p.join(timeout=30)
                     if p.exitcode and p.exitcode != 0:
                         warnings.warn(f"Process {p.pid} finished with exit code {p.exitcode}")
                     
@@ -427,12 +432,12 @@ if __name__ == "__main__":
         print(f"Loaded start time from file: {start_date}")
     else:
         start_date = datetime(2020, 10, 1, 0, 0)  # start date
-    n_days = 1  # Number of days
+    n_days = 365 * 2  # Number of days
 
     fac_coords = gpd.read_file("../data/FAC/zones/grid_coords_subset.geojson")
     # fac_coords = fac_coords[fac_coords['zone_name'] == 'Whitefish']
     # test_coords = fac_coords.iloc[0:10,:].copy()
-    test_coords = fac_coords.copy()
+    test_coords = fac_coords.iloc[:,:].copy()
 
     test_coords = test_coords.rename(columns={'lat':'latitude','lon':'longitude'})
 
@@ -441,15 +446,15 @@ if __name__ == "__main__":
     wind_reg = r":WIND|GRD:10 m above"
     regs = [surf_reg,m2_reg,wind_reg]
 
-    fxx = [0]
+    fxx = [1]
     
-    hf = HerbieFetcher(output_path, "grid_subset_weather.csv", error_file,date_path, show_times=True)
+    hf = HerbieFetcher(output_path, "grid_subset_weather_retry.csv", error_file,date_path, show_times=True)
     # hf.split_data(split_seasons=True)
     # hf.refetch_data(regs, fxx, test_coords)
     hf.fetch_data(regs = regs, 
                   fxx = fxx, 
                   coords=test_coords, 
                   start_date=start_date, 
-                  n_days=n_days, remove_output_dir=True, remove_herbie_dir=True)
+                  n_days=n_days, remove_herbie_dir=True)
     
     print(f"Total time {datetime.now() - start_time}")
