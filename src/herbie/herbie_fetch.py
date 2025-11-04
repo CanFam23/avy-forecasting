@@ -235,6 +235,7 @@ class HerbieFetcher():
   
     def refetch_data(self, regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
         """Attempts to refetch missing data found in `self.output_file_path`. Missing data is determined by
+        TODO UPDATE
         1. Finding the min and max times in the output file, and creating a range of hourly dates between them (excluding June-September)
         2. Checking the output df for hours not found 
         3. Checking the output df for hours with missing data.\n
@@ -251,9 +252,37 @@ class HerbieFetcher():
         """
         missing_date_ranges = []
         
+        # Look at error file for time ranges that failed
+        with open(self.error_file_path, "r") as file:
+            lines = file.readlines()
+
+        str_format = "%Y-%m-%d %H:%M:%S"
+            
+        for line in lines:
+            line = line.split(",")[1:3]
+            missing_date_ranges.append((datetime.strptime(line[0], str_format),datetime.strptime(line[1], str_format)))
+
+        if len(missing_date_ranges) > 0:
+            self.fetch_data(regs=regs, fxx=fxx, coords=coords, intervals=missing_date_ranges)
+
         # Load output data
         output_data = pd.read_csv(self.output_file_path)
         output_data['time'] = pd.to_datetime(output_data['time'])
+        
+        still_missing = []
+        
+        with open(self.error_file_path, "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                line_split = line.split(",")
+                # If data isn't found in output df and data hasn't attempted to be refetched yet, append to still missing
+                if not output_data['time'].isin([datetime.strptime(line_split[1],str_format)]).any() and (len(line_split) == 4 and line_split[3] == "still missing data after retry"):
+                    line_split = "still missing data after retry\n"
+                    still_missing.append(",".join(line_split))
+                    
+        # Rewrite missing dates to error file 
+        with open(self.error_file_path, "w") as file:
+            file.writelines(still_missing)
         
         missing_hours = self.get_missing_hours(output_data)
         
@@ -261,47 +290,23 @@ class HerbieFetcher():
         times = [pd.to_datetime(t) for t in output_data[output_data.isna().any(axis=1)]['time'].drop_duplicates().to_list()]
         
         times += missing_hours
-        
+    
         if len(times) == 0:
             print(f"No missing dates found for {self.output_file_path}")
             return
         else:
             print(f"Found {len(times)} hours either missing or have missing data in {self.output_file_path}")
         
-        times = sorted(times)
-        i = 0
-
-        # Make intervals from missing data
-        while i < len(times)-1:
-            start_time = times[i]
-            end_time = start_time
-            # Get the end time for current interval
-            while i+1 < len(times)-1 and times[i+1] == end_time + timedelta(hours=1):
-                end_time = times[i+1]
-                i += 1
+        # Interpolate remaining missing times
+        for hour in sorted(times):
+            output_data = self.interpolate_missing_time(output_data,hour)
                 
-            missing_date_ranges.append((start_time,end_time))
-            i += 1
-        
-        # Check last spot in case it was missed
-        if len(times) > 0 and len(missing_date_ranges) == 0 or times[-1] != missing_date_ranges[-1][1]:
-            missing_date_ranges.append((times[-1], times[-1]))
-                
-        # Resave data without missing values as they will get replaced hopefully
+        # Resave data
         output_data = output_data.dropna()
         output_data.drop_duplicates(inplace=True)
         output_data.sort_values(by='time',inplace=True)
         output_data.to_csv(self.output_file_path, index=False)
         
-        self.fetch_data(regs=regs, fxx=fxx, coords=coords, intervals=missing_date_ranges)
-        
-        output_data = pd.read_csv(self.output_file_path)
-        output_data['time'] = pd.to_datetime(output_data['time'])
-        
-        missing_hours = self.get_missing_hours(output_data)
-        
-        for hour in missing_hours:
-            self.interpolate_missing_time(hour)
             
     def get_missing_hours(self, df):
         # Make range of dates from min to max time in output data
@@ -317,27 +322,23 @@ class HerbieFetcher():
         
         return missing_hours
         
-    def interpolate_missing_time(self, t: datetime):
+    def interpolate_missing_time(self, df: pd.DataFrame, t: datetime):
         if self.verbose:
             print(f'Interpolating {t}')
         
-        # Load output data
-        output_data = pd.read_csv(self.output_file_path)
-        output_data['time'] = pd.to_datetime(output_data['time'])
+        validate_df(df)
         
-        validate_df(output_data)
-        
-        points = [int(n) for n in output_data['point_id'].unique()]
-        fxxs = [int(n) for n in output_data['fxx'].unique()]
+        points = [int(n) for n in df['point_id'].unique()]
+        fxxs = [int(n) for n in df['fxx'].unique()]
 
         # New data is the average of the hour before and after it
         new_rows = []
         for point in points:
             for fxx in fxxs:
-                vals = output_data[((output_data['time'] == t + timedelta(hours=1)) | (output_data['time'] == t - timedelta(hours=1))) & (output_data['fxx'] == fxx) & (output_data['point_id'] == point)]
+                vals = df[((df['time'] == t + timedelta(hours=1)) | (df['time'] == t - timedelta(hours=1))) & (df['fxx'] == fxx) & (df['point_id'] == point)]
                 
                 if vals.shape[0] < 2:
-                    warnings.warn(f"Missing nearby data for {t} - point_id {point} - fxx {fxx}")
+                    warnings.warn(f"Missing nearby data for {t} - point_id {point} - fxx {fxx} nearby: {vals.shape[0]}")
                     continue
 
                 new_entry = pd.DataFrame({
@@ -355,10 +356,8 @@ class HerbieFetcher():
                 new_rows.append(new_entry)
                
         # Add new rows 
-        output_data = pd.concat([output_data] + new_rows, ignore_index=True)
-        output_data.sort_values(by='time',inplace=True)
-        output_data.drop_duplicates(inplace=True)
-        output_data.to_csv(self.output_file_path, index=False)
+        df = pd.concat([df] + new_rows, ignore_index=True)
+        return df
 
     def split_data(self, split_seasons: bool = False):
         output_data = pd.read_csv(self.output_file_path)
@@ -432,7 +431,7 @@ if __name__ == "__main__":
         print(f"Loaded start time from file: {start_date}")
     else:
         start_date = datetime(2020, 10, 1, 0, 0)  # start date
-    n_days = 365 * 2  # Number of days
+    n_days = 365  # Number of days
 
     fac_coords = gpd.read_file("../data/FAC/zones/grid_coords_subset.geojson")
     # fac_coords = fac_coords[fac_coords['zone_name'] == 'Whitefish']
@@ -450,11 +449,11 @@ if __name__ == "__main__":
     
     hf = HerbieFetcher(output_path, "grid_subset_weather_retry.csv", error_file,date_path, show_times=True)
     # hf.split_data(split_seasons=True)
-    # hf.refetch_data(regs, fxx, test_coords)
-    hf.fetch_data(regs = regs, 
-                  fxx = fxx, 
-                  coords=test_coords, 
-                  start_date=start_date, 
-                  n_days=n_days, remove_herbie_dir=True)
+    hf.refetch_data(regs, fxx, test_coords)
+    # hf.fetch_data(regs = regs, 
+    #               fxx = fxx, 
+    #               coords=test_coords, 
+    #               start_date=start_date, 
+    #               n_days=n_days, remove_herbie_dir=True)
     
     print(f"Total time {datetime.now() - start_time}")
