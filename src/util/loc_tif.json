@@ -126,5 +126,21 @@
   "207": {
     "elevation": 2259.608154296875,
     "tif_file": "USGS_1M_11_x73y539_MT_Statewide_Phase3_2021_B21.tif"
+  },
+  "106": {
+    "elevation": 1601.1204833984375,
+    "tif_file": "USGS_1M_12_x27y535_MT_Statewide_Phase3_2021_B21.tif"
+  },
+  "186": {
+    "elevation": 1551.373779296875,
+    "tif_file": "USGS_1M_11_x70y538_MT_Statewide_Phase3_2021_B21.tif"
+  },
+  "202": {
+    "elevation": 1539.807861328125,
+    "tif_file": "USGS_1M_11_x70y539_MT_Statewide_Phase3_2021_B21.tif"
+  },
+  "194": {
+    "elevation": 2163.1455078125,
+    "tif_file": "USGS_1M_12_x30y539_MT_Statewide_Phase3_2021_B21.tif"
   }
 }

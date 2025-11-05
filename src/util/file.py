@@ -104,9 +104,6 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -
         if not station_id or not col_names: # type: ignore
             raise ValueError("No station_id or field names found!")
         
-        # if not altitude or not slope_angle or not slope_azi: # type: ignore
-        #     raise ValueError("One of altitude, slope angle, or slope azimuth is missing!")
-            
         while line:
             line = file.readline().strip().split()
             for i in range(len(line)):
