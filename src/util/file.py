@@ -9,7 +9,7 @@ from src.util.df import validate_df, remove_outliers
 
 from src.util.geo import find_elevation
 
-def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str) -> None:
+def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str):
     validate_df(df)
     
     remove_outliers(df)
@@ -28,8 +28,9 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
         "t":"TSG",
         "t2m":"TA",
         "r2":"RH",
-        "gust":"VW_MAX",
-        "max_10si":"VW",
+        "si10":"VW",
+        "max_10si":"VW_MAX",
+        "wdir10":"DW",
         "sdswrf":"ISWR",
         "suswrf":"RSWR",
         "sdlwrf":"ILWR",
@@ -49,8 +50,6 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
     station_altitude = find_elevation(station_id,station_coords['lat'].values[0],station_coords['lon'].values[0])
 
     os.makedirs(output_file_path, exist_ok=True)
-    
-    # df['DW'] = 0
 
     with open(os.path.join(output_file_path, output_file_name), "w") as file:
         file.write("SMET 1.1 ASCII\n")
@@ -73,6 +72,12 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
             row.iloc[0] = row.iloc[0].isoformat()
             row = [str(d) for d in row]
             file.write(' '.join(row) + "\n")
+    return {
+        "id":station_id,
+        "lat":station_coords['lat'].values[0],
+        "lon":station_coords['lon'].values[0],
+        "alt":station_altitude
+    }
             
 def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -> None:
     data = []
@@ -82,7 +87,7 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -
                 
         while line != ['[DATA]']:
             if "station_id" in line:
-                station_id = int(line[2])
+                station_id = int(line[2][:3])
             elif "fields" in line:
                 col_names = line[2:]
             elif "altitude" in line:
@@ -99,8 +104,8 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -
         if not station_id or not col_names: # type: ignore
             raise ValueError("No station_id or field names found!")
         
-        if not altitude or slope_angle or slope_azi: # type: ignore
-            raise ValueError("One of altitude, slope angle, or slope azimuth is missing!")
+        # if not altitude or not slope_angle or not slope_azi: # type: ignore
+        #     raise ValueError("One of altitude, slope angle, or slope azimuth is missing!")
             
         while line:
             line = file.readline().strip().split()
@@ -113,7 +118,7 @@ def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -
             
     df = pd.DataFrame(data=data, columns=col_names)
     df['id'] = station_id
-    df['altitude'] = altitude
+    df['altitude'] = altitude # type: ignore
     df['slope_angle'] = slope_angle # type: ignore
     df['slope_azi'] = slope_azi # type: ignore
     
@@ -172,5 +177,4 @@ def update_sno(id: int, lat: float, lon: float, altitude: float, year: int = 202
             lines[i] = " ".join(lines[i]) + "\n" # type: ignore
             
         with open(new_fp, 'w') as new_sno:
-            print(lines)
             new_sno.writelines(lines) # type: ignore
