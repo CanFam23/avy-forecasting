@@ -2,7 +2,22 @@ import numpy as np
 from numpy.typing import ArrayLike
 import pandas as pd
 
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error
+from sklearn.metrics import accuracy_score,balanced_accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error
+
+F_TO_M = 3.281
+
+ELEV_MAP = {
+    "lower": (0, 5000 / F_TO_M),
+    "middle": (5000 / F_TO_M, 6500 / F_TO_M),
+    "upper": (6500 / F_TO_M, (6500 / F_TO_M) * 2) # No mountains above 13,000 in mt...
+}
+
+def get_elevation_band(altitude):
+    for key in ELEV_MAP.keys():
+        if ELEV_MAP[key][0] <= altitude < ELEV_MAP[key][1]:
+            return key
+        
+    raise ValueError(f"{altitude} not in a elevation band!")
 
 def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = False) -> None:
     """Evaluates the given data by computing the accuracy, MSE, RMSE, and MAE, and optionally displays
@@ -15,9 +30,11 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
         norm (bool, optional): Whether to normalized confusion matrix. Defaults to False.
     """
     acc = accuracy_score(y_a, y_p)
+    bacc = balanced_accuracy_score(y_a,y_p)
     print(f"Accuracy {acc:.2f}")
-    print(f"MSE: {mean_squared_error(y_a, y_p)}")
-    print(f"RMSE: {root_mean_squared_error(y_a, y_p)}")
+    print(f"Balanced Accuracy {bacc:.2f}")
+    # print(f"MSE: {mean_squared_error(y_a, y_p)}")
+    # print(f"RMSE: {root_mean_squared_error(y_a, y_p)}")
     print(f"MAE: {mean_absolute_error(y_a, y_p)}")
 
     if plot:
@@ -55,7 +72,11 @@ def change_dangers(danger):
         return 3
     return danger
 
-def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, danger_col: str, replace_missing: bool =True, replace_val: float = 0, change_danger: bool = False, exclude_cols: list[str] = ['date','id', 'danger_level']) -> tuple[pd.DataFrame, pd.Series]:
+def get_danger(row):
+    """Helper function to get danger level based on elevation band"""
+    return row[row['elevation_band']]
+
+def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, replace_missing: bool =True, change_danger: bool = False, exclude_cols: list[str] = ['date','id', 'danger_level']) -> tuple[pd.DataFrame, pd.Series,pd.DataFrame]:
     """Prepares the given data for training / testing. This method does so by:
     1. Ensuring the timestamp col is in datetime format
     2. Replace missing values with `replace_val` if `replace_missing` is true
@@ -73,17 +94,17 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, danger_col: str, replac
         exclude_cols (list[str], optional): Columns to exclude in input data. Defaults to ['date','id', 'danger_level'].
 
     Returns:
-        tuple[pd.DataFrame, pd.Series]: X and y dataframes / series.
+        tuple[pd.DataFrame, pd.Series, pd.DataFrame]: X and y dataframes / series along with a dataframe of the columns removed.
     """
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
     df = df.loc[:, ~(df == -999).all()]
     
     if replace_missing:
        df.replace(-999, np.nan)
     
     # Find daily average of all columns
-    daily_avg = df.groupby(pd.Grouper(key='timestamp', freq='D')).mean()
-        
+    daily_avg = df.groupby(['id',pd.Grouper(key='timestamp', freq='D')]).mean()
+    
     avgs = daily_avg.reset_index()
 
     # Filter dates to those only found in danger_df
@@ -93,12 +114,19 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, danger_col: str, replac
     
     # Merge dfs
     data = pd.merge(avgs, danger_df, on='date', how='outer')
-    data = data.rename(columns={danger_col:"danger_level"})
+    
+    data['elevation_band'] = data['altitude'].apply(get_elevation_band)
+    
+    data['danger_level'] = data.apply(get_danger, axis=1)
     
     if change_danger:
         data['danger_level'] = data['danger_level'].apply(change_dangers)
 
+    extra_exclude_cols = ['danger_rating', 'lower',
+       'upper', 'middle','id_y']
     X = data[[c for c in data.columns if c not in exclude_cols]]
+    X = X[[c for c in X.columns if c not in extra_exclude_cols]]
     y = data['danger_level']
+    excluded_cols = data[[c for c in data.columns if c  in exclude_cols]]
     
-    return X,y
+    return X,y, excluded_cols
