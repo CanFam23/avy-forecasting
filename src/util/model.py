@@ -76,7 +76,7 @@ def get_danger(row):
     """Helper function to get danger level based on elevation band"""
     return row[row['elevation_band']]
 
-def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, replace_missing: bool =True, change_danger: bool = False, exclude_cols: list[str] = ['date','id', 'danger_level']) -> tuple[pd.DataFrame, pd.Series,pd.DataFrame]:
+def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFrame, replace_missing: bool = True, change_danger: bool = False, exclude_cols: list[str] = ['date','id', 'danger_level']) -> tuple[pd.DataFrame, pd.Series,pd.DataFrame]:
     """Prepares the given data for training / testing. This method does so by:
     1. Ensuring the timestamp col is in datetime format
     2. Replace missing values with `replace_val` if `replace_missing` is true
@@ -106,14 +106,22 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, replace_missing: bool =
     daily_avg = df.groupby(['id',pd.Grouper(key='timestamp', freq='D')]).mean()
     
     avgs = daily_avg.reset_index()
-
+    
     # Filter dates to those only found in danger_df
     avgs = avgs[avgs['timestamp'].isin(danger_df['date'])]
     
     avgs = avgs.rename(columns={"timestamp":"date"})
     
-    # Merge dfs
-    data = pd.merge(avgs, danger_df, on='date', how='outer')
+    # Merge average data and coordinate data to match ids and zones
+    data = pd.merge(avgs, coords_geodf, left_on="id", right_on="id")
+        
+    # Ensure zone names match
+    data['zone_name'] = data['zone_name'].str.lower()
+    danger_df = danger_df.rename(columns={"forecast_zone_id":"zone_name"})
+    data['zone_name'] = data['zone_name'].replace("glacier/flathead","flathead")
+    
+    # Merge data and danger levels
+    data = pd.merge(data, danger_df, on=['date','zone_name'], how='inner')
     
     data['elevation_band'] = data['altitude'].apply(get_elevation_band)
     
@@ -121,12 +129,13 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, replace_missing: bool =
     
     if change_danger:
         data['danger_level'] = data['danger_level'].apply(change_dangers)
-
+        
     extra_exclude_cols = ['danger_rating', 'lower',
        'upper', 'middle','id_y']
+    
     X = data[[c for c in data.columns if c not in exclude_cols]]
     X = X[[c for c in X.columns if c not in extra_exclude_cols]]
     y = data['danger_level']
     excluded_cols = data[[c for c in data.columns if c  in exclude_cols]]
-    
+        
     return X,y, excluded_cols
