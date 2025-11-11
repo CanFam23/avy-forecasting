@@ -93,10 +93,15 @@ if __name__ == "__main__":
         
         id = f.split("p")[1][:3]
         
+        found = False
         for t in os.listdir("data/training_data"):
             if f"p{id}" in t:
-                print(f"Skipping sim for {id} since there is already a file in training data")
+                found = True
                 break
+        
+        if found:
+            print(f'Skipping {f}')
+            continue
         
         failed = run_simulation(os.path.join(fp,f),"data/input/avyIO.ini")
         if failed:
