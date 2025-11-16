@@ -1,6 +1,7 @@
 import numpy as np
 from numpy.typing import ArrayLike
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from sklearn.metrics import accuracy_score,balanced_accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error
 
@@ -67,6 +68,54 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
             disp.ax_.set_yticklabels(y_order)
             disp.ax_.set_title("Confusion Matrix")
             
+def plot_performance(df):
+    data = {"name": [],
+        "elevation": [],
+        "value": []}
+
+    for z in df['zone_name'].unique():
+        for e in df['elevation_band'].unique():
+                fdf = df[(df['elevation_band'] == z) & (df['zone_name'] == e)]
+                if not fdf.empty:
+                    ac = accuracy_score(fdf['danger_level'],fdf['predicted'])
+                    data['name'].append(z)
+                    data['elevation'].append(e)
+                    data['value'].append(ac)
+                else:
+                    data['name'].append(z)
+                    data['elevation'].append(e)
+                    data['value'].append(None)
+
+
+    pdf = pd.DataFrame(data)
+
+    # order elevations
+    elev_order = ["lower", "middle", "upper"]
+    pdf["elevation"] = pd.Categorical(pdf["elevation"], categories=elev_order, ordered=True)
+
+    pivot = pdf.pivot(index="elevation", columns="name", values="value")
+
+    # plotting outline with text in each cell
+    fig, ax = plt.subplots()
+    cax = ax.imshow(pivot.values, aspect='auto')
+
+    # Add text labels
+    for i in range(pivot.shape[0]):            # rows
+        for j in range(pivot.shape[1]):        # columns
+            val = pivot.iloc[i, j]
+            if pd.notna(val):
+                ax.text(j, i, f"{val:.2%}", ha='center', va='center',color='white' if val < 0.78 else 'black') # type: ignore
+            else:
+                ax.text(j, i, "n/a", ha='center', va='center')
+
+    ax.set_xticks(range(len(pivot.columns)))
+    ax.set_xticklabels(pivot.columns)
+    ax.set_yticks(range(len(pivot.index)))
+    ax.set_yticklabels(pivot.index)
+
+    fig.colorbar(cax)
+    plt.show()
+            
 def change_dangers(danger):
     if danger >= 3:
         return 3
@@ -104,9 +153,9 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     
     # Find daily average of all columns
     daily_avg = df.groupby(['id',pd.Grouper(key='timestamp', freq='D')]).mean()
-    
+
     avgs = daily_avg.reset_index()
-    
+
     # Filter dates to those only found in danger_df
     avgs = avgs[avgs['timestamp'].isin(danger_df['date'])]
     
@@ -114,7 +163,7 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     
     # Merge average data and coordinate data to match ids and zones
     data = pd.merge(avgs, coords_geodf, left_on="id", right_on="id")
-        
+
     # Ensure zone names match
     data['zone_name'] = data['zone_name'].str.lower()
     danger_df = danger_df.rename(columns={"forecast_zone_id":"zone_name"})
