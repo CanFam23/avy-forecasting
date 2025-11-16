@@ -72,10 +72,10 @@ def plot_performance(df):
     data = {"name": [],
         "elevation": [],
         "value": []}
-
+    
     for z in df['zone_name'].unique():
         for e in df['elevation_band'].unique():
-                fdf = df[(df['elevation_band'] == z) & (df['zone_name'] == e)]
+                fdf = df[(df['elevation_band'] == e) & (df['zone_name'] == z)]
                 if not fdf.empty:
                     ac = accuracy_score(fdf['danger_level'],fdf['predicted'])
                     data['name'].append(z)
@@ -97,6 +97,7 @@ def plot_performance(df):
 
     # plotting outline with text in each cell
     fig, ax = plt.subplots()
+
     cax = ax.imshow(pivot.values, aspect='auto')
 
     # Add text labels
