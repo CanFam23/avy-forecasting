@@ -3,7 +3,7 @@ from numpy.typing import ArrayLike
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from sklearn.metrics import accuracy_score,balanced_accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error
+from sklearn.metrics import accuracy_score,balanced_accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error, classification_report
 
 F_TO_M = 3.281
 
@@ -20,7 +20,7 @@ def get_elevation_band(altitude):
         
     raise ValueError(f"{altitude} not in a elevation band!")
 
-def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = False) -> None:
+def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = False, cr: bool = False) -> None:
     """Evaluates the given data by computing the accuracy, MSE, RMSE, and MAE, and optionally displays
     a confusion matrix (Which can be normalized).
 
@@ -29,7 +29,8 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
         y_p (ArrayLike): Predicted y values
         plot (bool, optional): Whether to plot confusion matrix. Defaults to False.
         norm (bool, optional): Whether to normalized confusion matrix. Defaults to False.
-    """
+        cr: (bool, optional): Whether to print a classification report or not
+    """    
     acc = accuracy_score(y_a, y_p)
     bacc = balanced_accuracy_score(y_a,y_p)
     print(f"Accuracy {acc:.2f}")
@@ -37,6 +38,10 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
     # print(f"MSE: {mean_squared_error(y_a, y_p)}")
     # print(f"RMSE: {root_mean_squared_error(y_a, y_p)}")
     print(f"MAE: {mean_absolute_error(y_a, y_p)}")
+    
+    if cr:
+        print("Classification Report:")
+        print(classification_report(y_a, y_p, digits=2))
 
     if plot:
         labels = np.unique(y_a)
@@ -54,7 +59,8 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
             disp.plot(cmap='Blues', values_format='.2f')
 
             disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_yticklabels(y_order)
+            disp.ax_.set_xticklabels([i+1 for i in x_order])
+            disp.ax_.set_yticklabels([i+1 for i in y_order])
             disp.ax_.set_title("Normalized Confusion Matrix")
         else:
             cm = confusion_matrix(y_a, y_p)
@@ -65,7 +71,8 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
             disp.plot(cmap='Blues', values_format='d')
 
             disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_yticklabels(y_order)
+            disp.ax_.set_xticklabels([i+1 for i in x_order])
+            disp.ax_.set_yticklabels([i+1 for i in y_order])
             disp.ax_.set_title("Confusion Matrix")
             
 def plot_performance(df):
