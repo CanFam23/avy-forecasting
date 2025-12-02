@@ -365,7 +365,7 @@ class HerbieFetcher():
         
         validate_df(output_data)
         
-        remove_outliers(output_data)
+        output_data = remove_outliers(output_data)
         
         points = [n for n in output_data['point_id'].unique()]
         fxxs = [n for n in output_data['fxx'].unique()]
@@ -385,7 +385,7 @@ class HerbieFetcher():
                 if split_seasons:
                     min_year = filtered_df['time'].min().year
                     max_year = filtered_df['time'].max().year
-                    years = [y for y in range(min_year, max_year, 1)]
+                    years = [y for y in range(min_year, max_year+1, 1)]
                     
                     split_output_folder = f"weather_{min_year}-{max_year}_p{int(point)}_fxx{int(fxx)}"
                     
@@ -421,8 +421,8 @@ if __name__ == "__main__":
     start_time = datetime.now()
     
     output_path = "data/fetched"
-    error_file = "herbie_error_log.txt"
-    date_path = "date_log.txt"
+    error_file = "logs/herbie_error_log.txt"
+    date_path = "logs/date_log.txt"
         
     if os.path.exists(date_path):
         with open(date_path, 'r') as file:
@@ -430,7 +430,7 @@ if __name__ == "__main__":
             start_date = datetime.strptime(time, "%m/%d/%Y %H:%M:%S")
         print(f"Loaded start time from file: {start_date}")
     else:
-        start_date = datetime(2020, 10, 1, 0, 0)  # start date
+        start_date = datetime(2025, 10, 1, 0, 0)  # start date
     n_days = 365  # Number of days
 
     fac_coords = gpd.read_file("../data/FAC/zones/grid_coords_subset.geojson")
@@ -447,9 +447,9 @@ if __name__ == "__main__":
 
     fxx = [1]
     
-    hf = HerbieFetcher(output_path, "grid_subset_weather_retry.csv", error_file,date_path, show_times=True)
+    hf = HerbieFetcher(output_path, "weather_25-26.csv", error_file,date_path, show_times=True)
     # hf.split_data(split_seasons=True)
-    hf.refetch_data(regs, fxx, test_coords)
+    # hf.refetch_data(regs, fxx, test_coords)
     # hf.fetch_data(regs = regs, 
     #               fxx = fxx, 
     #               coords=test_coords, 
