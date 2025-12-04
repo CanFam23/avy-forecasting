@@ -5,7 +5,7 @@ import pandas as pd
 
 from src.util.file import csv_to_smet, smet_to_csv, update_sno
     
-def run_simulation(file_path: str, ini_file_path: str) -> bool:
+def run_simulation(file_path: str, ini_file_path: str, output_dir: str) -> bool:
     output_files = []
     s_id = "none"
     failed = False
@@ -66,9 +66,9 @@ def run_simulation(file_path: str, ini_file_path: str) -> bool:
         merged_df.dropna(inplace=True)
         merged_df.drop_duplicates(inplace=True)
     
-        os.makedirs("data/training_data", exist_ok=True)
+        os.makedirs(output_dir, exist_ok=True)
 
-        merged_df.to_csv(f"data/training_data/snow_{merged_df['timestamp'].min().year}-{merged_df['timestamp'].max().year}_p{id}_fxx{fxx}.csv",index=False)         # type: ignore
+        merged_df.to_csv(f"{output_dir}/snow_{merged_df['timestamp'].min().year}-{merged_df['timestamp'].max().year}_p{id}_fxx{fxx}.csv",index=False)         # type: ignore
 
     # Clean up files
     for file in os.listdir("data/input"):
@@ -85,26 +85,27 @@ def run_simulation(file_path: str, ini_file_path: str) -> bool:
             
 if __name__ == "__main__":
     
+    output_path = "data/ops25_26"
+    os.makedirs(output_path, exist_ok=True)
     
-    fp = "data/fetched/2020-10-01_00_2025-05-31_23_105_208_207_206_202_201_200_199_198_193_192_187_186_185_184_183_194_155_182_113_114_119_120_121_127_106_134_135_150_151_153_154_128_1"
+    fp = "data/fetched/2526_split"
     for f in os.listdir(fp):
-        if "105" in f:
-            continue
         
         id = f.split("p")[1][:3]
         
-        found = False
-        for t in os.listdir("data/training_data"):
-            if f"p{id}" in t:
-                found = True
-                break
+        # found = False
+        # for t in os.listdir(output_path):
+        #     if f"p{id}" in t:
+        #         found = True
+        #         break
         
-        if found:
-            print(f'Skipping {f}')
-            continue
+        # if found:
+        #     print(f'Skipping {f}')
+        #     continue
         
-        failed = run_simulation(os.path.join(fp,f),"data/input/avyIO.ini")
+        failed = run_simulation(os.path.join(fp,f),"data/input/avyIO.ini", output_path)
         if failed:
             print(f"{f} failed")
             with open("sim_log.txt", "a") as file:
                 file.write(f + "\n")
+        break
