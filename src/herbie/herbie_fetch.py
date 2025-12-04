@@ -99,7 +99,7 @@ class HerbieFetcher():
         
         merged.drop_duplicates(inplace=True)
         
-        merged["fxx"] = (merged["step"].dt.components["hours"] == 1).astype(int)
+        merged["fxx"] = (merged["step"].dt.components["hours"] == 1).astype(int) # type: ignore
         
         keep_cols = [c for c in merged.columns if c in EXP_COLS]
         filtered_df = merged[keep_cols]
@@ -284,7 +284,7 @@ class HerbieFetcher():
         with open(self.error_file_path, "w") as file:
             file.writelines(still_missing)
         
-        missing_hours = self.get_missing_hours(output_data)
+        missing_hours = self.get_missing_hours(output_data,output_data['time'].min(), output_data['time'].max())
         
         # Get rows with missing data
         times = [pd.to_datetime(t) for t in output_data[output_data.isna().any(axis=1)]['time'].drop_duplicates().to_list()]
@@ -307,10 +307,46 @@ class HerbieFetcher():
         output_data.sort_values(by='time',inplace=True)
         output_data.to_csv(self.output_file_path, index=False)
         
+    def fetch_missing_season_data(self, season: int, day: datetime,regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
+        season_start = datetime(season,10,1,0,0,0)
+        
+        fetched_df = pd.read_csv(self.output_file_path)
+        fetched_df['time'] = pd.to_datetime(fetched_df['time'], format='mixed')
+        
+        missing_hours = sorted(self.get_missing_hours(fetched_df, season_start, day))
+        
+        if len(missing_hours) == 0:
+            print("No missing hours found")
+            return False
+        
+        print(f"Found {len(missing_hours)} missing hours")
+        
+        i = 0
+        
+        missing_hour_ranges = []
+        
+        while i < len(missing_hours)-1:
+            start_time = missing_hours[i]
+            end_time = start_time
+            # Get the end time for current interval
+            while i+1 < len(missing_hours)-1 and missing_hours[i+1] == end_time + timedelta(hours=1) and end_time - start_time <= timedelta(hours=6):
+                end_time = missing_hours[i+1]
+                i += 1
+                
+            missing_hour_ranges.append((start_time,end_time))
+            i += 1
             
-    def get_missing_hours(self, df):
+        if len(missing_hours) > 0 and len(missing_hour_ranges) == 0 or missing_hours[-1] != missing_hour_ranges[-1][1]:
+            missing_hour_ranges.append((missing_hours[-1], missing_hours[-1]))
+            
+        self.fetch_data(regs, fxx, coords, intervals=missing_hour_ranges, remove_herbie_dir=True)
+        
+        return True
+        
+    
+    def get_missing_hours(self, df, min, max):
         # Make range of dates from min to max time in output data
-        dates = pd.date_range( df['time'].min(), df['time'].max(), freq='1h').to_list()
+        dates = pd.date_range( min, max, freq='1h').to_list()
 
         # Remove summer months
         for i in range(len(dates)-1, 0, -1):
@@ -359,9 +395,9 @@ class HerbieFetcher():
         df = pd.concat([df] + new_rows, ignore_index=True)
         return df
 
-    def split_data(self, split_seasons: bool = False):
+    def split_data(self, output_dir_name: str = "", split_seasons: bool = False):
         output_data = pd.read_csv(self.output_file_path)
-        output_data['time'] = pd.to_datetime(output_data['time'])
+        output_data['time'] = pd.to_datetime(output_data['time'], format='mixed')
         
         validate_df(output_data)
         
@@ -373,8 +409,11 @@ class HerbieFetcher():
         point_strs = [str(int(n)) for n in points]
         fxx_strs = [str(int(n)) for n in fxxs]
         
-        output_path = f"{self.output_file_dir}/{output_data['time'].min().strftime('%Y-%m-%d_%H')}_{output_data['time'].max().strftime('%Y-%m-%d_%H')}_{'_'.join(point_strs)}_{'_'.join(fxx_strs)}"
-        
+        if output_dir_name == "":
+            output_path = f"{self.output_file_dir}/{output_data['time'].min().strftime('%Y-%m-%d_%H')}_{output_data['time'].max().strftime('%Y-%m-%d_%H')}_{'_'.join(point_strs)}_{'_'.join(fxx_strs)}"
+        else:
+            output_path = os.path.join(self.output_file_dir, output_dir_name)
+            
         os.makedirs(output_path, exist_ok=True)
         
         for point in points:
