@@ -35,8 +35,6 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
     bacc = balanced_accuracy_score(y_a,y_p)
     print(f"Accuracy {acc:.2f}")
     print(f"Balanced Accuracy {bacc:.2f}")
-    # print(f"MSE: {mean_squared_error(y_a, y_p)}")
-    # print(f"RMSE: {root_mean_squared_error(y_a, y_p)}")
     print(f"MAE: {mean_absolute_error(y_a, y_p)}")
     
     if cr:
@@ -160,7 +158,7 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
        df.replace(-999, np.nan)
     
     # Find daily average of all columns
-    daily_avg = df.groupby(['id',pd.Grouper(key='timestamp', freq='D')]).mean()
+    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D')]).mean()
 
     avgs = daily_avg.reset_index()
 
