@@ -194,3 +194,23 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     excluded_cols = data[[c for c in data.columns if c  in exclude_cols]]
         
     return X,y, excluded_cols
+
+def get_averages(df: pd.DataFrame,
+              remove_cols = ["id","slope_angle","slope_azi","date","altitude"]):
+    df = df.rename(columns={"timestamp":"date"})
+    
+    if not all(rc in df.columns for rc in remove_cols):
+        print([rc for rc in remove_cols if rc not in df.columns])
+        
+    assert all(rc in df.columns for rc in remove_cols), "dataFrame is missing columns defined in remove_cols!"
+    
+    # Find daily average of all columns
+    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='date', freq='D')]).mean()
+
+    avgs = daily_avg.reset_index()
+    
+    removed_cols = avgs[remove_cols]
+    avgs = avgs.drop(columns=remove_cols)
+    
+    return avgs, removed_cols
+    
