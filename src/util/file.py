@@ -12,7 +12,7 @@ from src.util.geo import find_elevation
 def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str):
     validate_df(df)
     
-    remove_outliers(df)
+    df = remove_outliers(df)
     
     df['time'] = pd.to_datetime(df['time'])
     
@@ -82,7 +82,6 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
 def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -> None:
     data = []
     with open(data_source, "r") as file:
-        c = 0
         line = file.readline().strip().split()
                 
         while line != ['[DATA]']:
