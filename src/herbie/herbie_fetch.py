@@ -1,19 +1,20 @@
 import os
-import sys
 import shutil
+import sys
 import warnings
 from datetime import datetime, timedelta
 from multiprocessing import Process, Queue
-from typing import Optional, Union
 from tkinter import messagebox
+from typing import Optional, Union
 
 import geopandas as gpd
-import herbie
 import pandas as pd
-from herbie.fast import FastHerbie
 
+import herbie
+from herbie.fast import FastHerbie
+from src.config import COORDS_FP, EXP_COLS, REQ_COLS
 from src.util.df import remove_outliers, validate_df
-from src.config import REQ_COLS, EXP_COLS, COORDS_FP
+
 
 class HerbieFetcher():
     def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False, remove_output_file=False):
@@ -236,8 +237,8 @@ class HerbieFetcher():
   
     def refetch_data(self, regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
         """Attempts to refetch missing data found in `self.output_file_path`. Missing data is determined by
-        TODO UPDATE
-        1. Finding the min and max times in the output file, and creating a range of hourly dates between them (excluding June-September)
+        
+        1. Finding the min and max times in the error output file, and creating a range of hourly dates between them (excluding June-September)
         2. Checking the output df for hours not found 
         3. Checking the output df for hours with missing data.\n
         The missing hours are then converted to date/time ranges where possible to allow for efficient fetching.
