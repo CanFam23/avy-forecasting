@@ -309,13 +309,24 @@ class HerbieFetcher():
         output_data.to_csv(self.output_file_path, index=False)
         
     def fetch_missing_season_data(self, season: int, day: datetime,regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
-        # TODO Check for points with missing hours instead of overall missing hours
         season_start = datetime(season,10,1,0,0,0)
         
-        fetched_df = pd.read_csv(self.output_file_path)
+        fetched_df = pd.read_csv(self.output_file_path).drop_duplicates()
+        
+        validate_df(fetched_df)
+        
         fetched_df['time'] = pd.to_datetime(fetched_df['time'], format='mixed')
         
-        missing_hours = sorted(self.get_missing_hours(fetched_df, season_start, day))
+        missing_hours = []
+        
+        # Check each id for missing hours
+        # This will lead to data for one hour to be pulled for all ids
+        # But the duplicates get removed after pulling is finished
+        num_hours = len(fetched_df['time'].unique())
+        for id in fetched_df['point_id'].unique():
+            id_df = fetched_df[fetched_df['point_id'] == id]
+            if id_df.shape[0] != num_hours:
+                missing_hours.append(self.get_missing_hours(fetched_df, season_start, day))
         
         if len(missing_hours) == 0:
             print("No missing hours found")
@@ -323,10 +334,14 @@ class HerbieFetcher():
         
         print(f"Found {len(missing_hours)} missing hours")
         
+        # Remove duplicates and sort missing hours
+        missing_hours = sorted(list(set(missing_hours)))
+        
         i = 0
         
         missing_hour_ranges = []
         
+        # Create time ranges of 1-6 hours 
         while i < len(missing_hours)-1:
             start_time = missing_hours[i]
             end_time = start_time
@@ -337,15 +352,15 @@ class HerbieFetcher():
                 
             missing_hour_ranges.append((start_time,end_time))
             i += 1
-            
+        
+        # Sometimes the last hour in missing_hours is skipped or the above logic doesn't work if there is only one hour in it
         if len(missing_hours) > 0 and len(missing_hour_ranges) == 0 or missing_hours[-1] != missing_hour_ranges[-1][1]:
             missing_hour_ranges.append((missing_hours[-1], missing_hours[-1]))
             
         self.fetch_data(regs, fxx, coords, intervals=missing_hour_ranges, remove_herbie_dir=True)
         
         return True
-        
-    
+           
     def get_missing_hours(self, df, min, max):
         # Make range of dates from min to max time in output data
         dates = pd.date_range( min, max, freq='1h').to_list()
