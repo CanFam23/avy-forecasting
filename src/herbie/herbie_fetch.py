@@ -16,7 +16,7 @@ from src.util.df import remove_outliers, validate_df
 from src.config import REQ_COLS, EXP_COLS, COORDS_FP
 
 class HerbieFetcher():
-    def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False):
+    def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False, remove_output_file=False):
         if not os.path.exists(output_file_dir):
             print(f"Created path '{output_file_dir}'")
             os.makedirs(output_file_dir, exist_ok=True)
@@ -28,6 +28,12 @@ class HerbieFetcher():
         self.date_file_path = date_file_path
         self.verbose = verbose
         self.show_times = show_times
+        
+        if remove_output_file:
+            resp = messagebox.askyesno("Delete output file", f"Are you sure you want to delete {self.output_file_path}?")
+            if not resp:
+                sys.exit()
+            self.__remove_output_file()
 
     def get_data(self,dates:list[datetime], fxx: Union[int, list[int]], search_regex: str, coords: pd.DataFrame, queue: Queue) -> None:
         """Retrieves the data specified in the given search regex for the given dates, fxx, and coords. Adds the retrieved data to the given queue\n
@@ -99,7 +105,7 @@ class HerbieFetcher():
         
         merged.drop_duplicates(inplace=True)
         
-        merged["fxx"] = (merged["step"].dt.components["hours"] == 1).astype(int) # type: ignore
+        merged["fxx"] = 1#(merged["step"].dt.components["hours"] == 1).astype(int) # type: ignore
         
         keep_cols = [c for c in merged.columns if c in EXP_COLS]
         filtered_df = merged[keep_cols]
@@ -126,14 +132,9 @@ class HerbieFetcher():
         
     def fetch_data(self, regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame, start_date: Optional[datetime] = None, 
                    n_days: Optional[int] = None, intervals: Optional[list[tuple[datetime, datetime]]] = [], 
-                   remove_herbie_dir = False, remove_output_dir = False) -> None:
+                   remove_herbie_dir = False) -> None:
         if remove_herbie_dir:
             self.__remove_herbie_dir()
-        if remove_output_dir:
-            resp = messagebox.askyesno("Delete output file", f"Are you sure you want to delete {self.output_file_path}?")
-            if not resp:
-                sys.exit()
-            self.__remove_output_file()
         
         runtime = datetime.now()
 
@@ -308,6 +309,7 @@ class HerbieFetcher():
         output_data.to_csv(self.output_file_path, index=False)
         
     def fetch_missing_season_data(self, season: int, day: datetime,regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
+        # TODO Check for points with missing hours instead of overall missing hours
         season_start = datetime(season,10,1,0,0,0)
         
         fetched_df = pd.read_csv(self.output_file_path)
