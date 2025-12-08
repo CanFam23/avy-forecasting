@@ -1,19 +1,33 @@
-import numpy as np
-from numpy.typing import ArrayLike
-import pandas as pd
 import matplotlib.pyplot as plt
-
-from sklearn.metrics import accuracy_score,balanced_accuracy_score, confusion_matrix, ConfusionMatrixDisplay, root_mean_squared_error, mean_absolute_error, mean_squared_error, classification_report
+import numpy as np
+import pandas as pd
+from numpy.typing import ArrayLike
+from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
+                             balanced_accuracy_score, classification_report,
+                             confusion_matrix, mean_absolute_error,
+                             mean_squared_error, root_mean_squared_error)
 
 F_TO_M = 3.281
 
+# Maps elevation band names to their elevations bounds
 ELEV_MAP = {
     "lower": (0, 5000 / F_TO_M),
     "middle": (5000 / F_TO_M, 6500 / F_TO_M),
     "upper": (6500 / F_TO_M, (6500 / F_TO_M) * 2) # No mountains above 13,000 in mt...
 }
 
-def get_elevation_band(altitude):
+def get_elevation_band(altitude: float) -> str:
+    """Gets the elevation band name for the given altitude / elevation
+
+    Args:
+        altitude (float): Altitude to get band name for
+
+    Raises:
+        ValueError: If given altitude isn't in a elevaation band
+
+    Returns:
+        str: Elevation band name
+    """
     for key in ELEV_MAP.keys():
         if ELEV_MAP[key][0] <= altitude < ELEV_MAP[key][1]:
             return key
@@ -21,7 +35,7 @@ def get_elevation_band(altitude):
     raise ValueError(f"{altitude} not in a elevation band!")
 
 def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = False, cr: bool = False) -> None:
-    """Evaluates the given data by computing the accuracy, MSE, RMSE, and MAE, and optionally displays
+    """Evaluates the given data by computing the accuracy, MSE, classification report, and optionally displays
     a confusion matrix (Which can be normalized).
 
     Args:
@@ -73,7 +87,12 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
             disp.ax_.set_yticklabels([i+1 for i in y_order])
             disp.ax_.set_title("Confusion Matrix")
             
-def plot_performance(df):
+def plot_performance(df: pd.DataFrame) -> None:
+    """Plots the performance of the model across elevation band
+
+    Args:
+        df (pd.DataFrame): DataFrame to get data from
+    """
     data = {"name": [],
         "elevation": [],
         "value": []}
@@ -121,11 +140,6 @@ def plot_performance(df):
 
     fig.colorbar(cax)
     plt.show()
-            
-def change_dangers(danger):
-    if danger >= 3:
-        return 3
-    return danger
 
 def get_danger(row):
     """Helper function to get danger level based on elevation band"""
@@ -183,7 +197,8 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     data['danger_level'] = data.apply(get_danger, axis=1)
     
     if change_danger:
-        data['danger_level'] = data['danger_level'].apply(change_dangers)
+        # Danger level of 4 gets converted to 3
+        data['danger_level'] = data['danger_level'].apply(lambda x: 3 if x >= 3 else x)
         
     extra_exclude_cols = ['danger_rating', 'lower',
        'upper', 'middle','id_y']
@@ -196,7 +211,16 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     return X,y, excluded_cols
 
 def get_averages(df: pd.DataFrame,
-              remove_cols = ["id","slope_angle","slope_azi","date","altitude"]):
+              remove_cols: list[str] = ["id","slope_angle","slope_azi","date","altitude"]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Gets the averages of all columns in the given dataFrame after grouping the data by id, slope angle and azimuth, and date.
+
+    Args:
+        df (pd.DataFrame): DataFrame to average
+        remove_cols (list[str], optional): Columns to remove. Defaults to ["id","slope_angle","slope_azi","date","altitude"].
+
+    Returns:
+        tuple[pd.DataFrame, pd.DataFrame]: DataFrame with the averages, DataFrame consisting of the removed columns.
+    """
     df = df.rename(columns={"timestamp":"date"})
     
     if not all(rc in df.columns for rc in remove_cols):

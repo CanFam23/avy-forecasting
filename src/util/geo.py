@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Literal
+from typing import Any, Literal
 
 import geopandas as gpd
 import numpy as np
@@ -17,9 +17,21 @@ from shapely.geometry import Point
 
 fs = s3fs.S3FileSystem(anon=True)
 
-from src.config import COORDS_FP, LOC_TIFS_FP, TIFS_FP
+from src.config import LOC_TIFS_FP, TIFS_FP
 
-def get_midpoint(lat1, lon1, lat2, lon2):
+
+def get_midpoint(lat1: float, lon1: float, lat2: float, lon2: float) -> dict[str, Any]:
+    """Gets the geographic midpoint of two points
+
+    Args:
+        lat1 (float): Latitude of point 1
+        lon1 (float): Longitude of point 1
+        lat2 (float): Latitude of point 2
+        lon2 (float): Longitude of point 2
+
+    Returns:
+        dict[str, Any]: Midpoint as a dict [lat, lon]
+    """
     # Compute path from 1 to 2
     g = Geodesic.WGS84.Inverse(lat1, lon1, lat2, lon2);
 
@@ -29,6 +41,16 @@ def get_midpoint(lat1, lon1, lat2, lon2):
     return h1
 
 def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") -> gpd.GeoDataFrame:
+    """Gets the bounding coordinates of a HRRR chunk
+
+    Args:
+        lat (float): Latitude of point
+        lon (float): Longitude of point
+        ret_val (Literal[&quot;gdf&quot;, &quot;poly&quot;], optional): Whether to return a GeoDataFrame or Polygon. Defaults to "gdf".
+
+    Returns:
+        gpd.GeoDataFrame: GeoDataFrame or Polygon wrapped in a GDF
+    """
     chunk_index = xr.open_zarr(s3fs.S3Map("s3://hrrrzarr/grid/HRRR_chunk_index.zarr", s3=fs))
 
     # open HRRR grid metadata (Zarr)
@@ -73,6 +95,16 @@ def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") ->
         }], crs="EPSG:4326")
     
 def calculate_elevation(gdf: gpd.GeoDataFrame, rast_file_path: str) -> float:
+    """Calculates the elevation of the points defined in the given GeoDataFrame. The given raster file is used
+    to get the elevation for each point, and then the average elevation is returned.
+
+    Args:
+        gdf (gpd.GeoDataFrame): GeoDataFrame of points
+        rast_file_path (str): File path to a raster file
+
+    Returns:
+        float: Average elevation of all points
+    """
     min_lat = gdf['lat'].min()
     max_lat = gdf['lat'].max()
     min_lon = gdf['lon'].min()
@@ -123,6 +155,21 @@ def calculate_elevation(gdf: gpd.GeoDataFrame, rast_file_path: str) -> float:
     return df['elevation_m'].mean()
 
 def find_elevation(id: int, lat: float, lon: float) -> float:
+    """Finds the average elevation of the HRRR grid cell that contains the given lat and long points. 
+    This process usually takes 5-12 minutes on my computer, so calculated elevations are stored in `LOC_TIFS_FP`
+    for future use. 
+
+    Args:
+        id (int): ID of point
+        lat (float): Latitude of point
+        lon (float): Longitude of point
+
+    Raises:
+        ValueError: If no tif file contains the point
+
+    Returns:
+        float: Average elevation
+    """
     with open(LOC_TIFS_FP, "r") as file:
         json_data = json.load(file)
     if str(id) in json_data.keys():
