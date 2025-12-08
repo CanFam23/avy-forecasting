@@ -497,17 +497,12 @@ if __name__ == "__main__":
 
     test_coords = test_coords.rename(columns={'lat':'latitude','lon':'longitude'})
 
-    surf_reg = r":(?:TMP|SNOD|PRATE|APCP|.*WRF|RH|ASNOW):surface"
-    m2_reg = r":(?:TMP|RH):2 m"
-    wind_reg = r":WIND|GRD:10 m above"
-    regs = [surf_reg,m2_reg,wind_reg]
-
     fxx = [1]
     
     hf = HerbieFetcher(output_path, "weather_25-26.csv", error_file,date_path, show_times=True)
     # hf.split_data(split_seasons=True)
-    # hf.refetch_data(regs, fxx, test_coords)
-    # hf.fetch_data(regs = regs, 
+    # hf.refetch_data(REGS, fxx, test_coords)
+    # hf.fetch_data(regs = REGS, 
     #               fxx = fxx, 
     #               coords=test_coords, 
     #               start_date=start_date, 
