@@ -317,26 +317,26 @@ class HerbieFetcher():
         validate_df(fetched_df)
         
         fetched_df['time'] = pd.to_datetime(fetched_df['time'], format='mixed')
-        
+
         missing_hours = []
         
         # Check each id for missing hours
         # This will lead to data for one hour to be pulled for all ids
         # But the duplicates get removed after pulling is finished
-        num_hours = len(fetched_df['time'].unique())
+        num_hours = (day - fetched_df['time'].min()).total_seconds() // 3600 # Number of hours between min in df and given day
         for id in fetched_df['point_id'].unique():
             id_df = fetched_df[fetched_df['point_id'] == id]
-            if id_df.shape[0] != num_hours:
-                missing_hours.append(self.get_missing_hours(fetched_df, season_start, day))
+            if id_df.shape[0] != num_hours + 24:
+                missing_hours += self.get_missing_hours(fetched_df, season_start, day)
         
         if len(missing_hours) == 0:
             print("No missing hours found")
             return False
         
-        print(f"Found {len(missing_hours)} missing hours")
-        
         # Remove duplicates and sort missing hours
         missing_hours = sorted(list(set(missing_hours)))
+        
+        print(f"Found {len(missing_hours)} missing hours")
         
         i = 0
         
