@@ -4,15 +4,36 @@ import subprocess
 import pandas as pd
 
 from src.util.file import csv_to_smet, smet_to_csv, update_sno
+
+
+def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> bool:
+    """Runs the SNOWPACK model using the data found in each file in the file directory given, outputs the data to the
+    given output directory. Input should be a csv file and the output file is also a csv. 
+
+    Args:
+        file_dir (str): File directory to get data files frm
+        ini_file_path (str): _description_
+        output_dir (str): _description_
+
+    Returns:
+        bool: _description_
+    """
+    if not os.path.exists(file_dir) or not os.path.isdir(file_dir):
+        raise NotADirectoryError(f"{file_dir} doesn't exist or is not a directory!")
     
-def run_simulation(file_path: str, ini_file_path: str, output_dir: str) -> bool:
     output_files = []
     s_id = "none"
     failed = False
-    for file in os.listdir(file_path):
+    for file in os.listdir(file_dir):
+        if file[-3:] != "csv":
+            print(f"{file} is not a csv, not using for sim")
+            continue
+        
         print(f"Running simulation on {file}")
         
-        df = pd.read_csv(os.path.join(file_path, file))
+        # Get 'station' data and some config info
+        df = pd.read_csv(os.path.join(file_dir, file))
+        
         fxx = int(df['fxx'].unique()[0])
         id = int(df['point_id'].unique()[0])
         s_id = str(id)
@@ -32,6 +53,7 @@ def run_simulation(file_path: str, ini_file_path: str, output_dir: str) -> bool:
         
         print(f"Running SNOWPACK id {id} fxx {fxx} {df['time'].min().isoformat()} to {df['time'].max().isoformat()} ")
         
+        # Update sno file with stations data
         update_sno(station_data["id"], station_data["lat"], station_data["lon"], station_data["alt"])
         
         # Run snowpack
@@ -46,15 +68,16 @@ def run_simulation(file_path: str, ini_file_path: str, output_dir: str) -> bool:
         # Convert smet data to csv
         for of in os.listdir(f"data/output"):
             if of.find(str(id)) != -1 and of.find("smet") != -1:
-                # print(of)
                 smet_to_csv(f"data/output/{of}","data/sim_output",f"{file.split('.')[0]}_{of.split('.')[0]}_output.csv")
                 output_files.append(os.path.join("data/sim_output",f"{file.split('.')[0]}_{of.split('.')[0]}_output.csv"))
         
+        # Remove output files
         for file in os.listdir("data/output"):
             if s_id in file:
                 os.remove(os.path.join("data/output",file))
                 # print(f"Removed {file}")
                 
+    # Comebine all output files into one csv
     if not failed:
         merged_df = pd.DataFrame()
         for file in output_files:
