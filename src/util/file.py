@@ -1,15 +1,46 @@
 import os
 from datetime import datetime
+from typing import Any
 
 import geopandas as gpd
 import pandas as pd
 
 from src.config import COORDS_FP, SNO_FP
-from src.util.df import validate_df, remove_outliers
-
+from src.util.df import remove_outliers, validate_df
 from src.util.geo import find_elevation
 
-def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str):
+VAR_MAP = {
+    "time":"timestamp",
+    "t":"TSG",
+    "t2m":"TA",
+    "r2":"RH",
+    "si10":"VW",
+    "max_10si":"VW_MAX",
+    "wdir10":"DW",
+    "sdswrf":"ISWR",
+    "suswrf":"RSWR",
+    "sdlwrf":"ILWR",
+    "sulwrf":"OLWR",
+    "prate":"PINT",
+    "tp":"PSUM",
+    "sde":"HS"
+}
+
+def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, output_file_name: str) -> dict[str,Any]:
+    """Converts the given data frame to a smet file. 
+    
+    #### SMET file specification
+    https://meteoio.slf.ch/doc-release/SMET_specifications.pdf
+
+    Args:
+        df (pd.DataFrame): DataFrame to convert to smet
+        data_source (str): File where data came from
+        output_file_path (str): Directory to output data to
+        output_file_name (str): Name of file to output to, **File is rewritten**
+
+    Returns:
+        dict[str,str]: Dictionary with station data (Currently id, lat, lon, alt)
+    """
     validate_df(df)
     
     df = remove_outliers(df)
@@ -22,26 +53,9 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
     
     df['r2'] = df['r2'] / 100 # Convert to decimal
     df['prate'] = df['prate'] * 60 * 60 # kg/m2/s = mm/s, so * 60 == mm/min * 60 = mm/hr
-    
-    var_map = {
-        "time":"timestamp",
-        "t":"TSG",
-        "t2m":"TA",
-        "r2":"RH",
-        "si10":"VW",
-        "max_10si":"VW_MAX",
-        "wdir10":"DW",
-        "sdswrf":"ISWR",
-        "suswrf":"RSWR",
-        "sdlwrf":"ILWR",
-        "sulwrf":"OLWR",
-        "prate":"PINT",
-        "tp":"PSUM",
-        "sde":"HS"
-    }
 
-    df = df[var_map.keys()].copy()
-    df.rename(mapper=var_map, inplace=True, axis=1)
+    df = df[VAR_MAP.keys()].copy()
+    df.rename(mapper=VAR_MAP, inplace=True, axis=1)
     df.sort_values(by='timestamp',inplace=True)
     df.drop_duplicates(subset=['timestamp'],keep="first",inplace=True)
     
@@ -68,7 +82,7 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
         
         file.write(f"[DATA]\n")
         
-        for index, row in df.iterrows():
+        for _, row in df.iterrows():
             row.iloc[0] = row.iloc[0].isoformat()
             row = [str(d) for d in row]
             file.write(' '.join(row) + "\n")
@@ -80,6 +94,16 @@ def csv_to_smet(df: pd.DataFrame, data_source: str, output_file_path: str, outpu
     }
             
 def smet_to_csv(data_source: str, output_file_path: str,output_file_name: str) -> None:
+    """Converts the data found in data source to a csv file. 
+
+    Args:
+        data_source (str): File to get data from
+        output_file_path (str): Directory to output data to
+        output_file_name (str): Name of file to output to, **File is rewritten**
+
+    Raises:
+        ValueError: _description_
+    """
     data = []
     with open(data_source, "r") as file:
         line = file.readline().strip().split()
