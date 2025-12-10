@@ -38,7 +38,7 @@ def comebine_data(past_data_fp: str, forecast_data_fp: str, day: datetime, outpu
     past_df = past_df[past_df['time'] <= day]
     
     # Filter forecast data for given day only
-    forecast_data[forecast_data['time'].dt.date == day.date()]
+    forecast_data = forecast_data[forecast_data['time'].dt.date == day.date()]
     
     combined_df = pd.concat([past_df, forecast_data])
     
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         show_times=True
     )
     
-    day = datetime(2025, 12,8)
+    day = datetime(2025, 12,10)
         
     sid = str(fac_coords['id'].unique()[0])
     
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     for id in fac_coords['id'].unique():
         print(f"Predicting for #{id}")
         
-        comebine_data(f"data/fetched/2526_split/weather_2025-2025_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", "data/fetched/forecast_25-26.csv", day, f"data/sim_temp/{id}.csv")
+        comebine_data(f"data/fetched/2526_split/weather_2025-2025_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", "data/fetched/2525_forc_split/weather_2025-2025_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", day, f"data/sim_temp/{id}.csv")
         
         run_simulation("data/sim_temp", "data/input/avyIO.ini", output_dir="data/sim_fetch")
         
