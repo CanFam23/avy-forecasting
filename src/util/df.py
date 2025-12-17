@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from src import REQ_COLS, EXP_COLS
 
-def remove_outliers(df: pd.DataFrame) -> pd.DataFrame:
+def remove_outliers(df: pd.DataFrame, time_col: str = 'time') -> pd.DataFrame:
     """Removes outliers in each row of the given dataFrame. This is mainly used after pulling HRRR data as sometimes
     the data will be extremely unrealistice (Like 10,000 for temperature). All of the data should never be outside
     of -10 < x < 1000, so any of those 'bad' values get removed. 
@@ -15,6 +15,7 @@ def remove_outliers(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Cleaned dataFrame
     """
+    df = df.sort_values(by=time_col)
     for c in df.columns:
         if c in ['time','point_id','fxx','valid_time']:
             continue
@@ -27,8 +28,8 @@ def remove_outliers(df: pd.DataFrame) -> pd.DataFrame:
         if bad_vals.shape[0] != 0:
             for index, row in bad_vals.iterrows():
                 # Get data from prev and next hours
-                prev = df[(df['time'] == row['time'] - timedelta(hours=1)) & (df['point_id'] == row['point_id'])]
-                next = df[(df['time'] == row['time'] + timedelta(hours=1)) & (df['point_id'] == row['point_id'])]
+                prev = df[(df[time_col] == row[time_col] - timedelta(hours=1)) & (df['point_id'] == row['point_id'])]
+                next = df[(df[time_col] == row[time_col] + timedelta(hours=1)) & (df['point_id'] == row['point_id'])]
 
                 if index == 0:
                     # First row, only next row exists
