@@ -165,25 +165,31 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     Returns:
         tuple[pd.DataFrame, pd.Series, pd.DataFrame]: X and y dataframes / series along with a dataframe of the columns removed.
     """
-    df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+    # Convert to mountain time
+    df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
+    df['timestamp'] = df['timestamp'].dt.tz_convert('US/Mountain') # type: ignore
+
     df = df.loc[:, ~(df == -999).all()]
     
     if replace_missing:
        df.replace(-999, np.nan)
     
-    # Find daily average of all columns
-    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D')]).mean()
+    # Find daily average of all columns, offset by 19 hrs so "day" is 7pm to 7pm
+    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D',offset="19h")]).mean()
 
     avgs = daily_avg.reset_index()
-
+    
+    # Since averaging from 7pm - 7pm sets the date as the left bound, this sets it to the right
+    avgs['timestamp'] = pd.to_datetime(avgs['timestamp'].dt.date) + pd.Timedelta(days=1) # type: ignore
+    
     # Filter dates to those only found in danger_df
     avgs = avgs[avgs['timestamp'].isin(danger_df['date'])]
-    
+
     avgs = avgs.rename(columns={"timestamp":"date"})
     
     # Merge average data and coordinate data to match ids and zones
     data = pd.merge(avgs, coords_geodf, left_on="id", right_on="id")
-
+    
     # Ensure zone names match
     data['zone_name'] = data['zone_name'].str.lower()
     danger_df = danger_df.rename(columns={"forecast_zone_id":"zone_name"})
@@ -191,15 +197,13 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     
     # Merge data and danger levels
     data = pd.merge(data, danger_df, on=['date','zone_name'], how='inner')
-    
     data['elevation_band'] = data['altitude'].apply(get_elevation_band)
-    
     data['danger_level'] = data.apply(get_danger, axis=1)
-    
+
     if change_danger:
         # Danger level of 4 gets converted to 3
         data['danger_level'] = data['danger_level'].apply(lambda x: 3 if x >= 3 else x)
-        
+
     extra_exclude_cols = ['danger_rating', 'lower',
        'upper', 'middle','id_y']
     
@@ -223,18 +227,27 @@ def get_averages(df: pd.DataFrame,
     """
     df = df.rename(columns={"timestamp":"date"})
     
-    if not all(rc in df.columns for rc in remove_cols):
-        print([rc for rc in remove_cols if rc not in df.columns])
-        
     assert all(rc in df.columns for rc in remove_cols), "dataFrame is missing columns defined in remove_cols!"
     
-    # Find daily average of all columns
-    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='date', freq='D')]).mean()
+    df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
+    df['timestamp'] = df['timestamp'].dt.tz_convert('US/Mountain') # type: ignore
+
+    df = df.loc[:, ~(df == -999).all()]
+    
+    # Replace missing values
+    df.replace(-999, np.nan)
+    
+    # Find daily average of all columns, offset by 19 hrs so "day" is 7pm to 7pm
+    daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D',offset="19h")]).mean()
 
     avgs = daily_avg.reset_index()
     
+    # Since averaging from 7pm - 7pm sets the date as the left bound, this sets it to the right
+    avgs['timestamp'] = pd.to_datetime(avgs['timestamp'].dt.date) + pd.Timedelta(days=1) # type: ignore
+
+    avgs = avgs.rename(columns={"timestamp":"date"})
+
     removed_cols = avgs[remove_cols]
     avgs = avgs.drop(columns=remove_cols)
     
     return avgs, removed_cols
-    
