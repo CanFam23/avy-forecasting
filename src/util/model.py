@@ -4,8 +4,7 @@ import pandas as pd
 from numpy.typing import ArrayLike
 from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
                              balanced_accuracy_score, classification_report,
-                             confusion_matrix, mean_absolute_error,
-                             mean_squared_error, root_mean_squared_error)
+                             confusion_matrix, mean_absolute_error)
 
 F_TO_M = 3.281
 
@@ -215,7 +214,7 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     return X,y, excluded_cols
 
 def get_averages(df: pd.DataFrame,
-              remove_cols: list[str] = ["id","slope_angle","slope_azi","date","altitude"]) -> tuple[pd.DataFrame, pd.DataFrame]:
+              remove_cols: list[str] = ["id","slope_angle","slope_azi","timestamp","altitude"]) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Gets the averages of all columns in the given dataFrame after grouping the data by id, slope angle and azimuth, and date.
 
     Args:
@@ -225,16 +224,12 @@ def get_averages(df: pd.DataFrame,
     Returns:
         tuple[pd.DataFrame, pd.DataFrame]: DataFrame with the averages, DataFrame consisting of the removed columns.
     """
-    df = df.rename(columns={"timestamp":"date"})
-    
     assert all(rc in df.columns for rc in remove_cols), "dataFrame is missing columns defined in remove_cols!"
     
     df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
     df['timestamp'] = df['timestamp'].dt.tz_convert('US/Mountain') # type: ignore
-
-    df = df.loc[:, ~(df == -999).all()]
     
-    # Replace missing values
+    # Replace missing values TODO THIS IS NOT DONE IN PLACE
     df.replace(-999, np.nan)
     
     # Find daily average of all columns, offset by 19 hrs so "day" is 7pm to 7pm
@@ -242,12 +237,12 @@ def get_averages(df: pd.DataFrame,
 
     avgs = daily_avg.reset_index()
     
-    # Since averaging from 7pm - 7pm sets the date as the left bound, this sets it to the right
+    # Since averaging from 7pm - 7pm sets the date as the left bound date, this sets it to the right date
     avgs['timestamp'] = pd.to_datetime(avgs['timestamp'].dt.date) + pd.Timedelta(days=1) # type: ignore
-
-    avgs = avgs.rename(columns={"timestamp":"date"})
 
     removed_cols = avgs[remove_cols]
     avgs = avgs.drop(columns=remove_cols)
+    
+    removed_cols = removed_cols.rename(columns={"timestamp":"date"})
     
     return avgs, removed_cols
