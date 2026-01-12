@@ -227,13 +227,17 @@ class HerbieFetcher():
                     file.write(f'{datetime.now().strftime("%m/%d/%Y %H:%M:%S")},{start},{end}, missing data\n')
                 continue
             
+            # Remove any dupplicates and sort by time cols
+            output_data = pd.read_csv(self.output_file_path).drop_duplicates().sort_values(by=['time','valid_time'])
+            output_data.to_csv(self.output_file_path, index=False)
+            
             if self.verbose:
                 print(f"Appended data to {self.output_file_path} between {start}-{end}")
             if self.show_times:
                 print(f"Finished whole process for {start}-{end} in {datetime.now()-s_time} (Total runtime: {datetime.now()-runtime})")
                 
             with open(self.date_file_path, mode="w") as file:
-                file.write(end.strftime("%m/%d/%Y %H:%M:%S"))
+                file.write(end.strftime("%m/%d/%Y %H:%M:%S"))         
   
     def refetch_data(self, regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
         """Attempts to refetch missing data found in `self.output_file_path`. Missing data is determined by
@@ -309,6 +313,93 @@ class HerbieFetcher():
         output_data.sort_values(by='time',inplace=True)
         output_data.to_csv(self.output_file_path, index=False)
         
+    def fetch_missing_forecast_data(self, season: int, day: datetime,regs: list[str], coords: gpd.GeoDataFrame) -> bool:
+        """Fetch missing forecast data up to and including day. This fetches the data 
+        for hours 1-23 from forecast hour (fxx) 0 of each day.
+
+        Args:
+            season (int): Season to get data for (Start year of season)
+            day (datetime): Last day to check for missing data
+            regs (list[str]): Regular expressions to search for
+            coords (gpd.GeoDataFrame): Coordinates to pull data for.=
+
+        Returns:
+            bool: True if the data was successfully fetched, False otherwise
+        """        
+        season_start = datetime(season,12,1,0,0,0)
+        
+        fetched_df = pd.read_csv(self.output_file_path).drop_duplicates()
+        
+        validate_df(fetched_df)
+        
+        fetched_df['valid_time'] = pd.to_datetime(fetched_df['valid_time'], format='mixed')
+        
+        missing_hours = []
+        
+        # Check each id for missing hours
+        # This will lead to data for one hour to be pulled for all ids
+        # But the duplicates get removed after pulling is finished
+        num_hours = (day - fetched_df['valid_time'].min()).total_seconds() // 3600 # Number of hours between min in df and given day
+        for id in fetched_df['point_id'].unique():
+            id_df = fetched_df[fetched_df['point_id'] == id]
+            if id_df.shape[0] != num_hours + 24:
+                missing_hours += self.get_missing_hours(fetched_df, season_start, day + timedelta(days=1), time_col='valid_time')
+        
+        if len(missing_hours) == 0:
+            print("No missing hours found")
+            return False
+        
+        # Remove duplicates and sort missing hours
+        missing_hours = sorted(list(set(missing_hours)))
+        
+        print(f"Found {len(missing_hours)} missing hours")
+        
+        i = 0
+        
+        missing_hour_ranges = []
+
+        # Create time ranges of 1-6 hours 
+        while i < len(missing_hours)-1:
+            start_time = missing_hours[i]
+            end_time = start_time
+            # Get the end time for current interval
+            while i+1 <= len(missing_hours)-1 and missing_hours[i+1] == end_time + timedelta(hours=1) and end_time - start_time <= timedelta(hours=6):
+                end_time = missing_hours[i+1]
+                i += 1
+
+            missing_hour_ranges.append((start_time,end_time))
+            i += 1
+        
+        # Sometimes the last hour in missing_hours is skipped or the above logic doesn't work if there is only one hour in it
+        if len(missing_hours) > 0 and len(missing_hour_ranges) == 0 or missing_hours[-1] != missing_hour_ranges[-1][1]:
+            missing_hour_ranges.append((missing_hours[-1], missing_hours[-1]))
+
+        # This function always fetches data for time 00:00:00, and uses ranges for the fxx since its forecasted data
+        for interval in missing_hour_ranges:
+            start_ts = interval[0]
+            if start_ts.hour == 0:
+                start_date = start_ts - timedelta(days=1)
+                start_fxx = 24
+            else:
+                start_date = pd.to_datetime(start_ts.date())
+                start_fxx = start_ts.hour
+            
+            end_ts = interval[1]
+            if end_ts.hour == 0:
+                end_date = end_ts - timedelta(days = 1)
+                end_fxx = 24
+            else:
+                end_date = pd.to_datetime(end_ts.date())
+                end_fxx = end_ts.hour
+
+            self.fetch_data(
+                regs, 
+                fxx=[i for i in range(start_fxx, end_fxx+1)],
+                coords=coords,
+                intervals=[(start_date,end_date)],
+                remove_herbie_dir=True)
+        return True
+        
     def fetch_missing_season_data(self, season: int, day: datetime,regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame):
         season_start = datetime(season,10,1,0,0,0)
         
@@ -362,7 +453,7 @@ class HerbieFetcher():
         
         return True
            
-    def get_missing_hours(self, df, min, max):
+    def get_missing_hours(self, df, min, max, time_col='time'):
         # Make range of dates from min to max time in output data
         dates = pd.date_range( min, max, freq='1h').to_list()
 
@@ -372,7 +463,7 @@ class HerbieFetcher():
                 dates.pop(i)
 
         # Get missing hours in output data
-        missing_hours = list(set(dates)-set(df['time'].to_list()))
+        missing_hours = list(set(dates)-set(df[time_col].to_list()))
         
         return missing_hours
         
@@ -413,13 +504,15 @@ class HerbieFetcher():
         df = pd.concat([df] + new_rows, ignore_index=True)
         return df
 
-    def split_data(self, output_dir_name: str = "", split_seasons: bool = False):
+    def split_data(self, output_dir_name: str = "", split_seasons: bool = False, time_col = 'time'):
         output_data = pd.read_csv(self.output_file_path)
-        output_data['time'] = pd.to_datetime(output_data['time'], format='mixed')
-        
+        output_data[time_col] = pd.to_datetime(output_data[time_col], format='mixed')
+        if time_col != 'time':
+            output_data['time'] = pd.to_datetime(output_data['time'], format='mixed')
+
         validate_df(output_data)
         
-        output_data = remove_outliers(output_data)
+        output_data = remove_outliers(output_data,time_col)
         
         points = [n for n in output_data['point_id'].unique()]
         fxxs = [n for n in output_data['fxx'].unique()]
