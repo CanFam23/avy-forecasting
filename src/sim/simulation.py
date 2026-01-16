@@ -6,7 +6,7 @@ import pandas as pd
 from src.util.file import csv_to_smet, smet_to_csv, update_sno
 
 
-def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> bool:
+def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[bool, str | None]:
     """Runs the SNOWPACK model using the data found in each file in the file directory given, outputs the data to the
     given output directory. Input should be a csv file and the output file is also a csv. 
 
@@ -78,6 +78,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> bool:
                 # print(f"Removed {file}")
                 
     # Comebine all output files into one csv
+    output_file_name = None
     if not failed:
         merged_df = pd.DataFrame()
         for file in output_files:
@@ -90,6 +91,8 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> bool:
         merged_df.drop_duplicates(inplace=True)
     
         os.makedirs(output_dir, exist_ok=True)
+        
+        output_file_name = f"{output_dir}/snow_{merged_df['timestamp'].min().year}-{merged_df['timestamp'].max().year}_p{id}_fxx{fxx}.csv"          # type: ignore
 
         merged_df.to_csv(f"{output_dir}/snow_{merged_df['timestamp'].min().year}-{merged_df['timestamp'].max().year}_p{id}_fxx{fxx}.csv",index=False)         # type: ignore
 
@@ -103,7 +106,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> bool:
         if s_id in file:
             os.remove(os.path.join("data/sim_output",file))
             # print(f"Removed {file}")
-    return failed
+    return (failed, output_file_name)
     
             
 if __name__ == "__main__":
