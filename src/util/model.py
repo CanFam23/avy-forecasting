@@ -62,28 +62,46 @@ def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = 
         x_order = labels 
         
         if norm:
-            cm = confusion_matrix(y_a, y_p, normalize="true", labels=np.unique(y_a))
-            cm_reordered = cm[np.ix_(y_order, x_order)]
-            
-            disp = ConfusionMatrixDisplay(confusion_matrix=cm_reordered,
-                              display_labels=x_order)
-            disp.plot(cmap='Blues', values_format='.2f')
+            labels = sorted(set(y_a) | set(y_p))  # type: ignore # ensure consistent class order
+            cm = confusion_matrix(y_a, y_p, labels=labels, normalize="true")
+
+            # y_order and x_order are class labels (e.g. [4,3,2,1])
+            label_to_idx = {label: i for i, label in enumerate(labels)}
+
+            y_idx = [label_to_idx[l] for l in y_order]
+            x_idx = [label_to_idx[l] for l in x_order]
+
+            cm_reordered = cm[np.ix_(y_idx, x_idx)]
+
+            disp = ConfusionMatrixDisplay(
+                confusion_matrix=cm_reordered,
+                display_labels=x_order
+            )
+            disp.plot(cmap="Blues", values_format=".2f")
 
             disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_xticklabels([i+1 for i in x_order])
-            disp.ax_.set_yticklabels([i+1 for i in y_order])
-            disp.ax_.set_title("Normalized Confusion Matrix")
+            disp.ax_.set_yticklabels(y_order)
+            disp.ax_.set_title("Confusion Matrix")
         else:
-            cm = confusion_matrix(y_a, y_p)
-            cm_reordered = cm[np.ix_(y_order, x_order)]
+            labels = sorted(set(y_a) | set(y_p))  # type: ignore # ensure consistent class order
+            cm = confusion_matrix(y_a, y_p, labels=labels)
 
-            disp = ConfusionMatrixDisplay(confusion_matrix=cm_reordered,
-                              display_labels=x_order)
-            disp.plot(cmap='Blues', values_format='d')
+            # y_order and x_order are class labels (e.g. [4,3,2,1])
+            label_to_idx = {label: i for i, label in enumerate(labels)}
+
+            y_idx = [label_to_idx[l] for l in y_order]
+            x_idx = [label_to_idx[l] for l in x_order]
+
+            cm_reordered = cm[np.ix_(y_idx, x_idx)]
+
+            disp = ConfusionMatrixDisplay(
+                confusion_matrix=cm_reordered,
+                display_labels=x_order
+            )
+            disp.plot(cmap="Blues", values_format="d")
 
             disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_xticklabels([i+1 for i in x_order])
-            disp.ax_.set_yticklabels([i+1 for i in y_order])
+            disp.ax_.set_yticklabels(y_order)
             disp.ax_.set_title("Confusion Matrix")
             
 def plot_performance(df: pd.DataFrame) -> None:
@@ -171,7 +189,7 @@ def prep_data(df: pd.DataFrame, danger_df: pd.DataFrame, coords_geodf:pd.DataFra
     df = df.loc[:, ~(df == -999).all()]
     
     if replace_missing:
-       df.replace(-999, np.nan)
+       df = df.replace(-999, np.nan)
     
     # Find daily average of all columns, offset by 19 hrs so "day" is 7pm to 7pm
     daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D',offset="19h")]).mean()
@@ -229,8 +247,8 @@ def get_averages(df: pd.DataFrame,
     df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
     df['timestamp'] = df['timestamp'].dt.tz_convert('US/Mountain') # type: ignore
     
-    # Replace missing values TODO THIS IS NOT DONE IN PLACE
-    df.replace(-999, np.nan)
+    # Replace missing values
+    df = df.replace(-999, np.nan)
     
     # Find daily average of all columns, offset by 19 hrs so "day" is 7pm to 7pm
     daily_avg = df.groupby(['id','slope_angle','slope_azi',pd.Grouper(key='timestamp', freq='D',offset="19h")]).mean()
