@@ -548,8 +548,8 @@ class HerbieFetcher():
                         end_date = datetime(start_date.year + 1, 6,1)
                         
                         curr_df = filtered_df[(filtered_df['time'] >= start_date) & (filtered_df['time'] < end_date)]
-
-                        curr_df.to_csv(f"{split_output_path}/weather_{year}_p{int(point)}_fxx{int(fxx)}.csv",index=False)
+                        if not curr_df.empty:
+                            curr_df.to_csv(f"{split_output_path}/weather_{year}_p{int(point)}_fxx{int(fxx)}.csv",index=False)
                 else:
                     filtered_df.to_csv(f"{output_path}/weather_p{int(point)}_fxx{int(fxx)}.csv",index=False)
                 
