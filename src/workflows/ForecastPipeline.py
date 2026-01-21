@@ -1,3 +1,4 @@
+import logging
 import os
 import pickle
 from datetime import date, datetime, timedelta
@@ -20,6 +21,9 @@ DEFAULT_SNO_PATH = f"SNOWPATH = {os.getenv('DEFAULT_SNO_PATH')}\n"
 NUM_DAILY_PREDS = 33 * 5 
 
 class ForecastPipeline():
+    def __init__(self):
+        self.__logger = logging.getLogger(__name__)
+
     def comebine_data(self,past_data_fp: str, forecast_data_fp: str, day: datetime, output_fp: str) -> None:
         """Combines past data csv and forecasted data csv into one csv file. Past data is taken up to 
         the given day whule forecast data is taken for the given day. 
@@ -50,8 +54,8 @@ class ForecastPipeline():
             
         missing_hours = self.get_missing_hours(combined_df, past_df['time'].min(),day)
 
-        assert not missing_hours, f"Missing {missing_hours} for point {past_df['point_id'].unique()[0]}"
-        assert combined_df['time'].max() == day.replace(hour=23), f"DataFrame has more hours than expected, Max date should be {day.replace(hour=23)}, got {combined_df['time'].max()}"
+        assert not missing_hours, self.__logger.exception(f"Missing {missing_hours} for point {past_df['point_id'].unique()[0]}")
+        assert combined_df['time'].max() == day.replace(hour=23), self.__logger.exception(f"DataFrame has more hours than expected, Max date should be {day.replace(hour=23)}, got {combined_df['time'].max()}")
         
         combined_df.to_csv(output_fp, index=False)
         
@@ -107,7 +111,7 @@ class ForecastPipeline():
         missing_dates = dates - set(dates_missing_sims.index)
 
         if not missing_dates:
-            print("No missing predictions found")
+            self.__logger.info("No missing predictions found")
             return
         
         # Run simulation for each missing date
@@ -115,7 +119,7 @@ class ForecastPipeline():
         for day in missing_dates:
             # Run simulation for each point and then make predictions
             for id in fac_coords['id'].unique():
-                print(f"Predicting for #{id}")
+                self.__logger.info(f"Predicting for #{id}")
                 
                 self.comebine_data(f"data/fetched/2526_split/weather_2025-2026_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", f"data/fetched/2526_forc_split/weather_2025-2026_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", day, f"data/sim_temp/{id}.csv")
                     
@@ -124,14 +128,14 @@ class ForecastPipeline():
                 os.remove(os.path.join("data/sim_temp",f"{id}.csv"))
                 
                 if not file_name or failed:
-                    print(f"Sim for {id} failed, skipping predictions")
+                    self.__logger.error(f"Sim for {id} failed, skipping predictions")
                     continue
                         
                 sim_data = pd.read_csv(file_name)
                 sim_data['timestamp'] = pd.to_datetime(sim_data['timestamp'])
                 
                 if sim_data.empty:
-                    print(f"{id} missing data for {day.date()}, skipping")
+                    self.__logger.error(f"{id} missing data for {day.date()}, skipping")
                     continue
 
                 df = sim_data.drop(columns=['MS_Soil_Runoff', 'TSS_meas'])
@@ -157,7 +161,7 @@ class ForecastPipeline():
             for file in os.listdir("data/sim_fetch"):
                 os.remove(os.path.join("data/sim_fetch", file))
                 
-            print(f"Finished making predictions in {datetime.now() - start_time}")
+            self.__logger.info(f"Finished making predictions in {datetime.now() - start_time}")
 
             pred_file = pd.merge(pred_file, fac_coords, on=['id'], how='inner').drop(columns=["latitude","longitude","geometry"])
             pred_file['elevation_band'] = pred_file['altitude'].apply(get_elevation_band)
@@ -183,13 +187,13 @@ class ForecastPipeline():
 
         day = pd.to_datetime(datetime.now().date())
                 
-        print("Checking for missing season data")
+        self.__logger.info("Checking for missing season data")
         
         # Fetch any missing data up to day
         fetched = hf.fetch_missing_season_data(2025,day,REGS,[1],fac_coords)
         hf.split_data(output_dir_name="2526_split", split_seasons=True)
         if fetched:
-            print(f"Finished fetching data in {datetime.now() - start_time}")
+            self.__logger.info(f"Finished fetching data in {datetime.now() - start_time}")
 
         start_time = datetime.now()
             
@@ -202,11 +206,11 @@ class ForecastPipeline():
             show_times=True
         )
                     
-        print(f"Fetching current day forecast {day}")
+        self.__logger.info(f"Fetching current day forecast {day}")
         fetched = hf.fetch_missing_forecast_data(2025,day,REGS,fac_coords)    
         hf.split_data(output_dir_name="2526_forc_split", split_seasons=True, time_col='valid_time')
         if fetched:
-            print(f"Finished fetching forecast data in {datetime.now() - start_time}")
+            self.__logger.info(f"Finished fetching forecast data in {datetime.now() - start_time}")
 
     def run_pipeline(self,output_file_dir: str,output_file_name: str,error_file: str,date_file: str,fac_coords_fp: str,pred_output_fp: str,model_fp: str) -> None:
         """
