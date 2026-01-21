@@ -56,7 +56,7 @@ class HerbieFetcher():
             
         s_time = datetime.now()
         
-        fh = FastHerbie(DATES=dates, fxx=fxx, max_processes=10) # type: ignore
+        fh = FastHerbie(DATES=dates, fxx=fxx, max_processes=10, product='sfc') # type: ignore
         data_set = fh.xarray(search=search_regex)
         
         if "WIND" in search_regex:

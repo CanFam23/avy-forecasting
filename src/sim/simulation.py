@@ -31,7 +31,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
             logger.warning(f"{file} is not a csv, not using for sim")
             continue
         
-        logger.info(f"Running simulation on {file}")
+        logger.debug(f"Running simulation on {file}")
         
         # Get 'station' data and some config info
         df = pd.read_csv(os.path.join(file_dir, file))
@@ -53,7 +53,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
         with open(ini_file_path, "w") as ini_file:
             ini_file.writelines(lines)
         
-        logger.info(f"Running SNOWPACK id {id} fxx {fxx} {df['time'].min().isoformat()} to {df['time'].max().isoformat()} ")
+        logger.debug(f"Running SNOWPACK id {id} fxx {fxx} {df['time'].min().isoformat()} to {df['time'].max().isoformat()} ")
         
         # Update sno file with stations data
         update_sno(station_data["id"], station_data["lat"], station_data["lon"], station_data["alt"])
@@ -77,7 +77,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
         for file in os.listdir("data/output"):
             if s_id in file:
                 os.remove(os.path.join("data/output",file))
-                # logger.info(f"Removed {file}")
+                logger.debug(f"Removed {file}")
                 
     # Comebine all output files into one csv
     output_file_name = None
@@ -102,12 +102,12 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
     for file in os.listdir("data/input"):
         if s_id in file and ".smet" in file:
             os.remove(os.path.join("data/input",file))
-            # logger.info(f"Removed {file}")
+            logger.debug(f"Removed {file}")
             
     for file in os.listdir("data/sim_output"):#output_files:
         if s_id in file:
             os.remove(os.path.join("data/sim_output",file))
-            # logger.info(f"Removed {file}")
+            logger.debug(f"Removed {file}")
     return (failed, output_file_name)
     
             
