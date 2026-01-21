@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 import sys
@@ -18,8 +19,10 @@ from src.util.df import remove_outliers, validate_df
 
 class HerbieFetcher():
     def __init__(self, output_file_dir, output_file_name, error_file_path, date_file_path, verbose = False, show_times = False, remove_output_file=False):
+        self.__logger = logging.getLogger(__name__)
+        
         if not os.path.exists(output_file_dir):
-            print(f"Created path '{output_file_dir}'")
+            self.__logger.info(f"Created path '{output_file_dir}'")
             os.makedirs(output_file_dir, exist_ok=True)
         
         self.output_file_name = output_file_name
@@ -49,7 +52,7 @@ class HerbieFetcher():
             queue (Queue): Queue to add data to
         """
         if self.verbose:
-            print(f"fetching data for {min(dates)}-{max(dates)}, regex: {search_regex}")
+            self.__logger.info(f"fetching data for {min(dates)}-{max(dates)}, regex: {search_regex}")
             
         s_time = datetime.now()
         
@@ -66,7 +69,7 @@ class HerbieFetcher():
             queue.put(point_ds.to_dataframe())
             
             if self.verbose or self.show_times:
-                print(f"Finished fetching data in {datetime.now() - s_time}, regex: {search_regex}")
+                self.__logger.info(f"Finished fetching data in {datetime.now() - s_time}, regex: {search_regex}")
         else:
             warnings.warn(f"No data found for {dates}, regex: {search_regex}")
         
@@ -128,7 +131,7 @@ class HerbieFetcher():
             filtered_df.to_csv(self.output_file_path,index=False,header=True,mode='a')
             
         if self.verbose or self.show_times:
-            print(f"Finished saving data in {datetime.now()-s_time}")
+            self.__logger.info(f"Finished saving data in {datetime.now()-s_time}")
         return True
         
     def fetch_data(self, regs: list[str], fxx:list[int], coords: gpd.GeoDataFrame, start_date: Optional[datetime] = None, 
@@ -232,9 +235,9 @@ class HerbieFetcher():
             output_data.to_csv(self.output_file_path, index=False)
             
             if self.verbose:
-                print(f"Appended data to {self.output_file_path} between {start}-{end}")
+                self.__logger.info(f"Appended data to {self.output_file_path} between {start}-{end}")
             if self.show_times:
-                print(f"Finished whole process for {start}-{end} in {datetime.now()-s_time} (Total runtime: {datetime.now()-runtime})")
+                self.__logger.info(f"Finished whole process for {start}-{end} in {datetime.now()-s_time} (Total runtime: {datetime.now()-runtime})")
                 
             with open(self.date_file_path, mode="w") as file:
                 file.write(end.strftime("%m/%d/%Y %H:%M:%S"))         
@@ -298,10 +301,10 @@ class HerbieFetcher():
         times += missing_hours
     
         if len(times) == 0:
-            print(f"No missing dates found for {self.output_file_path}")
+            self.__logger.info(f"No missing dates found for {self.output_file_path}")
             return
         else:
-            print(f"Found {len(times)} hours either missing or have missing data in {self.output_file_path}")
+            self.__logger.info(f"Found {len(times)} hours either missing or have missing data in {self.output_file_path}")
         
         # Interpolate remaining missing times
         for hour in sorted(times):
@@ -346,13 +349,13 @@ class HerbieFetcher():
                 missing_hours += self.get_missing_hours(fetched_df, season_start, day + timedelta(days=1), time_col='valid_time')
         
         if len(missing_hours) == 0:
-            print("No missing hours found")
+            self.__logger.info("No missing hours found")
             return False
         
         # Remove duplicates and sort missing hours
         missing_hours = sorted(list(set(missing_hours)))
         
-        print(f"Found {len(missing_hours)} missing hours")
+        self.__logger.info(f"Found {len(missing_hours)} missing hours")
         
         i = 0
         
@@ -421,13 +424,13 @@ class HerbieFetcher():
                 missing_hours += self.get_missing_hours(fetched_df, season_start, day)
         
         if len(missing_hours) == 0:
-            print("No missing hours found")
+            self.__logger.info("No missing hours found")
             return False
         
         # Remove duplicates and sort missing hours
         missing_hours = sorted(list(set(missing_hours)))
         
-        print(f"Found {len(missing_hours)} missing hours")
+        self.__logger.info(f"Found {len(missing_hours)} missing hours")
         
         i = 0
         
@@ -469,7 +472,7 @@ class HerbieFetcher():
         
     def interpolate_missing_time(self, df: pd.DataFrame, t: datetime):
         if self.verbose:
-            print(f'Interpolating {t}')
+            self.__logger.info(f'Interpolating {t}')
         
         validate_df(df)
         
@@ -558,13 +561,13 @@ class HerbieFetcher():
 
         if os.path.exists(herbie_data_dir) and 'hrrr' in os.listdir(herbie_data_dir):
             shutil.rmtree(herbie_data_dir)
-            print(f"Removed herbie data dir.")
+            self.__logger.info(f"Removed herbie data dir.")
           
     def __remove_output_file(self):
         if os.path.exists(self.output_file_path):
             os.remove(self.output_file_path)
             if self.verbose:
-                print(f"{self.output_file_path} deleted.")
+                self.__logger.info(f"{self.output_file_path} deleted.")
         
 if __name__ == "__main__":
         
