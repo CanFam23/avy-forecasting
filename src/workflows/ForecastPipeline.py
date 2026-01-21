@@ -167,7 +167,7 @@ class ForecastPipeline():
             day_data['slope_angle'] = day_data['slope_angle'].apply(lambda x: "flat" if x == 0 else "slope")
             day_data.to_csv("data/ops25_26/day_predictions.csv",index=False)
 
-    def fetch_missing_weather_data(self,output_file_dir: str, output_file_name: str ,error_file: str ,date_fil: str, fac_coords_fp: str) -> None:
+    def fetch_missing_weather_data(self,output_file_dir: str, output_file_name: str ,error_file: str ,date_file: str, fac_coords_fp: str) -> None:
         start_time = datetime.now()
 
         fac_coords = gpd.read_file(fac_coords_fp).rename(columns={'lat':'latitude','lon':'longitude'})
@@ -226,7 +226,7 @@ class ForecastPipeline():
             pred_output_fp (str): File path where prediction outputs are stored/appended.
             model_fp (str): File path to the trained model used for predictions.
         """
-        fp.fetch_missing_weather_data(
+        self.fetch_missing_weather_data(
             output_file_dir,
             output_file_name,
             error_file,
@@ -234,7 +234,7 @@ class ForecastPipeline():
             fac_coords_fp
         )
 
-        fp.get_missing_predictions(
+        self.get_missing_predictions(
             pred_output_fp,
             model_fp,
             fac_coords_fp
