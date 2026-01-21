@@ -1,15 +1,17 @@
+import logging
 import re
 from datetime import datetime
 
 import pandas as pd
 from playwright.sync_api import Page, sync_playwright
 
+logger = logging.getLogger(__name__)
+
 BASE_URLS = ['https://www.flatheadavalanche.org/avalanche-forecast/#/whitefish-range',
              'https://www.flatheadavalanche.org/avalanche-forecast/#/swan-range',
              'https://www.flatheadavalanche.org/avalanche-forecast/#/flathead-range-&-glacier-np']
 
 ARCHIVE_URL = 'https://www.flatheadavalanche.org/avalanche-forecast/#/archive/forecast'
-
 
 class FAC_Scraper():
     """Class to handle scraping forecast data from the FAC website.
@@ -37,7 +39,7 @@ class FAC_Scraper():
         for i in range(len(forecast_data)-1, -1, -1):
             data = forecast_data[i]
             if data['date'].date() != datetime.now().date():
-                print(
+                logger.warning(
                     f"Most recent forecast ({data['date'].date()}) for {data['zone_name']} not valid for today! Removing from data.")
                 forecast_data.pop(i)
 
@@ -123,7 +125,7 @@ class FAC_Scraper():
                     if date == day and text not in text_found:
 
                         cards.nth(i).click()
-                        print(f"New URL: {page.url}")
+                        logger.info(f"New URL: {page.url}")
                         page.wait_for_load_state('networkidle')
 
                         # Scrape forecast
@@ -141,7 +143,7 @@ class FAC_Scraper():
 
                 # Forecasts are ordered, so if we pass the date it's not in the archives.
                 if min_date < day:
-                    print("Date passed")
+                    logger.info("Date passed")
                     break
 
                 # We should find three forecasts, one for each zone
@@ -161,7 +163,7 @@ class FAC_Scraper():
                             page.wait_for_load_state(
                                 'networkidle', timeout=3000)
                         except Exception:
-                            print("Timed out waiting for locator")
+                            logger.warning("Timed out waiting for locator")
 
                         break
 
@@ -196,25 +198,25 @@ class FAC_Scraper():
                 missing_dates.append(date)
 
         if not missing_dates:
-            print("No missing dates found")
+            logger.info("No missing dates found")
             return
 
         # Scrape each date
         for date in missing_dates:
             if date.date() != datetime.now().date():
-                print(f"Searching forecast archives for {date}")
+                logger.info(f"Searching forecast archives for {date}")
                 date_data = self.scrape_archives(date)
                 if not date_data.empty:
                     df = pd.concat([df, date_data])
                 else:
-                    print(f"No forecast found for {date}")
+                    logger.warning(f"No forecast found for {date}")
             else:
-                print(f"Scraping current forecast ({date})")
+                logger.info(f"Scraping current forecast ({date})")
                 date_data = self.scrape_current_forecast()
                 if not date_data.empty:
                     df = pd.concat([df, date_data])
                 else:
-                    print(f"No forecast found for {date}")
+                    logger.warning(f"No forecast found for {date}")
 
         df.sort_values(by='date').to_csv(archive_fp, mode='w', index=False)
 

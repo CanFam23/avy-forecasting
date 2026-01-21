@@ -1,3 +1,4 @@
+import logging
 import os
 import subprocess
 
@@ -5,6 +6,7 @@ import pandas as pd
 
 from src.util.file import csv_to_smet, smet_to_csv, update_sno
 
+logger = logging.getLogger(__name__)
 
 def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[bool, str | None]:
     """Runs the SNOWPACK model using the data found in each file in the file directory given, outputs the data to the
@@ -26,10 +28,10 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
     failed = False
     for file in os.listdir(file_dir):
         if file[-3:] != "csv":
-            print(f"{file} is not a csv, not using for sim")
+            logger.warning(f"{file} is not a csv, not using for sim")
             continue
         
-        print(f"Running simulation on {file}")
+        logger.info(f"Running simulation on {file}")
         
         # Get 'station' data and some config info
         df = pd.read_csv(os.path.join(file_dir, file))
@@ -51,7 +53,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
         with open(ini_file_path, "w") as ini_file:
             ini_file.writelines(lines)
         
-        print(f"Running SNOWPACK id {id} fxx {fxx} {df['time'].min().isoformat()} to {df['time'].max().isoformat()} ")
+        logger.info(f"Running SNOWPACK id {id} fxx {fxx} {df['time'].min().isoformat()} to {df['time'].max().isoformat()} ")
         
         # Update sno file with stations data
         update_sno(station_data["id"], station_data["lat"], station_data["lon"], station_data["alt"])
@@ -61,8 +63,8 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
 
         # Codes -11 and 0 usually mean SNOWPACK ran successfully
         if result.returncode not in [-11,0]:
-            print(result.stderr)
-            print(result.stdout)
+            logger.warning(result.stderr)
+            logger.warning(result.stdout)
             failed = True
         
         # Convert smet data to csv
@@ -75,7 +77,7 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
         for file in os.listdir("data/output"):
             if s_id in file:
                 os.remove(os.path.join("data/output",file))
-                # print(f"Removed {file}")
+                # logger.info(f"Removed {file}")
                 
     # Comebine all output files into one csv
     output_file_name = None
@@ -100,12 +102,12 @@ def run_simulation(file_dir: str, ini_file_path: str, output_dir: str) -> tuple[
     for file in os.listdir("data/input"):
         if s_id in file and ".smet" in file:
             os.remove(os.path.join("data/input",file))
-            # print(f"Removed {file}")
+            # logger.info(f"Removed {file}")
             
     for file in os.listdir("data/sim_output"):#output_files:
         if s_id in file:
             os.remove(os.path.join("data/sim_output",file))
-            # print(f"Removed {file}")
+            # logger.info(f"Removed {file}")
     return (failed, output_file_name)
     
             
