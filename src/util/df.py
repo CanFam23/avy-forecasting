@@ -1,8 +1,11 @@
+import logging
 import pandas as pd
 
 from datetime import timedelta
 
-from src import REQ_COLS, EXP_COLS
+from src import REQ_COLS
+
+logger = logging.getLogger(__name__)
 
 def remove_outliers(df: pd.DataFrame, time_col: str = 'time') -> pd.DataFrame:
     """Removes outliers in each row of the given dataFrame. This is mainly used after pulling HRRR data as sometimes
@@ -40,7 +43,7 @@ def remove_outliers(df: pd.DataFrame, time_col: str = 'time') -> pd.DataFrame:
                 else:
                     # Middle rows, average of previous and next
                     df.loc[index, c] = (next[c].values[0] + prev[c].values[0]) / 2 # type: ignore
-            print(f"Replaced {bad_vals.shape[0]} major outliers in col {c}")
+            logger.info(f"Replaced {bad_vals.shape[0]} major outliers in col {c}")
     return df
 
 def validate_df(df: pd.DataFrame):

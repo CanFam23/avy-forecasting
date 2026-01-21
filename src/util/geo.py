@@ -37,7 +37,7 @@ def get_midpoint(lat1: float, lon1: float, lat2: float, lon2: float) -> dict[str
 
     # Compute midpoint starting at 1
     h1 = Geodesic.WGS84.Direct(lat1, lon1, g['azi1'], g['s12']/2);
-    # print(h1['lat2'],h1['lon2'])
+
     return h1
 
 def get_bbox(lat: float, lon: float, ret_val: Literal["gdf", "poly"] = "gdf") -> gpd.GeoDataFrame:
