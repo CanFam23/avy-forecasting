@@ -1,13 +1,14 @@
 import Navbar from "./components/Navbar";
 import Disclaimer from "./components/Disclaimer";
 import Forecast from "./components/Forecast.tsx";
+import Footer from "./components/Footer.tsx";
 
 function App() {
 
   return (
     <>
       <Navbar navNames={["Forecast","Performance","About"]}/>
-        <main className="justify-center mx-10 md:mx-30 my-5 ">
+        <main className="justify-center mx-10 md:mx-30 my-5 min-h-screen">
             <Disclaimer/>
             <div className="flex justify-between mb-[-10px] mt-10 px-4 text-gray-500 text-xs sm:text-sm">
                 <p>Forecast Zone</p>
@@ -17,7 +18,7 @@ function App() {
             </div>
             <Forecast/>
         </main>
-      <h1 className="text-3xl font-bold underline text-black">Hello world!</h1>
+      <Footer/>
     </>
   );
 }
