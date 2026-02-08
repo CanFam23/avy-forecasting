@@ -1,6 +1,8 @@
+import json
 import os
 from datetime import datetime
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import geopandas as gpd
 import pandas as pd
@@ -198,3 +200,52 @@ def update_sno(id: int, lat: float, lon: float, altitude: float, year: int = 202
             
         with open(new_fp, 'w') as new_sno:
             new_sno.writelines(lines) # type: ignore
+
+def csv_to_json(input_fp: str, output_fp: str) -> None:
+    """Converts the given csv file to json. This method
+    is mainly used to convert prediction data to json so it
+    can be displayed better on a web page.
+
+    Args:
+        input_fp (str): Input file path
+        output_fp (str): Output file path
+
+    Raises:
+        ValueError: If the required columns aren't in the given df (date, zone_name, elevation_band, slope_angle)
+    """
+    df = pd.read_csv(input_fp)
+
+    required_cols = {
+        "date",
+        "zone_name",
+        "elevation_band",
+        "slope_angle",
+    }
+
+    missing = required_cols - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns: {sorted(missing)}")
+    
+    df = df[df['slope_angle'] == "slope"]
+
+    mt_tz = ZoneInfo('America/Denver')
+    df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(mt_tz)
+
+    df["timestamp"] = df["date"].apply(lambda x: int(x.timestamp()))
+
+    df["key"] = df.apply(
+        lambda x: (
+            str(x["timestamp"])
+            + x["zone_name"][0].lower()
+            + x["elevation_band"][0].lower()
+        ),
+        axis=1,
+    )
+
+    df = df.set_index("key").drop(columns=["timestamp", "slope_angle"])
+
+    df_json = json.loads(df.to_json(orient="index", date_unit="s"))
+    df_json["latest_day"] = int(df["date"].max().timestamp())
+
+    with open(output_fp, "w") as f:
+        json.dump(df_json, f, indent=2)
