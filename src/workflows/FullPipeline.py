@@ -19,7 +19,7 @@ if __name__ == "__main__":
     output_file_dir = "data/fetched"
     output_file_name = "weather_25-26.csv"
     error_file = "logs/operational_error_log.txt"
-    date_file = "logs/operational_error_log.txt"  # fixed typo from "operatioanl"
+    date_file = "logs/operational_error_log.txt"
     
     pred_output_file = "data/ops25_26/all_predictions.csv"
     fac_25_fp = "data/2526_FAC/FAC_danger_levels_25.csv"
