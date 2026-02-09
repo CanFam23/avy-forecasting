@@ -213,7 +213,7 @@ class ForecastPipeline():
         if fetched:
             self.__logger.info(f"Finished fetching forecast data in {datetime.now() - start_time}")
 
-    def run_pipeline(self,output_file_dir: str,output_file_name: str,error_file: str,date_file: str,fac_coords_fp: str,pred_output_fp: str,model_fp: str,web_pred_fp: str) -> None:
+    def run_pipeline(self,output_file_dir: str,output_file_name: str,error_file: str,date_file: str,fac_coords_fp: str,pred_output_fp: str,model_fp: str) -> None:
         """
         Run the full data ingestion and prediction pipeline.
 
@@ -230,7 +230,6 @@ class ForecastPipeline():
             fac_coords_fp (str): File path to forecast area coordinate data.
             pred_output_fp (str): File path where prediction outputs are stored/appended.
             model_fp (str): File path to the trained model used for predictions.
-            web_pred_fp (str): File path to output json formatted prediction data. 
         """
         self.fetch_missing_weather_data(
             output_file_dir,
@@ -246,8 +245,6 @@ class ForecastPipeline():
             fac_coords_fp
         )
 
-        csv_to_json("data/ops25_26/day_predictions.csv",web_pred_fp)
-
 if __name__ == "__main__":
     process_start = datetime.now()
     
@@ -259,10 +256,8 @@ if __name__ == "__main__":
     
     pred_output_file = "data/ops25_26/all_predictions.csv"
 
-    web_pred_file = "web/avyAI/public/data/ai_forecast.json"
-
     fp = ForecastPipeline()
 
-    fp.run_pipeline(output_file_dir,output_file_name,error_file,date_file, COORDS_SUBSET_FP,pred_output_file,"data/models/best_model_4.pkl",web_pred_file)
+    fp.run_pipeline(output_file_dir,output_file_name,error_file,date_file, COORDS_SUBSET_FP,pred_output_file,"data/models/best_model_4.pkl")
 
     print(f"Process completed in {datetime.now() - process_start}")

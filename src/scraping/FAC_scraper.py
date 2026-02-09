@@ -13,6 +13,12 @@ BASE_URLS = ['https://www.flatheadavalanche.org/avalanche-forecast/#/whitefish-r
 
 ARCHIVE_URL = 'https://www.flatheadavalanche.org/avalanche-forecast/#/archive/forecast'
 
+ZONE_MAP = {
+    "whitefish range":"Whitefish",
+    "swan range":"Swan",
+    "flathead range & glacier np":"Glacier/Flathead"
+}
+
 class FAC_Scraper():
     """Class to handle scraping forecast data from the FAC website.
     """
@@ -220,6 +226,20 @@ class FAC_Scraper():
 
         df.sort_values(by='date').to_csv(archive_fp, mode='w', index=False)
 
+        # Convert df to a format similar to the df outputted by the model for easier comparison.
+        df = df.melt(
+            id_vars=["zone_name", "date"],
+            value_vars=["upper", "middle", "lower"],
+            var_name="elevation_band",
+            value_name="actual_danger"
+        )
+
+        df['zone_name'] = df['zone_name'].apply(lambda x: ZONE_MAP[x])
+
+        df = df[['date','zone_name','elevation_band','actual_danger']].drop_duplicates()
+        df['slope_angle'] = 'slope'
+
+        df.to_csv(archive_fp.split(".")[0] + "_cleaned.csv",mode='w',index=False)
 
 if __name__ == "__main__":
     fp = "data/2526_FAC/FAC_danger_levels_25.csv"
