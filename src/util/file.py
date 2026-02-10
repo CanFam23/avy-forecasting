@@ -202,16 +202,20 @@ def update_sno(id: int, lat: float, lon: float, altitude: float, year: int = 202
             new_sno.writelines(lines) # type: ignore
 
 def csv_to_json(input_fp: str, output_fp: str) -> None:
-    """Converts the given csv file to json. This method
-    is mainly used to convert prediction data to json so it
-    can be displayed better on a web page.
+    """Converts the given csv file to json for web display.
+
+    Output format:
+    {
+      "meta": { "latest_day": <epoch_seconds> },
+      "predictions": [ { "date": <epoch_seconds>, "zone": "...", "elevation": "...", "predicted_danger": ... }, ... ]
+    }
 
     Args:
         input_fp (str): Input file path
         output_fp (str): Output file path
 
     Raises:
-        ValueError: If the required columns aren't in the given df (date, zone_name, elevation_band, slope_angle)
+        ValueError: If the required columns aren't in the given df
     """
     df = pd.read_csv(input_fp)
 
@@ -221,31 +225,42 @@ def csv_to_json(input_fp: str, output_fp: str) -> None:
         "elevation_band",
         "slope_angle",
     }
-
     missing = required_cols - set(df.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
     
-    df = df[df['slope_angle'] == "slope"]
+    danger_col = "predicted_danger" if "predicted_danger" in df.columns else "actual_danger"
 
-    mt_tz = ZoneInfo('America/Denver')
-    df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(mt_tz)
+    df = df[df["slope_angle"] == "slope"].copy().sort_values(by=['date','zone_name','elevation_band'])
 
-    df["timestamp"] = df["date"].apply(lambda x: int(x.timestamp()))
+    # Parse and localize, then convert to epoch seconds
+    mt_tz = ZoneInfo("America/Denver")
+    dt = pd.to_datetime(df["date"], errors="raise")
 
-    df["key"] = df.apply(
-        lambda x: (
-            str(x["timestamp"])
-            + x["zone_name"][0].lower()
-            + x["elevation_band"][0].lower()
-        ),
-        axis=1,
-    )
+    # localize dates, otherwise convert
+    if getattr(dt.dt, "tz", None) is None:
+        dt = dt.dt.tz_localize(mt_tz)
+    else:
+        dt = dt.dt.tz_convert(mt_tz)
 
-    df = df.set_index("key").drop(columns=["timestamp", "slope_angle"])
+    df["date"] = dt
+    df["date_epoch"] = df["date"].apply(lambda x: int(x.timestamp()))
 
-    df_json = json.loads(df.to_json(orient="index", date_unit="s"))
-    df_json["latest_day"] = int(df["date"].max().timestamp())
+    latest_day = int(df["date_epoch"].max()) if len(df) else None
+
+    # Build payload
+    payload = {
+        "meta": {"latest_day": latest_day},
+        "predictions": [
+            {
+                "date": int(row["date_epoch"]),
+                "zone": row["zone_name"],
+                "elevation": row["elevation_band"],
+                danger_col: row[danger_col],
+            }
+            for _, row in df.iterrows()
+        ],
+    }
 
     with open(output_fp, "w") as f:
-        json.dump(df_json, f, indent=2)
+        json.dump(payload, f, indent=2)
