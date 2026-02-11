@@ -1,16 +1,6 @@
-import {type JSX, useState} from "react";
-import * as React from "react";
+import { useState} from "react";
 import {Menu, X} from "lucide-react";
-
-interface navbarProps {
-    navNames: string[];
-}
-
-interface hamProps {
-    navHTML: JSX.Element[];
-    display: boolean;
-    setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import type {navbarProps, hamProps} from "../types.ts";
 
 export default function Navbar({navNames}: navbarProps) {
     // TODO: Change to links to navigate between pages
