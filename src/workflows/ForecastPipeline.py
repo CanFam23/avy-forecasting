@@ -104,22 +104,41 @@ class ForecastPipeline():
         pred_df = pd.read_csv(pred_fp)
         pred_df['date'] = pd.to_datetime(pred_df['date'])
 
-        pred_df_grouped = pred_df.groupby(by='date').size()
-
         # Get dates that have no predictions or not enough predictions
-        dates_missing_sims = pred_df_grouped[pred_df_grouped != NUM_DAILY_PREDS]
-        dates = set(pd.date_range( pred_df['date'].min(), datetime.now().date(), freq='1D').to_list())
-        missing_dates = dates - set(dates_missing_sims.index)
+        counts = pred_df.groupby(pred_df["date"].dt.normalize()).size() # type: ignore
 
-        if not missing_dates:
+        full_days = pd.date_range(
+            start=pred_df["date"].min().normalize(),
+            end=pd.Timestamp.today().normalize(),
+            freq="D"
+        )
+
+        counts_full = counts.reindex(full_days, fill_value=0)
+
+        # TODO: Point 202 is always missing for some reason
+        missing_dates = counts_full[counts_full < (NUM_DAILY_PREDS - 5)].index
+
+        if missing_dates.empty:
             self.__logger.info("No missing predictions found")
             return
-        
+                
+        id_set = set(fac_coords['id'].unique())
+
         # Run simulation for each missing date
         start_time = datetime.now()
         for day in missing_dates:
             # Run simulation for each point and then make predictions
-            for id in fac_coords['id'].unique():
+            day_df = pred_df[pred_df['date'] == day].groupby("id").size()
+
+            # Rerun sim with any ids missing a prediction, there should be 5 for each id each day
+            missing_set = id_set - set(day_df['id'].unique())
+            missing_set.update(day_df[day_df < 5].index.to_list())
+            
+            for id in missing_set:
+                # TODO: Always skip 202 because it causes consistent issues.
+                if id == 202:
+                    continue
+                
                 self.__logger.info(f"Predicting for #{id}")
                 
                 self.comebine_data(f"data/fetched/2526_split/weather_2025-2026_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", f"data/fetched/2526_forc_split/weather_2025-2026_p{id}_fxx1/weather_2025_p{id}_fxx1.csv", day, f"data/sim_temp/{id}.csv")
@@ -155,7 +174,7 @@ class ForecastPipeline():
             
             # Remove dups from prediction file
             pred_file = pd.read_csv(pred_fp)
-            pred_file = pred_file.drop_duplicates()
+            pred_file = pred_file.drop_duplicates().sort_values(by=["date","id"])
             pred_file.to_csv(pred_fp, index=False)
             
             # Clean up
