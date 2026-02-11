@@ -1,0 +1,3787 @@
+{
+  "meta": {
+    "latest_day": 1770620400
+  },
+  "predictions": [
+    {
+      "date": 1764658800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764658800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764658800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1764658800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764658800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764658800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1764658800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764658800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764658800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764745200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764745200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764745200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764745200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764831600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764831600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764831600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764831600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764831600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764831600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764831600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764831600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764831600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764918000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764918000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764918000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764918000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764918000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764918000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1764918000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764918000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1764918000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765004400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765004400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765004400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765004400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765004400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765004400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765004400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765004400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765004400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765090800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765090800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765090800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765090800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765090800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765090800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765090800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765090800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765090800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765177200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765177200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765177200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765177200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765177200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765177200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765177200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765177200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765177200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765263600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765263600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 4
+    },
+    {
+      "date": 1765263600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 4
+    },
+    {
+      "date": 1765263600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765263600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765263600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 4
+    },
+    {
+      "date": 1765263600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765263600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765263600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 4
+    },
+    {
+      "date": 1765350000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765350000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765350000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765350000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765350000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765350000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765350000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765350000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765350000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 4
+    },
+    {
+      "date": 1765436400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765436400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765436400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765436400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765436400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765436400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765436400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765436400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765436400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765522800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765522800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765522800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765522800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765522800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765522800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765522800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765522800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765522800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765609200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765609200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765609200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765609200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765695600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765695600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765782000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765782000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765868400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765868400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765868400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765868400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765868400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765868400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765868400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765868400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765868400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765954800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765954800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765954800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765954800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765954800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765954800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1765954800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1765954800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1765954800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1766041200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766041200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766041200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766041200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766041200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766041200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766041200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766041200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766041200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766127600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766127600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766127600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766127600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766214000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766214000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766214000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766214000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766300400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766300400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766300400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766300400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766386800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766386800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766386800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766386800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766473200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766473200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766473200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766473200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766559600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766559600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766559600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766559600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766559600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766559600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766559600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766559600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766559600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766646000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766732400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766732400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766732400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766732400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766732400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766732400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766732400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766732400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766732400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766818800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766818800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766818800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1766818800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766818800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766818800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1766818800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766818800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766818800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1766905200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766905200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766905200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766905200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766905200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766905200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766905200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766905200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766905200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766991600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766991600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1766991600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1766991600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767078000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767078000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767164400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767164400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767164400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767164400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767164400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767164400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767164400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767164400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767164400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767250800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767250800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767250800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767250800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767337200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767337200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767423600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767423600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767423600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767510000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767510000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767510000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767510000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767596400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767596400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767596400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767596400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767682800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767682800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767682800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767682800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767769200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767769200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1767769200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1767769200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767769200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767769200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1767769200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767769200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767769200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1767855600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767855600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767855600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1767855600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767855600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767855600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767855600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767855600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767855600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767942000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767942000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1767942000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1767942000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768028400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768028400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768028400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768028400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768114800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768114800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768114800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768114800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768201200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768201200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768201200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768201200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768287600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768287600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768287600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768287600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768374000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768374000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768374000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768374000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768374000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768374000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768374000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768374000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768374000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1768460400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768460400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768460400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768460400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768460400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768460400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768460400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768460400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768460400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768546800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768546800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768546800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768546800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768633200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768633200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768633200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768633200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768719600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768719600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768719600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768719600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768806000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768806000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768806000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768806000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768892400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768892400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768892400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768892400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768978800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768978800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1768978800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1768978800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769065200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769065200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769151600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769238000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769324400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769410800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769497200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769583600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769670000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769670000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769670000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769756400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769756400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769842800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769842800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769842800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769842800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769842800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769842800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1769842800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769842800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769842800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769929200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769929200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769929200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769929200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769929200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769929200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1769929200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1769929200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1769929200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770015600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770015600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770015600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770015600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770015600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770015600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770015600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770015600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770015600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770102000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770102000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770102000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770102000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770188400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770188400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770188400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770188400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770188400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770188400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770188400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770188400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770188400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770274800,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770274800,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770274800,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770274800,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770361200,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770361200,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770361200,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770361200,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 3
+    },
+    {
+      "date": 1770447600,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770447600,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770447600,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770447600,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770447600,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770447600,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770447600,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770447600,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770447600,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770534000,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770534000,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770534000,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770534000,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770620400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770620400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "actual_danger": 1
+    },
+    {
+      "date": 1770620400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "actual_danger": 2
+    },
+    {
+      "date": 1770620400,
+      "zone": "Whitefish",
+      "elevation": "upper",
+      "actual_danger": 2
+    }
+  ]
+}
