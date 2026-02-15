@@ -131,7 +131,7 @@ class ForecastPipeline():
             day_df = pred_df[pred_df['date'] == day].groupby("id").size()
 
             # Rerun sim with any ids missing a prediction, there should be 5 for each id each day
-            missing_set = id_set - set(day_df['id'].unique())
+            missing_set = id_set - set(day_df.index)
             missing_set.update(day_df[day_df < 5].index.to_list())
             
             for id in missing_set:
