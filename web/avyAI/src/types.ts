@@ -17,12 +17,28 @@ export interface ForecastDiscussion {
     travel_advice: string;
 }
 
+export type WeatherRow = {
+    zone_name: string;
+    elevation_band: "lower" | "middle" | "upper" | string;
+    slope_azi: number;
+    temp_avg: number;
+    rh_avg: number;
+    wind_avg: number;
+    new_snow_24: number;
+    precip_total: number;
+    snow_depth_avg: number;
+    swe_avg: number;
+    danger_level: number;
+    date_epoch: number;
+};
+
 export interface ForecastProps {
     dayPreds: ForecastDay[];
     zone: string;
     latestDate: number;
     zoneDataName: string;
     forecastDis: ForecastDiscussion[];
+    weather: WeatherRow[];
 }
 
 export interface navbarProps {

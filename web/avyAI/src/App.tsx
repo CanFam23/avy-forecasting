@@ -3,11 +3,13 @@ import Disclaimer from "./components/Disclaimer";
 import {Forecast} from "./components/Forecast.tsx";
 import Footer from "./components/Footer.tsx";
 import {useEffect, useState} from "react";
+import {WeatherTable} from "./components/WeatherTable.tsx";
 
 function App() {
 
     const [dayPreds, setDayPreds] = useState([]);
     const [forecastDis, setForecastDis] = useState([]);
+    const [weather, setWeather] = useState([]);
 
     const [latestDay, setLatestDay] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -15,18 +17,23 @@ function App() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [predRes, disRes] = await Promise.all([
+                const [predRes, disRes, weatherRes] = await Promise.all([
                     fetch("/data/ai_forecast.json"),
-                    fetch("/data/forecast_discussion.json")
+                    fetch("/data/forecast_discussion.json"),
+                    fetch("/data/weather.json")
                 ]);
 
                 const predictionData = await predRes.json();
                 const disResData = await disRes.json();
+                const weatherResData = await weatherRes.json();
 
                 setDayPreds(predictionData.predictions);
                 setLatestDay(predictionData.meta.latest_day);
 
                 setForecastDis(disResData.forecasts);
+
+                setWeather(weatherResData.weather);
+                console.log(weatherResData);
             } catch (err) {
                 console.error(err);
             }
@@ -55,6 +62,7 @@ function App() {
                     latestDate={latestDay}
                     zoneDataName="Whitefish"
                     forecastDis={forecastDis}
+                    weather={weather}
                 />
                 <Forecast
                     dayPreds={dayPreds}
@@ -62,6 +70,7 @@ function App() {
                     latestDate={latestDay}
                     zoneDataName="Glacier/Flathead"
                     forecastDis={forecastDis}
+                    weather={weather}
                 />
                 <Forecast
                     dayPreds={dayPreds}
@@ -69,6 +78,7 @@ function App() {
                     latestDate={latestDay}
                     zoneDataName="Swan"
                     forecastDis={forecastDis}
+                    weather={weather}
                 />
             </main>
             <Footer/>

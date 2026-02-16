@@ -1,28 +1,16 @@
 import {ChevronDown, ChevronRight} from "lucide-react";
 import {type JSX, useState} from "react";
 import type {ForecastProps, ForecastDay, ForecastDiscussion} from "../types.ts";
+import {WeatherTable} from "./WeatherTable.tsx";
+import {dangerMap, dangerMapName} from "../utils/dangers.ts";
 
-export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis }: ForecastProps) {
+export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis, weather }: ForecastProps) {
     const offset: number = 5;
     const height: number = 66;
 
     const lastestDateEpoch: number = latestDate;
     const date: Date = new Date(lastestDateEpoch * 1000);
     const daySeconds: number = 24 * 60 * 60;
-
-    const dangerMap = new Map<number, string>();
-    dangerMap.set(-1, "unknown");
-    dangerMap.set(1, "low");
-    dangerMap.set(2, "mod");
-    dangerMap.set(3, "con");
-    dangerMap.set(4, "hig");
-
-    const dangerMapName = new Map<number, string>();
-    dangerMapName.set(-1, "Unknown");
-    dangerMapName.set(1, "Low");
-    dangerMapName.set(2, "Moderate");
-    dangerMapName.set(3, "Considerable");
-    dangerMapName.set(4, "High");
 
     const dangerLevels: number[] = [];
     const dangerLevelsJSX: JSX.Element[] = [];
@@ -86,11 +74,17 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
                 day: "numeric",
             });
 
+            const currDateShort = date.toLocaleDateString("en-US", {
+                month: "numeric",
+                day: "numeric",
+            });
+
             prevDangers.push(
                 <div key={i}>
-                    <p>{currDate}</p>
+                    <p className="hidden sm:block">{currDate}</p>
+                    <p className="sm:hidden">{currDateShort}</p>
                     <div
-                        className="w-6 md:w-15 h-6 md:h-15 border-2 border-black"
+                        className="w-9 md:w-15 h-9 md:h-15 border-2 border-black"
                         style={{
                             backgroundColor: `var(--danger-${dangerMap.get(dayData.predicted_danger)})`,
                         }}
@@ -189,15 +183,11 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
 
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">Weather
-                    Forecast</h3>
-                  <p>TBD</p>
-
-                  <h3 className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">
+                    <h3 className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">
                     Forecast Details
                   </h3>
 
-                  <div className="ml-[10vw] xl:ml-[14vw] mt-6 space-y-6 max-w-3xl">
+                  <div className="mt-6 space-y-6 max-w-3xl mx-auto text-center">
                       {[
                           { label: "Primary Concern", value: forecastData?.primary_concern },
                           { label: "Discussion", value: forecastData?.discussion },
@@ -205,7 +195,7 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
                       ].map(({ label, value }) => (
                           <section key={label}>
                               <h4 className="font-semibold text-lg mb-1">{label}</h4>
-                              <p className="text-gray-700 leading-relaxed">
+                              <p className="text-xs md:text-lg text-gray-700 leading-relaxed">
                                   {value ?? "—"}
                               </p>
                           </section>
@@ -216,6 +206,11 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
                   <div className="flex space-x-5 justify-center">
                       {prevDangers}
                   </div>
+
+                  <h3 className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">Weather
+                    Forecast</h3>
+                  <WeatherTable rows={weather.filter(r => r.zone_name == zoneDataName)} />
+
                 </div>}
             </section>
         </>
