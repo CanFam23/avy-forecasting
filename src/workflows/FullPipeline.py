@@ -3,6 +3,7 @@ from datetime import datetime
 from src.config import COORDS_SUBSET_FP
 from src.scraping.FAC_scraper import FAC_Scraper
 from src.util.file import csv_to_json
+from src.util.web import gen_ai_forecast
 from src.workflows.ForecastPipeline import ForecastPipeline
 
 # Configure logging 
@@ -43,6 +44,14 @@ if __name__ == "__main__":
         csv_to_json("data/ops25_26/day_predictions.csv","web/avyAI/public/data/ai_forecast.json")
 
         csv_to_json("data/2526_FAC/FAC_danger_levels_25_cleaned.csv", "web/avyAI/public/data/actual_forecast.json")
+
+        gen_ai_forecast(
+            actual_dangers_fp="data/2526_FAC/FAC_danger_levels_25_cleaned.csv",
+            all_dangers_fp="data/ops25_26/all_predictions.csv",
+            day_dangers_fp="data/ops25_26/day_predictions.csv",
+            weather_output_fp="web/avyAI/public/data/weather.json",
+            forecast_output_fp="web/avyAI/public/data/forecast_discussion.json"
+        )
 
         logger.info(f"Pipeline completed in {datetime.now() - process_start}")
     except Exception as e:
