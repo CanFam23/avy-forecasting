@@ -3,7 +3,6 @@ import Disclaimer from "./components/Disclaimer";
 import {Forecast} from "./components/Forecast.tsx";
 import Footer from "./components/Footer.tsx";
 import {useEffect, useState} from "react";
-import {WeatherTable} from "./components/WeatherTable.tsx";
 
 function App() {
 
@@ -33,7 +32,6 @@ function App() {
                 setForecastDis(disResData.forecasts);
 
                 setWeather(weatherResData.weather);
-                console.log(weatherResData);
             } catch (err) {
                 console.error(err);
             }
