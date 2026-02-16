@@ -53,12 +53,13 @@ function App() {
     return (
         <>
             <Navbar navNames={["Forecast", "Performance", "About"]}/>
-            <main className="justify-center mx-10 md:mx-30 my-5 min-h-screen">
+            <main className="justify-center mx-10 md:mx-60 my-5 min-h-screen">
                 <Disclaimer/>
-                <div className="grid grid-cols-3 gap-x-4 items-center w-full mb-[-10px] mt-10 px-4 text-gray-500 text-xs sm:text-sm">
+                <div
+                    className="grid grid-cols-3 gap-x-4 items-center w-full mb-[-10px] mt-10 px-4 text-gray-500 text-xs sm:text-sm">
                     <p>Forecast Zone</p>
-                    <p>Forecast Date</p>
-                    <p>Low / Mid / Upper Elevation</p>
+                    <p className="text-center">Forecast Date</p>
+                    <p className="text-end">Low / Mid / Upper Elevation</p>
                 </div>
                 <Forecast
                     dayPreds={dayPreds}
