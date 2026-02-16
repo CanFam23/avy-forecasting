@@ -100,7 +100,7 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
                 dayForc.zone === zoneDataName
         ) ?? null;
 
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
     const dateShort = date.toLocaleDateString("en-US", {
         month: "numeric",
@@ -116,7 +116,7 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis
 
     return (
         <>
-            <section className="bg-[var(--color-secondary)] my-2 p-2 rounded-sm">
+            <section className="bg-[var(--color-secondary)] my-2 p-2 rounded-sm shadow-md">
                 {!expanded && <div className="flex space-x justify-between items-center">
                   <div className="grid grid-cols-3 gap-x-4 items-center w-full mr-6 md:mr-10 lg:mr-20">
                       {/* Left column - zone name */}

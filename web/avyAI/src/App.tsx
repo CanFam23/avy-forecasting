@@ -3,10 +3,13 @@ import Disclaimer from "./components/Disclaimer";
 import {Forecast} from "./components/Forecast.tsx";
 import Footer from "./components/Footer.tsx";
 import {useEffect, useState} from "react";
+import TimeSeriesPlot from "./plots/TimeSeriesPlot.tsx";
 
 function App() {
 
     const [dayPreds, setDayPreds] = useState([]);
+    const [actDang, setActDang] = useState([]);
+
     const [forecastDis, setForecastDis] = useState([]);
     const [weather, setWeather] = useState([]);
 
@@ -16,17 +19,20 @@ function App() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [predRes, disRes, weatherRes] = await Promise.all([
+                const [predRes, actRes, disRes, weatherRes] = await Promise.all([
                     fetch("/data/ai_forecast.json"),
+                    fetch("/data/actual_forecast.json"),
                     fetch("/data/forecast_discussion.json"),
                     fetch("/data/weather.json")
                 ]);
 
                 const predictionData = await predRes.json();
+                const actResData = await actRes.json();
                 const disResData = await disRes.json();
                 const weatherResData = await weatherRes.json();
 
                 setDayPreds(predictionData.predictions);
+                setActDang(actResData.dangers);
                 setLatestDay(predictionData.meta.latest_day);
 
                 setForecastDis(disResData.forecasts);
@@ -77,6 +83,11 @@ function App() {
                     zoneDataName="Swan"
                     forecastDis={forecastDis}
                     weather={weather}
+                />
+
+                <TimeSeriesPlot
+                    predDangers={dayPreds}
+                    actDangers={actDang}
                 />
             </main>
             <Footer/>
