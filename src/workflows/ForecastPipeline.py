@@ -127,6 +127,8 @@ class ForecastPipeline():
         # Run simulation for each missing date
         start_time = datetime.now()
         for day in missing_dates:
+            self.__logger.info(f"Running simulations for {day}")
+
             # Run simulation for each point and then make predictions
             day_df = pred_df[pred_df['date'] == day].groupby("id").size()
 
