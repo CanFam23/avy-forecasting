@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
 import Home from "./pages/Home.tsx";
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar.tsx";
+import Footer from "./components/Footer.tsx";
+import Disclaimer from "./components/Disclaimer.tsx";
 
 function App() {
 
@@ -48,15 +51,29 @@ function App() {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <Routes>
-            <Route path="/" element={<Home
-            dayPreds={dayPreds}
-            forecastDis={forecastDis}
-            weather={weather}
-            latestDay={latestDay}
-            actDang={actDang}
-            />} />
-        </Routes>
+        <>
+            <Navbar
+                navNames={{
+                    Forecast: "/",
+                    Performance: "/performance",
+                    About: "/about"
+                }}
+            />
+            <main className="justify-center mx-10 md:mx-60 my-5 min-h-screen">
+                <Disclaimer/>
+                <Routes>
+                    <Route path="/" element={<Home
+                        dayPreds={dayPreds}
+                        forecastDis={forecastDis}
+                        weather={weather}
+                        latestDay={latestDay}
+                        actDang={actDang}
+                    />} />
+                </Routes>
+            </main>
+
+            <Footer/>
+        </>
     );
 }
 
