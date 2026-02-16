@@ -11,3 +11,9 @@ SURF_REG = r":(?:TMP|SNOD|PRATE|APCP|.*WRF|RH|ASNOW):surface"
 M2_REG = r":(?:TMP|RH):2 m"
 WIND_REG = r":WIND|GRD:10 m above"
 REGS = [SURF_REG,M2_REG,WIND_REG]
+
+ZONE_MAP = {
+    "whitefish range":"Whitefish",
+    "swan range":"Swan",
+    "flathead range & glacier np":"Glacier/Flathead"
+}
