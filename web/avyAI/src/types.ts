@@ -41,8 +41,8 @@ export interface ForecastProps {
     weather: WeatherRow[];
 }
 
-export interface navbarProps {
-    navNames: string[];
+export interface NavbarProps {
+    navNames: Record<string, string>;
 }
 
 export interface hamProps {
@@ -54,4 +54,12 @@ export interface hamProps {
 export type GraphData = {
     predDangers: ForecastDay[];
     actDangers: ForecastDay[];
+}
+
+export type PageProps = {
+    dayPreds: ForecastDay[];
+    forecastDis: ForecastDiscussion[];
+    weather: WeatherRow[];
+    latestDay: number;
+    actDang: ForecastDay[];
 }

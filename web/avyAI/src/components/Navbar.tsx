@@ -1,16 +1,17 @@
 import {useState} from "react";
 import {Menu, X} from "lucide-react";
-import type {navbarProps, hamProps} from "../types.ts";
+import type {hamProps, NavbarProps} from "../types.ts";
+import { Link } from "react-router-dom";
 
-export default function Navbar({navNames}: navbarProps) {
-    // TODO: Change to links to navigate between pages
-    const navHTML = navNames.map((name) => (
-        <p
+export default function Navbar({navNames}: NavbarProps) {
+    const navHTML = Object.entries(navNames).map(([name, route]) => (
+        <Link
             key={name}
             className="font-bold p-2 hover:underline hover:cursor-pointer"
+            to={route}
         >
             {name}
-        </p>
+        </Link>
     ));
 
     const [displayHamMenu, setDisplayHamMenu] = useState(false);
