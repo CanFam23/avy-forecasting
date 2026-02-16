@@ -10,11 +10,19 @@ export interface ForecastDay {
     predicted_danger: -1 | 1 | 2 | 3 | 4;
 }
 
+export interface ForecastDiscussion {
+    zone: string;
+    primary_concern: string;
+    discussion: string;
+    travel_advice: string;
+}
+
 export interface ForecastProps {
     dayPreds: ForecastDay[];
     zone: string;
     latestDate: number;
     zoneDataName: string;
+    forecastDis: ForecastDiscussion[];
 }
 
 export interface navbarProps {

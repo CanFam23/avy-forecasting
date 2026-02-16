@@ -1,8 +1,8 @@
 import {ChevronDown, ChevronRight} from "lucide-react";
 import {type JSX, useState} from "react";
-import type {ForecastProps, ForecastDay} from "../types.ts";
+import type {ForecastProps, ForecastDay, ForecastDiscussion} from "../types.ts";
 
-export function Forecast({ dayPreds, zone, latestDate, zoneDataName }: ForecastProps) {
+export function Forecast({ dayPreds, zone, latestDate, zoneDataName, forecastDis }: ForecastProps) {
     const offset: number = 5;
     const height: number = 66;
 
@@ -100,8 +100,13 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName }: ForecastP
         }
     }
 
+    const forecastData: ForecastDiscussion | null =
+        forecastDis.find(
+            (dayForc) =>
+                dayForc.zone === zoneDataName
+        ) ?? null;
 
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(true);
 
     const dateShort = date.toLocaleDateString("en-US", {
         month: "numeric",
@@ -188,13 +193,24 @@ export function Forecast({ dayPreds, zone, latestDate, zoneDataName }: ForecastP
                     Forecast</h3>
                   <p>TBD</p>
 
-                  <h3
-                    className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">Discussion</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <h3 className="text-xl md:text-2xl font-bold ml-[10vw] xl:ml-[14vw] mr-auto text-start mt-10">
+                    Forecast Details
+                  </h3>
+
+                  <div className="ml-[10vw] xl:ml-[14vw] mt-6 space-y-6 max-w-3xl">
+                      {[
+                          { label: "Primary Concern", value: forecastData?.primary_concern },
+                          { label: "Discussion", value: forecastData?.discussion },
+                          { label: "Travel Advice", value: forecastData?.travel_advice },
+                      ].map(({ label, value }) => (
+                          <section key={label}>
+                              <h4 className="font-semibold text-lg mb-1">{label}</h4>
+                              <p className="text-gray-700 leading-relaxed">
+                                  {value ?? "—"}
+                              </p>
+                          </section>
+                      ))}
+                  </div>
 
                   <h3 className="text-xl md:text-2xl font-bold mt-10 text-cetner">Last {prevDangers.length} days</h3>
                   <div className="flex space-x-5 justify-center">

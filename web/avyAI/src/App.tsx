@@ -7,18 +7,34 @@ import {useEffect, useState} from "react";
 function App() {
 
     const [dayPreds, setDayPreds] = useState([]);
+    const [forecastDis, setForecastDis] = useState([]);
+
     const [latestDay, setLatestDay] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/data/ai_forecast.json')
-            .then(response => response.json())
-            .then(data => {
-                setDayPreds(data.predictions);
-                setLatestDay(data.meta.latest_day);
-                setLoading(false);
-            })
-            .catch(error => console.error('Error:', error));
+        const fetchData = async () => {
+            try {
+                const [predRes, disRes] = await Promise.all([
+                    fetch("/data/ai_forecast.json"),
+                    fetch("/data/forecast_discussion.json")
+                ]);
+
+                const predictionData = await predRes.json();
+                const disResData = await disRes.json();
+
+                setDayPreds(predictionData.predictions);
+                setLatestDay(predictionData.meta.latest_day);
+
+                setForecastDis(disResData.forecasts);
+            } catch (err) {
+                console.error(err);
+            }
+
+            setLoading(false);
+        }
+
+        fetchData();
     }, []);
 
     if (loading) return <div>Loading...</div>;
@@ -38,18 +54,21 @@ function App() {
                     zone="Whitefish"
                     latestDate={latestDay}
                     zoneDataName="Whitefish"
+                    forecastDis={forecastDis}
                 />
                 <Forecast
                     dayPreds={dayPreds}
                     zone="Flathead & Glacier NP"
                     latestDate={latestDay}
                     zoneDataName="Glacier/Flathead"
+                    forecastDis={forecastDis}
                 />
                 <Forecast
                     dayPreds={dayPreds}
                     zone="Swan"
                     latestDate={latestDay}
                     zoneDataName="Swan"
+                    forecastDis={forecastDis}
                 />
             </main>
             <Footer/>
