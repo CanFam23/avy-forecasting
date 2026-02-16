@@ -50,3 +50,8 @@ export interface hamProps {
     display: boolean;
     setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export type GraphData = {
+    predDangers: ForecastDay[];
+    actDangers: ForecastDay[];
+}
