@@ -1,0 +1,23 @@
+{
+  "date": "02-15-2026",
+  "forecasts": [
+    {
+      "zone": "Glacier/Flathead",
+      "primary_concern": "Wind-drifted snow and solar-induced surface warming.",
+      "discussion": "Upper elevations exhibit moderate danger levels due to increased wind speeds of 11.6 mph and significant snow depths on North and East aspects. Middle elevations remain relatively stable, although southern aspects show increased liquid water content up to 1.51. Lower elevation bands are near the freezing point with solar-induced warming and measurable liquid water content on South and West aspects, while North aspects maintain higher cold content and greater snow depths.",
+      "travel_advice": "Avoid steep wind-loaded slopes at upper elevations, specifically on North and East aspects. The safest and highest quality snow is found in sheltered middle elevation terrain on North-facing slopes where temperatures have remained cooler."
+    },
+    {
+      "zone": "Swan",
+      "primary_concern": "New snow accumulation and surface hoar development.",
+      "discussion": "Upper elevations are currently at a moderate danger level with 1.1 inches of new snow and winds of 8.8 mph creating potential for localized instabilities. Middle elevations show the development of surface hoar up to 0.67mm across all aspects, which may act as a future weak layer. Lower elevations received 1.3 inches of new snow, but low wind speeds and higher cold content at these aspects keep the danger level low.",
+      "travel_advice": "Exercise caution on steep upper-elevation slopes. Monitor middle elevation terrain for the presence of surface hoar before committing to steep lines. The safest and highest quality snow is located on North-facing aspects at lower to middle elevations where the snowpack remains cold and stable."
+    },
+    {
+      "zone": "Whitefish",
+      "primary_concern": "Surface hoar growth and solar-induced softening.",
+      "discussion": "Middle elevations are characterized by significant surface hoar growth reaching 1.05mm under light wind conditions. Lower elevations exhibit high liquid water content on southern aspects, peaking at 1.74, which suggests a weakening of the surface snowpack due to diurnal warming. Northern and eastern aspects across both monitored elevation bands remain colder with deeper snow and no liquid water present.",
+      "travel_advice": "Avoid steep southern aspects at lower elevations during peak solar radiation to minimize the risk of wet loose activity. Use caution on mid-elevation slopes where surface hoar is prevalent. The safest and highest quality snow is found on sheltered North and East aspects at middle elevations."
+    }
+  ]
+}
