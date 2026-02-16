@@ -1,23 +1,23 @@
 {
-  "date": "02-15-2026",
+  "date": "02-16-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
-      "primary_concern": "Wind-drifted snow and solar-induced surface warming.",
-      "discussion": "Upper elevations exhibit moderate danger levels due to increased wind speeds of 11.6 mph and significant snow depths on North and East aspects. Middle elevations remain relatively stable, although southern aspects show increased liquid water content up to 1.51. Lower elevation bands are near the freezing point with solar-induced warming and measurable liquid water content on South and West aspects, while North aspects maintain higher cold content and greater snow depths.",
-      "travel_advice": "Avoid steep wind-loaded slopes at upper elevations, specifically on North and East aspects. The safest and highest quality snow is found in sheltered middle elevation terrain on North-facing slopes where temperatures have remained cooler."
+      "primary_concern": "Wind Slabs and Wet Loose Avalanches",
+      "discussion": "Upper elevation bands are experiencing moderate to strong winds at 17.7 mph, facilitating active snow transport. Leeward slopes, particularly North and East aspects, have accumulated significantly more depth (up to 76.7 cm) compared to wind-scoured West aspects, creating potential wind slab hazards. Middle elevations remain cooler with low liquid water content. Lower elevations are hovering at the freezing point (32\u00b0F) with liquid water mass reaching 1.68 on South aspects, indicating a transition toward a moist snowpack and potential for wet loose activity on solar-exposed terrain.",
+      "travel_advice": "Avoid steep, wind-loaded North and East aspects at upper elevations where slabs are likely to have formed. Be cautious on South-facing slopes at lower elevations as daytime warming increases liquid water content. The safest and highest quality snow will be found on sheltered, mid-elevation slopes that have not been affected by wind scouring or solar-induced warming."
     },
     {
       "zone": "Swan",
-      "primary_concern": "New snow accumulation and surface hoar development.",
-      "discussion": "Upper elevations are currently at a moderate danger level with 1.1 inches of new snow and winds of 8.8 mph creating potential for localized instabilities. Middle elevations show the development of surface hoar up to 0.67mm across all aspects, which may act as a future weak layer. Lower elevations received 1.3 inches of new snow, but low wind speeds and higher cold content at these aspects keep the danger level low.",
-      "travel_advice": "Exercise caution on steep upper-elevation slopes. Monitor middle elevation terrain for the presence of surface hoar before committing to steep lines. The safest and highest quality snow is located on North-facing aspects at lower to middle elevations where the snowpack remains cold and stable."
+      "primary_concern": "Persistent Weak Layers (Surface Hoar)",
+      "discussion": "The primary instability is located at middle elevations, where a significant buried surface hoar layer (up to 1.42 mm) has been identified, resulting in a Danger Level of 3. This weak layer is present across all aspects but is most concerning on North and East slopes where the slab depth is greater. Upper elevations remain relatively stable with minimal new loading and low danger. Lower elevations show high liquid water mass (4.53) on South aspects due to temperatures near freezing, suggesting potential for point releases on steep solar slopes.",
+      "travel_advice": "Exercise extreme caution and conservative terrain choices at middle elevations. Avoid steep slopes where the buried surface hoar layer may be reactive. Seek out higher elevation terrain where the snowpack is shallower and more stable, or stick to low-angle slopes. The best snow is located on high-elevation sheltered terrain where the persistent weak layer is less prevalent."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Surface hoar growth and solar-induced softening.",
-      "discussion": "Middle elevations are characterized by significant surface hoar growth reaching 1.05mm under light wind conditions. Lower elevations exhibit high liquid water content on southern aspects, peaking at 1.74, which suggests a weakening of the surface snowpack due to diurnal warming. Northern and eastern aspects across both monitored elevation bands remain colder with deeper snow and no liquid water present.",
-      "travel_advice": "Avoid steep southern aspects at lower elevations during peak solar radiation to minimize the risk of wet loose activity. Use caution on mid-elevation slopes where surface hoar is prevalent. The safest and highest quality snow is found on sheltered North and East aspects at middle elevations."
+      "primary_concern": "Buried Surface Hoar and Solar Warming",
+      "discussion": "At middle elevations, a buried surface hoar layer measuring 0.93 mm is the primary concern, creating a moderate avalanche risk. Snow depths are greatest on North aspects (26.7 cm), providing enough of a slab to potentially trigger the underlying weak layer. Lower elevation bands are seeing increased liquid water content, specifically on South aspects (1.93 mass), as temperatures reach 31.6\u00b0F. The upper elevation data was not available for this period, but mid-elevation trends suggest an increasingly complex snowpack structure.",
+      "travel_advice": "Avoid steep mid-elevation terrain, particularly North and East aspects where buried surface hoar is most likely to be preserved under a slab. Use caution on South aspects at lower elevations during the warmest part of the day. The highest quality and safest travel will be found on low-angle, mid-elevation slopes that are sheltered from both wind and direct solar radiation."
     }
   ]
 }
