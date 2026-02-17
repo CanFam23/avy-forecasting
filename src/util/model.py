@@ -1,3 +1,4 @@
+from typing import Any, Optional
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -33,82 +34,91 @@ def get_elevation_band(altitude: float) -> str:
         
     raise ValueError(f"{altitude} not in a elevation band!")
 
-def eval_model(y_a: ArrayLike, y_p: ArrayLike, plot: bool = False, norm: bool = False, cr: bool = False) -> None:
-    """Evaluates the given data by computing the accuracy, MSE, classification report, and optionally displays
-    a confusion matrix (Which can be normalized).
+def eval_model(
+    y_a: ArrayLike,
+    y_p: ArrayLike,
+    plot: bool = False,
+    norm: bool = False,
+    cr: bool = False,
+    save_path: Optional[str] = None,
+) -> dict[str, Any]:
+    """Evaluates predictions and optionally plots/saves a confusion matrix.
 
     Args:
-        y_a (ArrayLike): Actual y values
-        y_p (ArrayLike): Predicted y values
-        plot (bool, optional): Whether to plot confusion matrix. Defaults to False.
-        norm (bool, optional): Whether to normalized confusion matrix. Defaults to False.
-        cr: (bool, optional): Whether to print a classification report or not
-    """    
+        y_a: Actual y values
+        y_p: Predicted y values
+        plot: Whether to create a confusion matrix plot
+        norm: Whether to normalize confusion matrix by true labels (rows)
+        cr: Whether to print a classification report
+        save_path: If provided and plot=True, saves the confusion matrix figure to this path
+
+    Returns:
+        dict with accuracy, balanced_accuracy, mae, and (if plotted) the ConfusionMatrixDisplay/fig/ax
+    """
+    eval_dict: dict[str, Any] = {}
+
     acc = accuracy_score(y_a, y_p)
-    bacc = balanced_accuracy_score(y_a,y_p)
+    bacc = balanced_accuracy_score(y_a, y_p)
+    mae = mean_absolute_error(y_a, y_p)
+
+    eval_dict["accuracy"] = acc
+    eval_dict["balanced_accuracy"] = bacc
+    eval_dict["mae"] = mae
+
     print(f"Accuracy {acc:.2f}")
     print(f"Balanced Accuracy {bacc:.2f}")
-    print(f"MAE: {mean_absolute_error(y_a, y_p)}")
-    
+    print(f"MAE: {mae}")
+
     if cr:
         print("Classification Report:")
-        print(classification_report(y_a, y_p, digits=2))
+        report = classification_report(y_a, y_p, digits=2)
+        print(report)
+        eval_dict["classification_report"] = report
 
     if plot:
-        labels = np.unique(y_a)
+        # consistent class order across y_a and y_p
+        labels = sorted(set(np.asarray(y_a).tolist()) | set(np.asarray(y_p).tolist()))
+        y_order = labels[::-1]  # show highest at top
+        x_order = labels        # show lowest->highest left->right
 
-        # Reorder labels so they are in the same order
-        y_order = labels[::-1]
-        x_order = labels 
-        
-        if norm:
-            labels = sorted(set(y_a) | set(y_p))  # type: ignore # ensure consistent class order
-            cm = confusion_matrix(y_a, y_p, labels=labels, normalize="true")
+        cm = confusion_matrix(
+            y_a,
+            y_p,
+            labels=labels,
+            normalize="true" if norm else None,
+        )
 
-            # y_order and x_order are class labels (e.g. [4,3,2,1])
-            label_to_idx = {label: i for i, label in enumerate(labels)}
+        # Reorder CM to y_order (rows) and x_order (cols)
+        label_to_idx = {label: i for i, label in enumerate(labels)}
+        y_idx = [label_to_idx[l] for l in y_order]
+        x_idx = [label_to_idx[l] for l in x_order]
+        cm_reordered = cm[np.ix_(y_idx, x_idx)]
 
-            y_idx = [label_to_idx[l] for l in y_order]
-            x_idx = [label_to_idx[l] for l in x_order]
+        disp = ConfusionMatrixDisplay(
+            confusion_matrix=cm_reordered,
+            display_labels=x_order,
+        )
 
-            cm_reordered = cm[np.ix_(y_idx, x_idx)]
+        disp.plot(cmap="Blues", values_format=".2f" if norm else "d")
 
-            disp = ConfusionMatrixDisplay(
-                confusion_matrix=cm_reordered,
-                display_labels=x_order
-            )
-            disp.plot(cmap="Blues", values_format=".2f")
+        disp.ax_.set_yticks(np.arange(len(y_order)))
+        disp.ax_.set_yticklabels(y_order)
+        disp.ax_.set_title("Normalized Predicted vs. Actual" if norm else "Predicted vs. Actual")
 
-            disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_yticklabels(y_order)
-            disp.ax_.set_title("Confusion Matrix")
-        else:
-            labels = sorted(set(y_a) | set(y_p))  # type: ignore # ensure consistent class order
-            cm = confusion_matrix(y_a, y_p, labels=labels)
+        fig = disp.figure_
+        ax = disp.ax_
 
-            # y_order and x_order are class labels (e.g. [4,3,2,1])
-            label_to_idx = {label: i for i, label in enumerate(labels)}
+        if save_path:
+            fig.savefig(save_path, bbox_inches="tight", dpi=300)
 
-            y_idx = [label_to_idx[l] for l in y_order]
-            x_idx = [label_to_idx[l] for l in x_order]
-
-            cm_reordered = cm[np.ix_(y_idx, x_idx)]
-
-            disp = ConfusionMatrixDisplay(
-                confusion_matrix=cm_reordered,
-                display_labels=x_order
-            )
-            disp.plot(cmap="Blues", values_format="d")
-
-            disp.ax_.set_yticks(np.arange(len(y_order)))
-            disp.ax_.set_yticklabels(y_order)
-            disp.ax_.set_title("Confusion Matrix")
+    return eval_dict
             
-def plot_performance(df: pd.DataFrame) -> None:
-    """Plots the performance of the model across elevation band
+def plot_performance(df: pd.DataFrame, save_path: Optional[str] = None):
+    """Plots the performance of the model across elevation band.
 
     Args:
         df (pd.DataFrame): DataFrame to get data from
+        save_path (str, optional): File path to save the figure (e.g., 'plot.png' or 'plot.svg')
     """
     data = {"name": [],
         "elevation": [],
@@ -146,7 +156,7 @@ def plot_performance(df: pd.DataFrame) -> None:
         for j in range(pivot.shape[1]):        # columns
             val = pivot.iloc[i, j]
             if pd.notna(val):
-                ax.text(j, i, f"{val:.2%}", ha='center', va='center',color='white' if val < 0.78 else 'black') # type: ignore
+                ax.text(j, i, f"{val:.2%}", ha='center', va='center',color='white' if val < 0.6 else 'black') # type: ignore
             else:
                 ax.text(j, i, "n/a", ha='center', va='center')
 
@@ -154,9 +164,12 @@ def plot_performance(df: pd.DataFrame) -> None:
     ax.set_xticklabels(pivot.columns)
     ax.set_yticks(range(len(pivot.index)))
     ax.set_yticklabels(pivot.index)
+    ax.set_title("Model Performance across Zones and Elevation Bands")
 
     fig.colorbar(cax)
-    plt.show()
+
+    if save_path:
+        fig.savefig(save_path, bbox_inches="tight", dpi=300)
 
 def get_danger(row):
     """Helper function to get danger level based on elevation band"""
