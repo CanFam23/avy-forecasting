@@ -251,7 +251,7 @@ def csv_to_json(input_fp: str, output_fp: str) -> None:
     # Build payload
     payload = {
         "meta": {"latest_day": latest_day},
-        "predictions": [
+        "predictions" if "predicted_danger" in df.columns else "dangers": [
             {
                 "date": int(row["date_epoch"]),
                 "zone": row["zone_name"],
