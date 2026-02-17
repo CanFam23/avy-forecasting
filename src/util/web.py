@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import logging
 import os
+import time
 from typing import List, Tuple
 from zoneinfo import ZoneInfo
 
@@ -11,8 +12,8 @@ from dotenv import load_dotenv
 from google import genai
 from pydantic import BaseModel, Field
 
-from src.config import COORDS_SUBSET_FP
-from src.util.model import get_elevation_band
+from src.config import COORDS_SUBSET_FP, ZONE_MAP
+from src.util.model import get_elevation_band, eval_model, plot_performance
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +45,7 @@ Do not include conversational language.
 """
 
 MT_TZ = ZoneInfo('America/Denver')
+
 
 class Forecast(BaseModel):
     zone: str = Field(description="The name of the forecast zone.")
@@ -80,7 +82,6 @@ def gen_ai_forecast(
     """
     today = pd.Timestamp.now(tz=MT_TZ).normalize()
 
-
     daily = get_daily_weather(
         today,
         actual_dangers_fp,
@@ -93,33 +94,50 @@ def gen_ai_forecast(
         with open(forecast_output_fp, "r") as f:
             current_data = json.load(f)
             if current_data.get("date") and current_data.get("date") == today.strftime("%m-%d-%Y"):
-                logger.info(f"{forecast_output_fp} already contains forecast for {datetime.now().date()}")
+                logger.info(
+                    f"{forecast_output_fp} already contains forecast for {datetime.now().date()}")
                 return
-            
+
     logger.info(f"Generating AI forecast for {today}")
-    
+    start_time = datetime.now()
+
     client = genai.Client()
 
-    response = client.models.generate_content(
-        model="gemini-3-flash-preview",
-        contents=(
-            f"{GEMINI_PROMPT}\n"
-            f"date: {today.strftime('%m-%d-%Y')}\n"
-            f"data:\n{daily.to_markdown(index=False)}"
-        ),
-        config={
-            "response_mime_type": "application/json",
-            "response_json_schema": AvalancheForecast.model_json_schema(),
-            "system_instruction": GEMINI_SI,
-        },
-    )
+    # Try to generate AI response 3 times in case of a failure
+    i = 0
+    while i < 3:
+        try:
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=(
+                    f"{GEMINI_PROMPT}\n"
+                    f"date: {today.strftime('%m-%d-%Y')}\n"
+                    f"data:\n{daily.to_markdown(index=False)}"
+                ),
+                config={
+                    "response_mime_type": "application/json",
+                    "response_json_schema": AvalancheForecast.model_json_schema(),
+                    "system_instruction": GEMINI_SI,
+                },
+            )
 
-    # Get formatted JSON response
-    forecast = AvalancheForecast.model_validate_json(
-        response.text)  # type: ignore
+            # Get formatted JSON response
+            forecast = AvalancheForecast.model_validate_json(
+                response.text)  # type: ignore
 
-    with open(forecast_output_fp, "w") as f:
-        json.dump(forecast.model_dump(), f, indent=2)
+            with open(forecast_output_fp, "w") as f:
+                json.dump(forecast.model_dump(), f, indent=2)
+
+            logger.info(
+                f"AI forecast generated in {datetime.now() - start_time}")
+
+            return
+        except Exception:
+            time.sleep(5)
+            i += 1
+
+        logger.warning("Failed to generate AI forecast")
+
 
 def get_daily_weather(
     date: pd.Timestamp,
@@ -154,7 +172,7 @@ def get_daily_weather(
             if current_data.get("date") and current_data.get("date") == int(date.timestamp()):
                 logger.info(f"{output_fp} already contains data for {date}")
                 return pd.DataFrame(current_data["weather"])
-            
+
     logger.info(f"Aggregating data for {date}")
 
     actual_dangers = pd.read_csv(actual_dangers_fp)
@@ -179,7 +197,7 @@ def get_daily_weather(
         columns=["latitude", "longitude", "geometry"])
     combined_df['elevation_band'] = combined_df['altitude'].apply(
         get_elevation_band)
-    
+
     # Merge to get predicted danger
     combined_df = combined_df.merge(day_preds,
                                     on=["date", "zone_name", "elevation_band"]).drop(
@@ -213,7 +231,7 @@ def get_daily_weather(
             new_snow_72_24=('HN72_24', 'mean'),
             precip_total=('PSUM24', 'mean'),
 
-            # snowpack state / wetness / structure 
+            # snowpack state / wetness / structure
             snow_depth_avg=('HS_mod', 'mean'),
             swe_avg=('SWE', 'mean'),
             ski_pen_avg=('ski_pen', 'mean'),
@@ -278,10 +296,46 @@ def get_daily_weather(
     return daily
 
 
+def save_performance_data(actual_fp: str, predicted_fp: str, output_dir: str):
+    actual_dangers = pd.read_csv(actual_fp)
+    actual_dangers['date'] = pd.to_datetime(
+        actual_dangers['date']).dt.tz_localize(MT_TZ)
+
+    day_preds = pd.read_csv(predicted_fp)
+    day_preds = day_preds[day_preds['slope_angle'] == "slope"]
+    day_preds['date'] = pd.to_datetime(day_preds['date']).dt.tz_localize(MT_TZ)
+
+    combined_df = pd.merge(actual_dangers, day_preds, on=[
+                           "zone_name", "date", "elevation_band"], how='inner').sort_values(by="date")
+
+    eval_dict = eval_model(combined_df['actual_danger'],
+                           combined_df['predicted_danger'],
+                           plot=True,
+                           norm=True,
+                           save_path=f"{output_dir}/norm_cm.svg",
+                           print_performance=False)
+    
+    eval_model(combined_df['actual_danger'],
+               combined_df['predicted_danger'],
+               plot=True,
+               norm=False,
+               save_path=f"{output_dir}/cm.svg",
+               print_performance=False)
+
+    perform_df = combined_df.rename(
+        columns={"predicted_danger": "predicted", "actual_danger": "danger_level"})
+    plot_performance(perform_df, save_path=f"{output_dir}/zone_ele_perf.svg")
+
+    with open(f"{output_dir}/performance_metrics.json", "w") as f:
+        json.dump(eval_dict, f, indent=2)
+
+
 if __name__ == "__main__":
     actual = "data/2526_FAC/FAC_danger_levels_25_cleaned.csv"
     all_dangers = "data/ops25_26/all_predictions.csv"
     day_dangers = "data/ops25_26/day_predictions.csv"
 
-    print(gen_ai_forecast(actual, all_dangers, day_dangers,
-          "web/avyAI/public/data/weather.json", "web/avyAI/public/data/forecast_discussion.json"))
+    save_performance_data(actual, day_dangers, "web/avyAI/public/performance")
+
+    # print(gen_ai_forecast(actual, all_dangers, day_dangers,
+    #       "web/avyAI/public/data/weather.json", "web/avyAI/public/data/forecast_discussion.json"))

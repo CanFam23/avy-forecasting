@@ -41,6 +41,7 @@ def eval_model(
     norm: bool = False,
     cr: bool = False,
     save_path: Optional[str] = None,
+    print_performance = True
 ) -> dict[str, Any]:
     """Evaluates predictions and optionally plots/saves a confusion matrix.
 
@@ -51,6 +52,7 @@ def eval_model(
         norm: Whether to normalize confusion matrix by true labels (rows)
         cr: Whether to print a classification report
         save_path: If provided and plot=True, saves the confusion matrix figure to this path
+        print_performance: If performance should be printed.
 
     Returns:
         dict with accuracy, balanced_accuracy, mae, and (if plotted) the ConfusionMatrixDisplay/fig/ax
@@ -65,9 +67,10 @@ def eval_model(
     eval_dict["balanced_accuracy"] = bacc
     eval_dict["mae"] = mae
 
-    print(f"Accuracy {acc:.2f}")
-    print(f"Balanced Accuracy {bacc:.2f}")
-    print(f"MAE: {mae}")
+    if print_performance:
+        print(f"Accuracy {acc:.2f}")
+        print(f"Balanced Accuracy {bacc:.2f}")
+        print(f"MAE: {mae}")
 
     if cr:
         print("Classification Report:")
