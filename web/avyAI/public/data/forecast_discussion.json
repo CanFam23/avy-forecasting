@@ -1,23 +1,23 @@
 {
-  "date": "02-16-2026",
+  "date": "02-17-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
       "primary_concern": "Wind Slabs and Wet Loose Avalanches",
-      "discussion": "Upper elevation bands are experiencing moderate to strong winds at 17.7 mph, facilitating active snow transport. Leeward slopes, particularly North and East aspects, have accumulated significantly more depth (up to 76.7 cm) compared to wind-scoured West aspects, creating potential wind slab hazards. Middle elevations remain cooler with low liquid water content. Lower elevations are hovering at the freezing point (32\u00b0F) with liquid water mass reaching 1.68 on South aspects, indicating a transition toward a moist snowpack and potential for wet loose activity on solar-exposed terrain.",
-      "travel_advice": "Avoid steep, wind-loaded North and East aspects at upper elevations where slabs are likely to have formed. Be cautious on South-facing slopes at lower elevations as daytime warming increases liquid water content. The safest and highest quality snow will be found on sheltered, mid-elevation slopes that have not been affected by wind scouring or solar-induced warming."
+      "discussion": "At upper elevations, the avalanche danger is Considerable (Level 3). Colder temperatures (21.2\u00b0F) and moderate wind transport (0.59) are facilitating the development of wind slabs on leeward aspects, particularly North and East slopes. In the middle elevation band, danger remains Moderate (Level 2) with wind transport (0.42) and new snow accumulation contributing to slab formation. At lower elevations, temperatures near the freezing mark (30.3\u00b0F) and increasing liquid water content on southern aspects (0.21) indicate a rising potential for wet loose avalanches on steep solar-exposed terrain.",
+      "travel_advice": "Avoid steep, wind-loaded slopes at upper elevations, especially those near ridge lines. On southern aspects at middle and lower elevations, watch for signs of snowpack warming such as roller balls or pinwheels, and transition away from these areas as they soften. The safest and highest quality snow can be found on sheltered, low-angle terrain on North to Northeast aspects where wind effect is minimal and the snowpack remains cold."
     },
     {
       "zone": "Swan",
-      "primary_concern": "Persistent Weak Layers (Surface Hoar)",
-      "discussion": "The primary instability is located at middle elevations, where a significant buried surface hoar layer (up to 1.42 mm) has been identified, resulting in a Danger Level of 3. This weak layer is present across all aspects but is most concerning on North and East slopes where the slab depth is greater. Upper elevations remain relatively stable with minimal new loading and low danger. Lower elevations show high liquid water mass (4.53) on South aspects due to temperatures near freezing, suggesting potential for point releases on steep solar slopes.",
-      "travel_advice": "Exercise extreme caution and conservative terrain choices at middle elevations. Avoid steep slopes where the buried surface hoar layer may be reactive. Seek out higher elevation terrain where the snowpack is shallower and more stable, or stick to low-angle slopes. The best snow is located on high-elevation sheltered terrain where the persistent weak layer is less prevalent."
+      "primary_concern": "Wind Slabs and Storm Slabs",
+      "discussion": "Considerable avalanche danger (Level 3) exists at both upper and middle elevations. Significant wind transport (0.57 at mid-elevations) combined with 3.6 inches of new snow is creating reactive wind slabs. The snowpack at mid-elevations shows a significant increase in liquid water content (1.85) on southern aspects, suggesting structural weakening during periods of solar gain. Lower elevations remain at Low danger (Level 1) with minimal wind transport and less snow accumulation, resulting in a generally stable snowpack in the valley bottoms.",
+      "travel_advice": "Limit travel in steep, high-consequence terrain at mid and upper elevations. Avoid lee-side slopes where wind-deposited snow has formed stiff slabs. Give cornices a wide berth. For the safest conditions and best snow quality, stick to lower elevation bands or sheltered, mid-elevation North-facing glades with slope angles less than 30 degrees."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Buried Surface Hoar and Solar Warming",
-      "discussion": "At middle elevations, a buried surface hoar layer measuring 0.93 mm is the primary concern, creating a moderate avalanche risk. Snow depths are greatest on North aspects (26.7 cm), providing enough of a slab to potentially trigger the underlying weak layer. Lower elevation bands are seeing increased liquid water content, specifically on South aspects (1.93 mass), as temperatures reach 31.6\u00b0F. The upper elevation data was not available for this period, but mid-elevation trends suggest an increasingly complex snowpack structure.",
-      "travel_advice": "Avoid steep mid-elevation terrain, particularly North and East aspects where buried surface hoar is most likely to be preserved under a slab. Use caution on South aspects at lower elevations during the warmest part of the day. The highest quality and safest travel will be found on low-angle, mid-elevation slopes that are sheltered from both wind and direct solar radiation."
+      "primary_concern": "Wet Loose and Wind Slabs",
+      "discussion": "Moderate avalanche danger (Level 2) is present across lower and middle elevation bands. Mid-elevation terrain is seeing moderate wind transport (0.38) which is building localized wind slabs on North and East aspects. Lower elevations are experiencing significant warming, with liquid water mass reaching 2.47 on southern aspects. This indicates a high probability of wet loose activity on steep solar slopes as the day progresses. Snow depths vary significantly by aspect, with North-facing slopes maintaining the deepest and most consistent coverage.",
+      "travel_advice": "Exercise caution on steep southern aspects at all elevations, as the high liquid water content increases the likelihood of wet snow slides. Monitor mid-elevation ridges for wind-stiffened snow. The best and safest skiing will be found on sheltered, high-latitude aspects (North and Northwest) that have been protected from both wind scouring and solar radiation."
     }
   ]
 }
