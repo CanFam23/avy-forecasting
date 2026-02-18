@@ -1,23 +1,23 @@
 {
-  "date": "02-17-2026",
+  "date": "02-18-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
-      "primary_concern": "Wind Slabs and Wet Loose Avalanches",
-      "discussion": "At upper elevations, the avalanche danger is Considerable (Level 3). Colder temperatures (21.2\u00b0F) and moderate wind transport (0.59) are facilitating the development of wind slabs on leeward aspects, particularly North and East slopes. In the middle elevation band, danger remains Moderate (Level 2) with wind transport (0.42) and new snow accumulation contributing to slab formation. At lower elevations, temperatures near the freezing mark (30.3\u00b0F) and increasing liquid water content on southern aspects (0.21) indicate a rising potential for wet loose avalanches on steep solar-exposed terrain.",
-      "travel_advice": "Avoid steep, wind-loaded slopes at upper elevations, especially those near ridge lines. On southern aspects at middle and lower elevations, watch for signs of snowpack warming such as roller balls or pinwheels, and transition away from these areas as they soften. The safest and highest quality snow can be found on sheltered, low-angle terrain on North to Northeast aspects where wind effect is minimal and the snowpack remains cold."
+      "primary_concern": "Wind-drifted snow and wet-snow instabilities on solar aspects.",
+      "discussion": "Upper elevation bands remain cold with a significant cold content of -8 on east aspects and temperatures averaging -3.4F. Minor liquid water (0.11) is present on upper-elevation east slopes, while mid-elevation south-facing slopes show more pronounced warming with liquid water content at 0.85. Lower elevations received the highest new snow accumulation of 2.1 inches. Moderate westerly winds are driving snow transport (0.57) across lower bands, while ridge-top transport remains low. Slopes with northern and western aspects remain drier and colder across all elevations.",
+      "travel_advice": "Avoid steep south-facing aspects during periods of peak solar radiation to prevent wet loose avalanches. Be cautious on leeward east-facing slopes where thin wind slabs or moist snow may be reactive. The best snow, providing the safest and highest quality conditions, is found on protected north-facing slopes at middle elevations."
     },
     {
       "zone": "Swan",
-      "primary_concern": "Wind Slabs and Storm Slabs",
-      "discussion": "Considerable avalanche danger (Level 3) exists at both upper and middle elevations. Significant wind transport (0.57 at mid-elevations) combined with 3.6 inches of new snow is creating reactive wind slabs. The snowpack at mid-elevations shows a significant increase in liquid water content (1.85) on southern aspects, suggesting structural weakening during periods of solar gain. Lower elevations remain at Low danger (Level 1) with minimal wind transport and less snow accumulation, resulting in a generally stable snowpack in the valley bottoms.",
-      "travel_advice": "Limit travel in steep, high-consequence terrain at mid and upper elevations. Avoid lee-side slopes where wind-deposited snow has formed stiff slabs. Give cornices a wide berth. For the safest conditions and best snow quality, stick to lower elevation bands or sheltered, mid-elevation North-facing glades with slope angles less than 30 degrees."
+      "primary_concern": "Wind-slab development and solar-induced surface warming.",
+      "discussion": "A temperature inversion is observed with upper elevations at 11.5F, while middle elevations are cooler at 10.1F. New snow increases with altitude, peaking at 4.9 inches in the upper band. Strong westerly winds (12.4 mph) are actively transporting snow (0.49) onto leeward north and east aspects. At middle elevations, south-facing slopes are experiencing significant solar gain, resulting in a liquid water content of 0.83. Lower elevations remain stable with 2.8 inches of new snow and minimal wind influence.",
+      "travel_advice": "Stay off steep, upper-elevation slopes on north and east aspects where wind-loading has created reactive slabs. Monitor south-facing terrain at mid-elevations for increasing wet-snow hazard as the day progresses. The best snow is located on mid-elevation north-facing glades which offer the best combination of safety and fresh snow quality."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Wet Loose and Wind Slabs",
-      "discussion": "Moderate avalanche danger (Level 2) is present across lower and middle elevation bands. Mid-elevation terrain is seeing moderate wind transport (0.38) which is building localized wind slabs on North and East aspects. Lower elevations are experiencing significant warming, with liquid water mass reaching 2.47 on southern aspects. This indicates a high probability of wet loose activity on steep solar slopes as the day progresses. Snow depths vary significantly by aspect, with North-facing slopes maintaining the deepest and most consistent coverage.",
-      "travel_advice": "Exercise caution on steep southern aspects at all elevations, as the high liquid water content increases the likelihood of wet snow slides. Monitor mid-elevation ridges for wind-stiffened snow. The best and safest skiing will be found on sheltered, high-latitude aspects (North and Northwest) that have been protected from both wind scouring and solar radiation."
+      "primary_concern": "Wet loose avalanche activity on sun-exposed slopes.",
+      "discussion": "New snow amounts are light, ranging from 1.6 inches at lower elevations to 2.3 inches at middle elevations. The primary concern is the rapid warming of south-facing aspects at lower elevations, where liquid water content has reached 1.18. East-facing lower slopes also show minor warming (0.06). Middle elevations remain cooler at 8.0F, though south aspects there also show early signs of liquid water (0.06). Wind transport is negligible across the zone, with wind speeds remaining below 8 mph. The overall snow depth is thin, ranging between 12 and 30 cm.",
+      "travel_advice": "Limit travel on steep south-facing terrain below treeline where liquid water content indicates a high risk of wet loose slides. Exercise caution on steep slopes with new snow, though wind-slab risk is currently low. The highest quality and safest skiing is found on north and west-facing aspects at middle elevations where the snowpack remains cold and dry."
     }
   ]
 }
