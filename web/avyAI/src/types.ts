@@ -58,8 +58,21 @@ export type GraphData = {
 
 export type PageProps = {
     dayPreds: ForecastDay[];
+    actDang: ForecastDay[];
+}
+
+export type HomeProps = PageProps & {
     forecastDis: ForecastDiscussion[];
     weather: WeatherRow[];
     latestDay: number;
-    actDang: ForecastDay[];
+}
+
+export type PerformanceMetric = {
+    accuracy: number;
+    balanced_accuracy: number
+    mae: number;
+}
+
+export type PerformanceProps = PageProps & {
+    performanceMetrics: PerformanceMetric | null;
 }

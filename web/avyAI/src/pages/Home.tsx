@@ -1,8 +1,8 @@
 import {Forecast} from "../components/Forecast.tsx";
 import TimeSeriesPlot from "../plots/TimeSeriesPlot.tsx";
-import type {PageProps} from "../types.ts";
+import type {HomeProps} from "../types.ts";
 
-export default function Home({dayPreds, forecastDis, weather, latestDay, actDang}: PageProps) {
+export default function Home({dayPreds, forecastDis, weather, latestDay, actDang}: HomeProps) {
     return (
         <>
             <div
