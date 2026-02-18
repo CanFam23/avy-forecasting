@@ -61,7 +61,7 @@ export default function TimeSeriesPlot({ predDangers, actDangers }: GraphData) {
     );
 
     return (
-        <div className="w-full bg-white rounded-xl shadow-md p-6 space-y-4 mt-20">
+        <div className="w-full bg-white rounded-xl shadow-md p-6 space-y-4">
 
             <div>
                 <h2 className="text-2xl font-semibold tracking-tight">
