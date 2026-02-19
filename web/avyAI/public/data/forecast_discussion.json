@@ -1,23 +1,23 @@
 {
-  "date": "02-18-2026",
+  "date": "02-19-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
-      "primary_concern": "Wind-drifted snow and wet-snow instabilities on solar aspects.",
-      "discussion": "Upper elevation bands remain cold with a significant cold content of -8 on east aspects and temperatures averaging -3.4F. Minor liquid water (0.11) is present on upper-elevation east slopes, while mid-elevation south-facing slopes show more pronounced warming with liquid water content at 0.85. Lower elevations received the highest new snow accumulation of 2.1 inches. Moderate westerly winds are driving snow transport (0.57) across lower bands, while ridge-top transport remains low. Slopes with northern and western aspects remain drier and colder across all elevations.",
-      "travel_advice": "Avoid steep south-facing aspects during periods of peak solar radiation to prevent wet loose avalanches. Be cautious on leeward east-facing slopes where thin wind slabs or moist snow may be reactive. The best snow, providing the safest and highest quality conditions, is found on protected north-facing slopes at middle elevations."
+      "primary_concern": "Wet Loose Avalanches",
+      "discussion": "Atmospheric warming is the primary driver of instability as temperatures reach 13\u00b0C at lower elevations and remain above freezing at upper elevations. Significant solar radiation, measured at 1175 W/m\u00b2 on upper south aspects, combined with liquid water content reaching 0.51 at middle elevations, is actively degrading surface cohesion. South-facing slopes across all elevation bands are most affected by diurnal warming and the transition toward an isothermal surface layer. While northern aspects remain more stable, the lack of an overnight freeze at lower and middle elevations prevents the snowpack from recovering strength.",
+      "travel_advice": "Avoid travel on or beneath steep, sun-exposed slopes during the heat of the day. Monitor for signs of increasing instability such as rollerballs, pinwheels, or small natural point releases. The safest and highest quality snow is located on high-elevation, north-facing slopes that remain sheltered from direct solar radiation."
     },
     {
       "zone": "Swan",
-      "primary_concern": "Wind-slab development and solar-induced surface warming.",
-      "discussion": "A temperature inversion is observed with upper elevations at 11.5F, while middle elevations are cooler at 10.1F. New snow increases with altitude, peaking at 4.9 inches in the upper band. Strong westerly winds (12.4 mph) are actively transporting snow (0.49) onto leeward north and east aspects. At middle elevations, south-facing slopes are experiencing significant solar gain, resulting in a liquid water content of 0.83. Lower elevations remain stable with 2.8 inches of new snow and minimal wind influence.",
-      "travel_advice": "Stay off steep, upper-elevation slopes on north and east aspects where wind-loading has created reactive slabs. Monitor south-facing terrain at mid-elevations for increasing wet-snow hazard as the day progresses. The best snow is located on mid-elevation north-facing glades which offer the best combination of safety and fresh snow quality."
+      "primary_concern": "Wet Loose Avalanches",
+      "discussion": "The snowpack is under intense thermal stress with temperatures exceeding 10\u00b0C at all elevation bands. High solar gain on south-facing slopes, particularly at middle elevations where radiation reaches 1786 W/m\u00b2, is promoting rapid melting and the presence of liquid water in the upper snowpack. Surface cohesion is rapidly decreasing on all aspects, though southern aspects are the most critical. At upper elevations, while wind transport is present at 0.94, the dominant hazard remains the loss of structural integrity due to the unseasonably warm air mass and high solar input.",
+      "travel_advice": "Limit exposure to steep terrain and runout zones on southern aspects during periods of peak warming. Be cautious of terrain traps where even small wet loose slides could be dangerous. Seek out high-elevation, north-facing terrain for the most stable and well-preserved snow conditions."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Wet loose avalanche activity on sun-exposed slopes.",
-      "discussion": "New snow amounts are light, ranging from 1.6 inches at lower elevations to 2.3 inches at middle elevations. The primary concern is the rapid warming of south-facing aspects at lower elevations, where liquid water content has reached 1.18. East-facing lower slopes also show minor warming (0.06). Middle elevations remain cooler at 8.0F, though south aspects there also show early signs of liquid water (0.06). Wind transport is negligible across the zone, with wind speeds remaining below 8 mph. The overall snow depth is thin, ranging between 12 and 30 cm.",
-      "travel_advice": "Limit travel on steep south-facing terrain below treeline where liquid water content indicates a high risk of wet loose slides. Exercise caution on steep slopes with new snow, though wind-slab risk is currently low. The highest quality and safest skiing is found on north and west-facing aspects at middle elevations where the snowpack remains cold and dry."
+      "primary_concern": "Wet Loose Avalanches",
+      "discussion": "Warming temperatures are impacting the snowpack surface, with lower elevations reaching 11.1\u00b0C and middle elevations at 8.8\u00b0C. Liquid water accumulation is most significant on lower-elevation southern aspects, reaching a mass of 0.9, which corresponds with a danger level of 2. Middle elevations exhibit a danger level of 1, but still experience solar-driven softening on south-facing slopes where radiation reaches 1343 W/m\u00b2. The overall trend shows a loss of surface strength on all sun-exposed aspects due to consistent positive temperatures and solar gain.",
+      "travel_advice": "Exercise caution on steep southern aspects and monitor for increasing snow moisture and pinwheeling throughout the day. Avoid steep lower-elevation slopes where the liquid water content is highest. The highest quality and most stable snow is located on sheltered northern aspects at middle elevations."
     }
   ]
 }

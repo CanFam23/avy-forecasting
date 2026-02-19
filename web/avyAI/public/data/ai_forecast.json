@@ -1,6 +1,6 @@
 {
   "meta": {
-    "latest_day": 1771398000
+    "latest_day": 1771484400
   },
   "predictions": [
     {
@@ -3794,6 +3794,54 @@
       "zone": "Whitefish",
       "elevation": "middle",
       "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Glacier/Flathead",
+      "elevation": "lower",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Glacier/Flathead",
+      "elevation": "middle",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Glacier/Flathead",
+      "elevation": "upper",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Swan",
+      "elevation": "lower",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Swan",
+      "elevation": "middle",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Swan",
+      "elevation": "upper",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Whitefish",
+      "elevation": "lower",
+      "predicted_danger": 2
+    },
+    {
+      "date": 1771484400,
+      "zone": "Whitefish",
+      "elevation": "middle",
+      "predicted_danger": 1
     }
   ]
 }
