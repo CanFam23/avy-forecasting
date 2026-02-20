@@ -1,23 +1,23 @@
 {
-  "date": "02-19-2026",
+  "date": "02-20-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
-      "primary_concern": "Wet Loose Avalanches",
-      "discussion": "Atmospheric warming is the primary driver of instability as temperatures reach 13\u00b0C at lower elevations and remain above freezing at upper elevations. Significant solar radiation, measured at 1175 W/m\u00b2 on upper south aspects, combined with liquid water content reaching 0.51 at middle elevations, is actively degrading surface cohesion. South-facing slopes across all elevation bands are most affected by diurnal warming and the transition toward an isothermal surface layer. While northern aspects remain more stable, the lack of an overnight freeze at lower and middle elevations prevents the snowpack from recovering strength.",
-      "travel_advice": "Avoid travel on or beneath steep, sun-exposed slopes during the heat of the day. Monitor for signs of increasing instability such as rollerballs, pinwheels, or small natural point releases. The safest and highest quality snow is located on high-elevation, north-facing slopes that remain sheltered from direct solar radiation."
+      "primary_concern": "Wind-drifted snow and wet loose activity.",
+      "discussion": "Upper elevation bands are characterized by cold temperatures (6.1F) and moderate winds (12.4 mph), facilitating wind slab development on leeward North and East aspects. At middle elevations, significant solar radiation (723 W/m2) and liquid water content (0.25) on Southern aspects indicate surface snow softening. Lower elevations received the greatest 24-hour snowfall (3.7 inches), though stability remains moderate across all bands with a danger level of 2.",
+      "travel_advice": "Avoid steep Southern aspects during peak solar hours due to increasing liquid water content. Exercise caution on North and East-facing leeward slopes at upper elevations where wind slabs may be reactive. The highest quality and safest snow is located on sheltered Northern aspects at middle elevations where cold content remains stable."
     },
     {
       "zone": "Swan",
-      "primary_concern": "Wet Loose Avalanches",
-      "discussion": "The snowpack is under intense thermal stress with temperatures exceeding 10\u00b0C at all elevation bands. High solar gain on south-facing slopes, particularly at middle elevations where radiation reaches 1786 W/m\u00b2, is promoting rapid melting and the presence of liquid water in the upper snowpack. Surface cohesion is rapidly decreasing on all aspects, though southern aspects are the most critical. At upper elevations, while wind transport is present at 0.94, the dominant hazard remains the loss of structural integrity due to the unseasonably warm air mass and high solar input.",
-      "travel_advice": "Limit exposure to steep terrain and runout zones on southern aspects during periods of peak warming. Be cautious of terrain traps where even small wet loose slides could be dangerous. Seek out high-elevation, north-facing terrain for the most stable and well-preserved snow conditions."
+      "primary_concern": "New snow accumulation and solar-driven instability.",
+      "discussion": "Upper elevations received 6.8 inches of new snow over the last 24 hours with wind transport (0.49) active across various aspects. Middle elevations show extreme solar radiation (2239 W/m2) on Southern aspects, resulting in liquid water accumulation (0.44) within the surface layers. Lower elevations show stable conditions with 3.7 inches of new snow, though Southern aspects are beginning to show signs of warming.",
+      "travel_advice": "Limit exposure to steep slopes on Southern aspects as solar loading increases liquid water content. Be wary of new snow loading on steep terrain at upper elevations. The best snow is found on high-elevation Northern aspects that have remained protected from wind and direct solar radiation."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Wet Loose Avalanches",
-      "discussion": "Warming temperatures are impacting the snowpack surface, with lower elevations reaching 11.1\u00b0C and middle elevations at 8.8\u00b0C. Liquid water accumulation is most significant on lower-elevation southern aspects, reaching a mass of 0.9, which corresponds with a danger level of 2. Middle elevations exhibit a danger level of 1, but still experience solar-driven softening on south-facing slopes where radiation reaches 1343 W/m\u00b2. The overall trend shows a loss of surface strength on all sun-exposed aspects due to consistent positive temperatures and solar gain.",
-      "travel_advice": "Exercise caution on steep southern aspects and monitor for increasing snow moisture and pinwheeling throughout the day. Avoid steep lower-elevation slopes where the liquid water content is highest. The highest quality and most stable snow is located on sheltered northern aspects at middle elevations."
+      "primary_concern": "Loose wet avalanches on sun-exposed slopes.",
+      "discussion": "Middle elevations are experiencing intense solar radiation (2153 W/m2) on Southern aspects, which is likely to trigger surface warming despite cool ambient temperatures. Lower elevations show significant liquid water content (1.02) on South aspects, indicating a damp and potentially unstable surface snowpack. Northern and Western aspects across all documented bands remain drier and more consolidated.",
+      "travel_advice": "Avoid steep Southern aspects, especially in the afternoon as solar loading peaks and liquid water increases. Focus travel on Northern aspects where the snowpack remains colder and more stable. The highest quality snow is currently situated on mid-elevation Northern slopes."
     }
   ]
 }
