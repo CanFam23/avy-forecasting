@@ -1,23 +1,23 @@
 {
-  "date": "02-22-2026",
+  "date": "02-25-2026",
   "forecasts": [
     {
       "zone": "Glacier/Flathead",
-      "primary_concern": "Upper elevation wind slabs",
-      "discussion": "At upper elevations, moderate danger exists due to wind transport of recent snow, creating slabs on leeward aspects where snow depths reach 76.6 inches. Cold content remains significant at -10, maintaining a dry snowpack. Middle and lower elevations show low danger with minimal new snow accumulation. Solar radiation is impacting southern aspects at lower elevations, where liquid water content has increased to 1.77, while northern aspects remain cold and stable with negligible liquid water.",
-      "travel_advice": "Avoid steep, wind-loaded slopes at upper elevations, particularly on east and south-facing aspects where snow depth is greatest. Best snow conditions are found on sheltered, northern aspects at middle elevations where the snowpack remains cold and surface hoar has not been capped by significant slabs."
+      "primary_concern": "Wind-drifted snow (Wind Slabs)",
+      "discussion": "At upper elevations, high winds averaging 18.6 mph are actively transporting snow, as evidenced by a wind transport value of 2.01. This is forming wind slabs primarily on north and east-facing slopes where snow depths reach up to 77.9 cm. Middle elevations show moderate wind transport (0.62) with no new precipitation, while lower elevations remain relatively stable with trace new snow (0.8 cm). Solar radiation is introducing liquid water (0.06) on southern aspects at lower elevations, potentially weakening the surface layer.",
+      "travel_advice": "Avoid steep, wind-loaded slopes at upper elevations, particularly on north through east aspects. Higher quality and safer snow can be found on sheltered, north-facing slopes at middle elevations where wind transport is less significant and the snowpack remains cold (cold content -3)."
     },
     {
       "zone": "Swan",
-      "primary_concern": "Persistent slabs and wind-drifted snow",
-      "discussion": "Moderate danger prevails at upper and middle elevations. Middle elevations harbor buried surface hoar up to 0.76mm, which may act as a failure plane for persistent slabs. Wind speeds of 10.1 mph at upper elevations are actively transporting snow, though transport rates remain low at 0.03. Southern aspects across all bands show liquid water presence, peaking at 0.65 at middle elevations due to solar gain, which may weaken surface bonds.",
-      "travel_advice": "Practice cautious route-finding on middle elevation slopes where buried surface hoar is present. Avoid steep southerly aspects during the afternoon as solar radiation increases liquid water content. Highest quality and safest snow is located on mid-elevation, low-angle northern aspects."
+      "primary_concern": "Wind slabs and localized wet snow",
+      "discussion": "Upper elevations are experiencing significant wind transport (1.59) from westerly winds, leading to slab development on lee aspects despite a lack of new snow. Middle elevations show trace precipitation and moderate winds, with solar warming beginning to produce liquid water (0.18) on south-facing slopes. Lower elevations remain stable but exhibit significant liquid water mass (1.3) on southern aspects, indicating a shift toward wet snow conditions on sun-exposed terrain.",
+      "travel_advice": "Avoid steep southern aspects at lower elevations during periods of high solar radiation to prevent wet loose activity. Use caution around wind-loaded ridgelines at upper elevations. The highest quality snow is likely on sheltered, mid-elevation northerly aspects where the snowpack has not been affected by wind or solar warming."
     },
     {
       "zone": "Whitefish",
-      "primary_concern": "Wet loose avalanches on southern aspects",
-      "discussion": "Avalanche danger is low for lower and middle elevations. Minimal new snow of 0.6 to 0.9 inches has fallen over the last 24 hours. The primary driver of instability is solar warming on southern aspects, where liquid water values have reached 1.35 at lower elevations. Wind transport is negligible at 0.01, and cold content is shallow, ranging from -1 to -4. Northern aspects remain dry and stable across the surveyed elevation bands.",
-      "travel_advice": "Travel is generally safe across most terrain. Avoid steep southern aspects during periods of direct sunlight to mitigate the risk of small wet loose slides. The most consistent and high-quality snow is found on northern aspects at middle elevations where liquid water content remains at zero."
+      "primary_concern": "Wind slabs and surface hoar instability",
+      "discussion": "Middle elevations are seeing moderate wind transport (1.06) which is building slabs on leeward slopes. At lower elevations, 0.4 inches of new snow has fallen over a layer of surface hoar (0.6 mm), creating a potential weak interface. Southern aspects at lower elevations show a high liquid water content (1.28), indicating significant warming. The snowpack at middle elevations remains colder (cold content -2) and more reactive to wind than at lower elevations.",
+      "travel_advice": "Avoid steep southern slopes at lower elevations where liquid water is accumulating. Be cautious of wind slabs on leeward aspects at middle elevations. The most reliable and highest quality snow will be found on sheltered, north-facing slopes at middle elevations where the snow remains dry and protected from wind."
     }
   ]
 }
