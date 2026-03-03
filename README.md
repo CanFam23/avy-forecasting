@@ -1,6 +1,9 @@
 # Avy Forecasting
 
 Forecasting pipeline and web dashboard for avalanche danger in the Whitefish, Swan, and Glacier/Flathead forecast zones in northwest Montana.
+# Avy Forecasting
+
+Forecasting pipeline and web dashboard for avalanche danger in the Whitefish, Swan, and Glacier/Flathead forecast zones in northwest Montana.
 
 ## What this project does
 
@@ -34,7 +37,7 @@ Primary outputs include:
 ├── web/avyAI/                    # React + TypeScript frontend
 ├── data/                         # Models, fetched weather, predictions, FAC archives
 ├── notebooks/                    # Model experiments and visualization notebooks
-└── docs/                         # UI drafts
+└── docs/                         # JSON schema and UI drafts
 ```
 
 ## Prerequisites
