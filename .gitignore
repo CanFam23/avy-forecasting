@@ -24,11 +24,11 @@ dist/
 .DS_Store
 Thumbs.db
 
-**/*.txt
-
 data/*
 output/*
 
 notebooks/testing.*
 
 .env
+
+logs/

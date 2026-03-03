@@ -1,0 +1,16 @@
+geographiclib==2.1
+geopandas==1.1.1
+matplotlib==3.8.3
+numpy==2.4.2
+pandas==3.0.1
+playwright==1.55.0
+playwright==1.56.0
+protobuf==7.34.0
+pydantic==2.12.5
+python-dotenv==1.2.2
+rasterio==1.4.3
+Requests==2.32.5
+s3fs==2025.9.0
+scikit_learn==1.8.0
+Shapely==2.1.2
+xarray==2025.6.1
