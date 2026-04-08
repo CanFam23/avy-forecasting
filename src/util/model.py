@@ -41,7 +41,8 @@ def eval_model(
     norm: bool = False,
     cr: bool = False,
     save_path: Optional[str] = None,
-    print_performance = True
+    print_performance = True,
+    plot_title=None
 ) -> dict[str, Any]:
     """Evaluates predictions and optionally plots/saves a confusion matrix.
 
@@ -106,7 +107,7 @@ def eval_model(
 
         disp.ax_.set_yticks(np.arange(len(y_order)))
         disp.ax_.set_yticklabels(y_order)
-        disp.ax_.set_title("Normalized Predicted vs. Actual" if norm else "Predicted vs. Actual")
+        disp.ax_.set_title(plot_title if plot_title else ("Normalized Predicted vs. Actual" if norm else "Predicted vs. Actual"))
 
         fig = disp.figure_
         ax = disp.ax_
